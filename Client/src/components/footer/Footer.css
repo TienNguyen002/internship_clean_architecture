@@ -1,0 +1,145 @@
+.site-footer {
+    display: block;
+    line-height: 1.6;
+}
+
+.box-footer-google {
+    background-color: var(--medium-gray);
+    color: var(--light-color);
+    padding: 40px 0;
+}
+
+.box-footer-google .footer-container {
+    justify-content: space-between;
+}
+
+.box-footer-google-title {
+    font-size: 28px;
+    text-transform: uppercase;
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+.footer-container {
+    display: flex;
+    width: 86vw;
+    margin: 0 auto;
+}
+
+.box-footer-location {
+    padding: 50px 0 20px;
+}
+
+.box-footer-support {
+    padding: 0 0 60px;
+}
+
+.box-footer-support a {
+    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 300;
+}
+
+.box-footer-support li {
+    text-decoration: none;
+}
+
+.footer-item {
+    width: 33.3%;
+    text-align: left;
+    padding: 0 45px;
+    color: var(--medium-gray);
+}
+
+.footer-item h3 {
+    border-bottom: 2px solid var(--text-color);
+    font-size: 24px;
+    font-weight: 400;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+}
+
+.footer-item p {
+    color: var(--text-color);
+    font-size: 22px;
+    font-weight: 200;
+}
+.footer-item a{
+    cursor: pointer;
+}
+.box-footer-location .footer-item a {
+    font-size: 22px;
+    font-weight: 400;
+}
+
+.box-footer-bottom {
+    background-color: var(--gray-light);
+    padding: 20px 0;
+    display: block;
+}
+
+.box-footer-bottom .footer-container {
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+}
+
+.box-footer-bottom-copyright {
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--text-color);
+}
+
+.box-footer-bottom-socials {
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--medium-gray);
+    width: 500px;
+}
+
+.socials-icon {
+    max-height: 28px;
+    padding: 0 20px;
+}
+
+.location-icon {
+    padding: 0 15px;
+}
+
+.space-item {
+    margin-bottom: 35px;
+}
+.space-item-text:hover{
+    color: var(--primary-color);
+}
+
+.mail-icon {
+    color: var(--medium-gray);
+    width: 20px;
+}
+
+.map-show {
+    overflow: hidden;
+    transition: height 0.5s ease;
+    height: 0;
+}
+
+.map-show.active {
+    height: 500px;
+}
+
+.box-footer-google-description {
+    cursor: pointer;
+    font-size: 22px;
+}
+
+#back-to-top {
+    position: absolute;
+    z-index: 5;
+    height: 70px;
+    right: 15px;
+}
+.scroll-to-top{
+    width: 60px;
+    cursor: pointer;
+}

@@ -1,0 +1,92 @@
+  .admin-navbar {
+    height: 60px; 
+    background-color: var(--black); 
+    color: var(--light-color); 
+    display: flex;
+    padding: 0 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    justify-content: space-between;
+  }
+
+  .admin-logo-container {
+  width: 220px;
+  height: 54.14px;
+  padding: 10px 15px;
+  }
+
+  .admin-logo-container {
+    width: 150px; 
+  }
+  
+  .admin-logo {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .admin-left-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .admin-left-icons i {
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .admin-right-icons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .admin-right-icons i {
+    margin-right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .admin-search-form {
+    display: flex; 
+    align-items: center; 
+    margin-right: 1rem; 
+    background-color: var(--gray-light);
+    border-radius: 5px; 
+    box-sizing: border-box; 
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .admin-search-form:hover {
+    background-color: var(--gray-color); 
+  }
+  
+  .admin-search-form input[type="text"] {
+    border: none; 
+    outline: none; 
+    background-color: transparent; 
+    font-size: 1rem; 
+    padding: 0.5rem; 
+    width: 100%; 
+    transition: color 0.2s ease-in-out; 
+  }
+  
+  .admin-search-form input[type="text"]:focus {
+    color: var(--medium-gray); 
+  }
+  
+  .admin-search-form button {
+    border: none; 
+    background-color: transparent;
+    cursor: pointer; 
+    transition: color 0.2s ease-in-out; 
+  }
+  
+  .admin-search-form button:hover {
+    color: var(--medium-gray); 
+  }
+  
+  .admin-search-form .fa-search {
+    font-size: 1.2rem; 
+    color: var(--gray-color)
+  }

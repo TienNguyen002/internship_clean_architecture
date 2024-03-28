@@ -1,0 +1,56 @@
+{
+  "navbar": {
+    "Home": "ホーム",
+    "Lang": "English"
+  },
+  "menu": {
+    "Home": "ホーム",
+    "ABOUT US": "我々について",
+    "Who we are?": "弊社はどの様な会社？",
+    "Our Clients": "弊社のクライアント",
+    "News & Events": "ニュース & イベント",
+    "Blogs": "ブログ",
+    "Services": "サービス",
+    "Domains & Technologies": "ドメイン＆テクノロジー",
+    "Engagement Models": "導入モデル",
+    "Innovations": "イノベーション",
+    "Careers": "就職の機会",
+    "Contact": "お問い合わせ"
+  },
+  "request": {
+    "Name": "お名前 *",
+    "Phone": "電話番号",
+    "Subject": "件名 *",
+    "Message": "お問い合わせ内容 *",
+    "Error": "必須項目を記入してください（*)",
+    "ErrCaptcha": "reCaptcha でご確認ください。"
+  },
+  "footer": {
+    "Contact": "お問い合わせ",
+    "Map": "GOOGLE MAP で私たちを探す",
+    "Headquarters": "Headquarters",
+    "Branchoffice": "Branch office",
+    "GeneralInquiries": "総合窓口",
+    "SaleSupport": "セールス、サポート",
+    "Copyright": "Copyright",
+    "ConnectWithUs": "米国との接続"
+  },
+  "career": {
+    "Title": "就職の機会",
+    "Intro1": "Titan Technologyは、弊社のモットーである",
+    "Inspire": "「Inspire your work」",
+    "Is": "が",
+    "Intro2": "体感できるよう最高の職場環境を用意しています。",
+    "Intro3": "全ての社員が各々の責任、役割、義務を果たすことにより「責任と利益を共有する」という考えのもとに職場環境を作っています。",
+    "Welcome": "弊社のチームの一員になれば、次のような環境を提供します。",
+    "List1": "フレンドリーで頼りになるチーム",
+    "List2": "快適な労働環境",
+    "List3": "キャリアアップの機会",
+    "List4": "興味があり、チャレンジできる新しいプロジェクト",
+    "List5": "自己実現と創造力を発揮できる環境",
+    "List6": "経験とスキルに基づいた平均水準以上の給与",
+    "Required": "弊社は様々なスキルをもった人材を募集しており、選考しています。最終選考に残った方には、折り返し弊社担当よりご連絡させていただきます。",
+    "Contact": "上記の職種に興味がありましたら、履歴書・経歴書を までお送りください。",
+    "Email": "recruitment@titancorpvn.com"
+  }
+}

@@ -1,0 +1,117 @@
+.navbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  color: var(--light-color);
+  opacity: 1;
+  width: 100%;
+  height: 85px;
+  position: fixed;
+  top: 0px;
+  padding: 20px 50px 20px;
+  z-index: 10;
+}
+
+.topright {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+
+.menuCloseBtn {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  color: var(--light-color);
+  font-size: 26px;
+  width: 82px;
+  top: 32px;
+  right: 90px;
+  font-weight: 40px;
+  cursor: pointer;
+}
+
+/* Hide scrollbar on body when popup is open */
+body.popup-open {
+  overflow: hidden;
+}
+
+/* Style scrollbar in the popup */
+.popup {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 transparent;
+}
+
+.navbar a {
+  color: #ffffff;
+}
+
+.navbar .log {
+  font-weight: 400;
+}
+
+.navbar.scroll-down {
+  background-color: var(--secondary-color);
+  transition-delay: 200ms;
+  transition: background-color 1s ease, opacity 1s ease;
+}
+.navbar.scroll-up {
+  background-color: transparent;
+  transition-delay: 200ms;
+  transition: background-color 1s ease, opacity 1s ease;
+}
+
+.bar-nav {
+  transform: scale(1.6);
+}
+
+.popup {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-color);
+  z-index: 100;
+  display: block;
+}
+
+.logo {
+  width: 150px;
+  cursor: pointer;
+}
+.grid-container {
+  display: grid;
+  column-gap: 15px;
+  grid-template-columns: auto auto auto;
+}
+
+.grid-item {
+  color: var(--light-color);
+  font-size: 22px;
+  text-align: center;
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  margin-right: 38px;
+  cursor: pointer;
+}
+
+.grid-item.home {
+  cursor: pointer;
+}
+
+.fa-bars {
+  cursor: pointer;
+}
+
+.fa-flag {
+  cursor: pointer;
+}

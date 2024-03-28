@@ -1,0 +1,56 @@
+{
+  "navbar": {
+    "Home": "Home",
+    "Lang": "日本"
+  },
+  "menu": {
+    "Home": "HOME",
+    "ABOUT US": "ABOUT US",
+    "Who we are?": "Who we are?",
+    "Our Clients": "Our Clients",
+    "News & Events": "News & Events",
+    "Blogs": "Blogs",
+    "Services": "SERVICES",
+    "Domains & Technologies": "Domains & Technologies",
+    "Engagement Models": "Engagement Models",
+    "Innovations": "INNOVATIONS",
+    "Careers": "CAREERS",
+    "Contact": "CONTACT US"
+  },
+  "request": {
+    "Name": "Name *",
+    "Phone": "PHONE",
+    "Subject": "Subject *",
+    "Message": "You're looking for *",
+    "Error": "Please enter required fields marked (*)",
+    "ErrCaptcha": "Please confirm with the reCaptcha."
+  },
+  "footer": {
+    "Contact": "CONTACT US",
+    "Map": "FIND OUT US ON GOOGLE MAP",
+    "Headquarters": "Headquarters",
+    "Branchoffice": "Branch office",
+    "GeneralInquiries": "General Inquiries",
+    "SaleSupport": "Sales & Support",
+    "Copyright": "Copyright",
+    "ConnectWithUs": "Connect with us"
+  },
+  "career": {
+    "Title": "JOB OPPORTUNITIES",
+    "Intro1": "Titan Technology is the place where we care about individuals. Our ultimate goal by offering a working environment to “",
+    "Inspire": "Inspire Your Work",
+    "Is": "” is “",
+    "Intro2": "to bring the best benefits to employees",
+    "Intro3": "Titan is a place where everyone shares ideas, responsibilities and enjoy the benefits, a place where all employees contribute to the company thru’ their sense of ownership, dedication and commitment.",
+    "Welcome": "You are welcome to become a part of our team",
+    "List1": "Friendly and helpful team",
+    "List2": "Comfortable working conditions",
+    "List3": "Good career growth opportunities",
+    "List4": "Interesting and challenging projects",
+    "List5": "Healthy environment for self-realization and creativity",
+    "List6": "Competitive salary, that depends on skills &amp; capabilities.",
+    "Required": "We need various resources with skills on a &quot; first come first serve &quot; basis. Only qualified and shorted-list candidates will be contacted.",
+    "Contact": "If you are interested in this position, please send us detailed CV to ",
+    "Email": "recruitment@titancorpvn.com"
+  }
+}
