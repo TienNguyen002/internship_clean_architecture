@@ -1,5 +1,4 @@
 ﻿using TitanWeb.Domain.DTO.Button;
-using TitanWeb.Domain.DTO.Image;
 using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.DTO.SubItem;
 
@@ -15,6 +14,8 @@ namespace TitanWeb.Domain.DTO.Items
         public string? Description { get; set; }
         public string? Address { get; set; }
         public string? TelNumber { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdatedDate { get; set; }
         public SectionForItemDTO Section { get; set; }
         public IList<SubItemDTO> SubItems { get; set; }
         public string ImageUrl { get; set; }

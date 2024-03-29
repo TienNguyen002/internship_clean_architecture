@@ -52,5 +52,26 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Where(s => s.UrlSlug.Contains(slug))
                 .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Get All Section By Slug
+        /// </summary>
+        /// <param name="slug"> UrlSlug want to get All Section </param>
+        /// <returns> List Of Section With UrlSlug want to get </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<Section>> GetAllSectionBySlugAsync(string slug)
+        {
+            return await _context.Set<Section>()
+                .Include(s => s.Items)
+                    .ThenInclude(i => i.Image)
+                .Include(s => s.Items)
+                    .ThenInclude(i => i.Button)
+                .Include(s => s.Items)
+                    .ThenInclude(i => i.SubItems)
+                        .ThenInclude(s => s.Image)
+                .Include(s => s.Image)
+                .Where(s => s.UrlSlug.Contains(slug))
+                .ToListAsync();
+        }
     }
 }

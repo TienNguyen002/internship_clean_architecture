@@ -48,9 +48,11 @@
         /// Log Func Section
         /// </summary>
         public static readonly string LogGetAllSections = "\nGetting All Sections";
+        public static readonly string LogGetAllSectionsBySlug = "\nGetting All Sections By Slug ";
         public static readonly string LogGetSectionBySlug = "\nGetting Section By Slug ";
         public static readonly string LogReturnSection= "\nReturn Sections Result";
         public static readonly string LogReturnSectionBySlug = "\nReturn Section By Slug ";
+        public static readonly string LogReturnAllSectionsBySlug = "\nReturn All Sections By Slug ";
         public static readonly string LogCreateSection = "\nCreating Section";
         public static readonly string LogDeleteSection = "\nDelete Section By Id ";
 

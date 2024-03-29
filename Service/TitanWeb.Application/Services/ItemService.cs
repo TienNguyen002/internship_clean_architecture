@@ -94,9 +94,9 @@ namespace TitanWeb.Application.Services
             {
                 ImageUrl = uploadPath,
             };
-            foreach(var result in model.SectionSlug)
+            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
+            foreach(var section in sections)
             {
-                var section = await _sectionRepository.GetSectionBySlugAsync(result);
                 news.Sections.Add(section);
             }
             await _repository.EditItemAsync(news);
@@ -112,7 +112,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<ItemDTO> GetItemByIdAsync(int id)
         {
-            var item = await _repository.GetById(id);
+            var item = await _repository.GetByIdWithInclude(id, i => i.Image);
             return _mapper.Map<ItemDTO>(item);
         }
 
@@ -125,6 +125,19 @@ namespace TitanWeb.Application.Services
         public async Task<bool> DeleteNewsAsync(int id)
         {
             await _repository.DeleteItemAsync(id);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
+
+        /// <summary>
+        /// Change Image For Item
+        /// </summary>
+        /// <param name="imageId"> Id Of Image want to change for Item </param>
+        /// <returns> Image Item Changed </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> ChangeLogoImage(int imageId)
+        {
+            await _repository.ChangeLogoImage(imageId);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }

@@ -6,5 +6,6 @@ namespace TitanWeb.Domain.Interfaces.Services
     {
         Task<IList<SectionDTO>> GetAllSectionAsync(string language);
         Task<SectionDTO> GetSectionBySlugAsync(string slug);
+        Task<IList<SectionDTO>> GetAllSectionBySlugAsync(string slug);
     }
 }

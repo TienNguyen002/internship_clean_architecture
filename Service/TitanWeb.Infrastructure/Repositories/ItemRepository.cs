@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.Contracts;
 using TitanWeb.Domain.DTO.Items;
 using TitanWeb.Domain.Entities;
@@ -119,7 +120,7 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <exception cref="Exception"></exception>
         public async Task<bool> DeleteItemAsync(int id)
         {
-            var itemToDelete = _context.Set<Item>()
+            var itemToDelete = await _context.Set<Item>()
                 .Include(i => i.Button)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
@@ -130,6 +131,35 @@ namespace TitanWeb.Infrastructure.Repositories
             try
             {
                 _context.Remove(itemToDelete);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Change Image For Item
+        /// </summary>
+        /// <param name="imageId"> Id Of Image want to change for Item </param>
+        /// <returns> Image Item Changed </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> ChangeLogoImage(int imageId)
+        {
+            var image = await _context.Set<Image>()
+                .Where(i => i.ImageId == imageId).FirstOrDefaultAsync();
+            var itemsToUpdate = await _context.Set<Item>()
+                .Include(i => i.Image)
+                .Where(i => i.UrlSlug.Contains(QueryManagements.NavbarSlug))
+                .ToListAsync();
+            try
+            {
+                foreach (var item in itemsToUpdate)
+                {
+                    item.Image = image;
+                    _context.Update(item);
+                }
                 return true;
             }
             catch (Exception ex)

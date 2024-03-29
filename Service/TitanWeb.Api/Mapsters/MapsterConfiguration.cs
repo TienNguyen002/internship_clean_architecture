@@ -15,8 +15,6 @@ namespace TitanWeb.Api.Mapsters
         {
             config.NewConfig<Image, ImageDTO>()
                 .Map(desc => desc.Id, src => src.ImageId);
-            config.NewConfig<Image, ImageData>()
-                .Map(desc => desc.Id, src => src.ImageId);
 
             config.NewConfig<Item, ItemDTO>()
                 .Map(desc => desc.Id, src => src.ItemId)

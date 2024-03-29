@@ -33,5 +33,17 @@ namespace TitanWeb.Infrastructure.Repositories
                 return false;
             }
         }
+
+        /// <summary>
+        /// Get All Logo Image
+        /// </summary>
+        /// <returns> A List Of Logos </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<Image>> GetAllLogos()
+        {
+            return await _context.Set<Image>()
+                .Where(i => i.IsLogo)
+                .ToListAsync();
+        }
     }
 }

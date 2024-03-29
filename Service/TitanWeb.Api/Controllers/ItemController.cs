@@ -2,10 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
-using TitanWeb.Application.Services;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO;
-using TitanWeb.Domain.DTO.Image;
 using TitanWeb.Domain.DTO.Items;
 using TitanWeb.Domain.Interfaces.Services;
 
@@ -30,8 +28,7 @@ namespace TitanWeb.Api.Controllers
         /// <param name="query"> Query By User Input To Get Item </param>
         /// <param name="pagingModel"> Model Pagination Filter </param>
         /// <returns> List Of Item Filter By Query With Pagination </returns>
-        [HttpGet]
-        [Route("paged")]
+        [HttpGet("paged")]
         public async Task<ActionResult<ItemDTO>> GetPagedItem([AsParameters] ItemQuery query,
             PagingModel model)
         {
@@ -51,12 +48,15 @@ namespace TitanWeb.Api.Controllers
         /// </summary>
         /// <param name="id"> Id Of Item want to get </param>
         /// <returns> Get Item By Id </returns>
-        [HttpGet]
-        [Route("/api/[controller]/byid/{id}")]
+        [HttpGet("byid/{id}")]
         public async Task<ActionResult<ItemDTO>> GetItemById(int id)
         {
             _logger.LogInformation(LogManagements.LogGetItemById + id);
             var item = await _service.GetItemByIdAsync(id);
+            if(item == null)
+            {
+                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemIdMsg + id));
+            }
             _logger.LogInformation(LogManagements.LogReturnItemById + id);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemById + id));
         }
@@ -66,12 +66,15 @@ namespace TitanWeb.Api.Controllers
         /// </summary>
         /// <param name="slug"> UrlSlug want to get Item </param>
         /// <returns> Item With UrlSlug want to get </returns>
-        [HttpGet]
-        [Route("/api/[controller]/byslug/{slug}")]
+        [HttpGet("byslug/{slug}")]
         public async Task<ActionResult<ItemDTO>> GetItemBySlug(string slug)
         {
             _logger.LogInformation(LogManagements.LogGetItemBySlug + slug);
             var item = await _service.GetItemBySlugAsync(slug);
+            if(item == null)
+            {
+                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemSlugMsg + slug));
+            }
             _logger.LogInformation(LogManagements.LogReturnItemBySlug + slug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemBySlug + slug));
         }
@@ -87,6 +90,10 @@ namespace TitanWeb.Api.Controllers
         {
             _logger.LogInformation(LogManagements.LogGetItemByCategorySlug + categorySlug);
             var item = await _service.GetItemsByCategorySlugAsync(categorySlug, language);
+            if (item == null)
+            {
+                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));
+            }
             _logger.LogInformation(LogManagements.LogReturnItemByCategorySlug + categorySlug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemByCategorySlug + categorySlug));
         }
@@ -97,8 +104,7 @@ namespace TitanWeb.Api.Controllers
         /// <param name="model"> Model to add/update </param>
         /// <returns> Added/Updated News </returns>
         /// <exception cref="Exception"></exception>
-        [HttpPost]
-        [Route("/api/[controller]/createNews")]
+        [HttpPost("createNews")]
         public async Task<ActionResult> EditNews([FromForm] NewsEditModel model)
         {
             _logger.LogInformation(LogManagements.ValidateInput);
@@ -131,6 +137,24 @@ namespace TitanWeb.Api.Controllers
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteItem + id));
             }
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteItem + id));;
+        }
+
+        /// <summary>
+        /// Change Image For Item
+        /// </summary>
+        /// <param name="imageId"> Id Of Image want to change for Item </param>
+        /// <returns> Image Item Changed </returns>
+        [HttpPut("changeLogo/{imageId}")]
+        public async Task<ActionResult> ChangeLogo(int imageId)
+        {
+            _logger.LogInformation(LogManagements.LogChangeLogo);
+            var newItem = await _service.ChangeLogoImage(imageId);
+            if (!newItem)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToChangeLogo));
+            }
+            var result = _mapper.Map<ItemDTO>(newItem);
+            return Ok(ApiResponse.Success(newItem, ResponseManagements.SuccessChangeLogo));
         }
     }
 }

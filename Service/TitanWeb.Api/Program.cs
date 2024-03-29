@@ -1,4 +1,3 @@
-using Carter;
 using TitanWeb.Api.Extensions;
 using TitanWeb.Api.Mapsters;
 using TitanWeb.Api.Middleware;

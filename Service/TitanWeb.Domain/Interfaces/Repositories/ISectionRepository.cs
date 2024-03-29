@@ -6,5 +6,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
     {
         Task<IList<Section>> GetSectionsAsync(string language);
         Task<Section> GetSectionBySlugAsync(string slug);
+        Task<IList<Section>> GetAllSectionBySlugAsync(string slug);
     }
 }

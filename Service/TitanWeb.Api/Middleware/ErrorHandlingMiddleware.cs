@@ -1,5 +1,4 @@
-﻿using Serilog;
-using System.Net;
+﻿using System.Net;
 using TitanWeb.Domain.Constants;
 
 namespace TitanWeb.Api.Middleware

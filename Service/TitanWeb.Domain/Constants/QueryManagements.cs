@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TitanWeb.Domain.Constants
+﻿namespace TitanWeb.Domain.Constants
 {
     /// <summary>
     /// Class Manage All Hard-Code Query
@@ -14,7 +8,11 @@ namespace TitanWeb.Domain.Constants
         /// <summary>
         /// Query For News Slug
         /// </summary>
-        public static readonly string NewsEnSlug = "news";
-        public static readonly string NewsJaSlug = "news-ja";
+        public static readonly string NewsSlug = "news";
+
+        /// <summary>
+        /// Query For Navbar Slug
+        /// </summary>
+        public static readonly string NavbarSlug = "navbar";
     }
 }

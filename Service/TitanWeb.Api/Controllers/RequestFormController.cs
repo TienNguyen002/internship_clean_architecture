@@ -1,7 +1,5 @@
 ﻿using MapsterMapper;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Domain.Constants;

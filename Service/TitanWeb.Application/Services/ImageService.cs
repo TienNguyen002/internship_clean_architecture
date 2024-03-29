@@ -27,10 +27,10 @@ namespace TitanWeb.Application.Services
         /// </summary>
         /// <returns> List Of Image </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<ImageData>> GetAllImagesAsync()
+        public async Task<IList<ImageDTO>> GetAllImagesAsync()
         {
             var images = await _repository.GetAll();
-            return _mapper.Map<IList<ImageData>>(images);
+            return _mapper.Map<IList<ImageDTO>>(images);
         }
 
         /// <summary>
@@ -78,6 +78,17 @@ namespace TitanWeb.Application.Services
             await _repository.DeleteImageByIdAsync(id);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
+        }
+
+        /// <summary>
+        /// Get All Logo Image
+        /// </summary>
+        /// <returns> A List Of Logos </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<ImageDTO>> GetAllLogos()
+        {
+            var images = await _repository.GetAllLogos();
+            return _mapper.Map<IList<ImageDTO>>(images);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.Extensions.Logging;
 
 namespace TitanWeb.Api.Media
 {

@@ -12,5 +12,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
             IPagingParams pagingParams);
         Task<bool> EditItemAsync(Item item);
         Task<bool> DeleteItemAsync(int id);
+        Task<bool> ChangeLogoImage(int imageId);
     }
 }

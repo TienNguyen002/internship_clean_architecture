@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using TitanWeb.Domain.Constants;
 
 namespace TitanWeb.Domain.DTO.Items
@@ -22,14 +17,9 @@ namespace TitanWeb.Domain.DTO.Items
 
         [DisplayName(ValidateManagements.NewsDescription)]
         [Required(ErrorMessage = ValidateManagements.NewsDescriptionRequiredMsg)]
-        [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.NewsDescriptionMaxLength)]
         public string Description { get; set; }
 
         [DisplayName(ValidateManagements.NewsDescription)]
         public IFormFile ImageFile { get; set; }
-
-        [DisplayName(ValidateManagements.SectionSlug)]
-        [Required(ErrorMessage = ValidateManagements.SectionSlugRequiredMsg)]
-        public IList<string> SectionSlug { get; set; }
     }
 }

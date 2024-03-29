@@ -39,5 +39,17 @@ namespace TitanWeb.Application.Services
             var section = await _repository.GetSectionBySlugAsync(slug);
             return _mapper.Map<SectionDTO>(section);
         }
+
+        /// <summary>
+        /// Get Section By Slug
+        /// </summary>
+        /// <param name="slug"> UrlSlug want to get Section </param>
+        /// <returns> Section With UrlSlug want to get </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<SectionDTO>> GetAllSectionBySlugAsync(string slug)
+        {
+            var section = await _repository.GetAllSectionBySlugAsync(slug);
+            return _mapper.Map<IList<SectionDTO>>(section);
+        }
     }
 }

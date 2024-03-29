@@ -1,5 +1,4 @@
-﻿
-using MapsterMapper;
+﻿using MapsterMapper;
 using TitanWeb.Domain.Collections;
 using TitanWeb.Domain.DTO;
 using TitanWeb.Domain.DTO.RequestForm;

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace TitanWeb.Api.Media
+﻿namespace TitanWeb.Api.Media
 {
     public interface IMediaManager
     {

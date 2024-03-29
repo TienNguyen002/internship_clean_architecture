@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Category;
@@ -29,6 +30,10 @@ namespace TitanWeb.Api.Controllers
         {
             _logger.LogInformation(LogManagements.LogGetCategoryBySlug + slug);
             var category = await _service.GetCategoryBySlugAsync(slug, language);
+            if(category == null)
+            {
+                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundCategoryBySlugMsg + slug));
+            }
             _logger.LogInformation(LogManagements.LogReturnCategoryBySlug + slug);
             return Ok(ApiResponse.Success(category, ResponseManagements.SuccessGetCategoryBySlug + slug));
         }

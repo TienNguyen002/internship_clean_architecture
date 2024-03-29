@@ -20,7 +20,7 @@
         public static readonly string FailToCreateImage = "Fail To Create New Image";
         public static readonly string SuccessDeleteImage = "Has Delete Success Image with Id ";
         public static readonly string FailToDeleteImage = "Fail To Delete Image with Id ";
-        public static readonly string NotFoundImageMsg = "Not found Image With Id ";
+        public static readonly string NotFoundImageIdMsg = "Not found Image With Id ";
 
         /// <summary>
         /// Response Message For Func Item
@@ -35,18 +35,23 @@
         public static readonly string SuccessUpdateImageForItem = "Has Update Image For Item with Id ";
         public static readonly string FailToDeleteItem = "Fail To Delete Item with Id ";
         public static readonly string FailToUpdateImageForItem = "Fail To Update Image For Item with Id ";
+        public static readonly string NotFoundItemIdMsg = "Not found Item With Id ";
+        public static readonly string NotFoundItemSlugMsg = "Not found Item With Slug ";
+        public static readonly string NotFoundItemCategorySlugMsg = "Not found Item With Category Slug ";
 
         /// <summary>
         /// Response Message For Func Section
         /// </summary>
         public static readonly string SuccessGetAllSections = "Success Get All Sections";
         public static readonly string SuccessGetSectionBySlug = "Success Get Section By Slug ";
+        public static readonly string SuccessGetAllSectionsBySlug = "Success Get All Sections By Slug ";
         public static readonly string SuccessCreateSection = "Success Create New Section";
         public static readonly string FailToCreateSection = "Fail To Create New Section";
         public static readonly string SuccessDeleteSection = "Has Delete Success Section with Id ";
+        public static readonly string NotFoundSectionSlugMsg = "Not found Section With Slug ";
 
         /// <summary>
-        /// Response Message For Func Requ8est Form
+        /// Response Message For Func Request Form
         /// </summary>
         public static readonly string SuccessGetRequestFormByQuery = "Success Get Request Form By Query";
         public static readonly string SuccessGetRequestFormBySlug = "Success Get Request Form with Slug ";
@@ -62,6 +67,7 @@
         public static readonly string SuccessCreateCategory = "Success Create New Category";
         public static readonly string FailToCreateCategory = "Fail To Create New Category";
         public static readonly string SuccessDeleteCategory = "Has Delete Success Category with Id ";
+        public static readonly string NotFoundCategoryBySlugMsg = "Not found Any Category With Slug ";
 
         /// <summary>
         /// Response Message For Func Logo

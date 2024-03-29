@@ -27,7 +27,7 @@ namespace TitanWeb.Api.Controllers
         /// </summary>
         /// <returns> Response List Of Image </returns>
         [HttpGet("getAll")]
-        public async Task<ActionResult<IList<ImageData>>> GetAllImages()
+        public async Task<ActionResult<IList<ImageDTO>>> GetAllImages()
         {
             _logger.LogInformation(LogManagements.LogGetAllImages);
             var images = await _imageService.GetAllImagesAsync();
@@ -45,6 +45,10 @@ namespace TitanWeb.Api.Controllers
         {
             _logger.LogInformation(LogManagements.LogGetImageById + id);
             var image = await _imageService.GetImageByIdAsync(id);
+            if(image == null)
+            {
+                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundImageIdMsg + id));
+            }
             _logger.LogInformation(LogManagements.LogReturnImageById + id);
             return Ok(ApiResponse.Success(image, ResponseManagements.SuccessGetImageById + id));
         }
@@ -87,6 +91,19 @@ namespace TitanWeb.Api.Controllers
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteImage + id));
             }
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteImage + id));
+        }
+
+        /// <summary>
+        /// Get All Logo Image
+        /// </summary>
+        /// <returns> A List Of Logos </returns>
+        [HttpGet("getLogos")]
+        public async Task<ActionResult<IList<ImageDTO>>> GetAllLogos()
+        {
+            _logger.LogInformation(LogManagements.LogGetAllLogoImages);
+            var logos = await _imageService.GetAllLogos();
+            _logger.LogInformation(LogManagements.LogReturnLogoImage);
+            return Ok(ApiResponse.Success(logos, ResponseManagements.SuccessGetAllLogoImages));
         }
     }
 }
