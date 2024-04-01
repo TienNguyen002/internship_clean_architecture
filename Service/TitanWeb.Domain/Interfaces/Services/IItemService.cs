@@ -9,7 +9,7 @@ namespace TitanWeb.Domain.Interfaces.Services
         Task<PaginationResult<ItemDTO>> GetPagedItemAsync(ItemQuery query, PagingModel pagingModel);
         Task<ItemDTO> GetItemByIdAsync(int id); 
         Task<ItemDTO> GetItemBySlugAsync(string slug);
-        Task<IList<ItemDTO>> GetItemsByCategorySlugAsync(string categorySlug, string language);
+        Task<IList<ItemForCategoryDTO>> GetItemsByCategorySlugAsync(string categorySlug, string language);
         Task<bool> EditNewsAsync(NewsEditModel model);
         Task<bool> EditBlogsAsync(BlogEditModel model);
         Task<bool> DeleteNewsAsync(int id);

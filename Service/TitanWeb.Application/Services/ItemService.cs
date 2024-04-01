@@ -63,10 +63,10 @@ namespace TitanWeb.Application.Services
         /// <param name="language"> Language of category want to get (en, ja) </param>
         /// <returns> A List Of Item By Category Slug filter language </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<ItemDTO>> GetItemsByCategorySlugAsync(string categorySlug, string language)
+        public async Task<IList<ItemForCategoryDTO>> GetItemsByCategorySlugAsync(string categorySlug, string language)
         {
             var item = await _repository.GetItemByCategorySlugAsync(categorySlug, language);
-            return _mapper.Map<IList<ItemDTO>>(item);
+            return _mapper.Map<IList<ItemForCategoryDTO>>(item);
         }
 
         /// <summary>

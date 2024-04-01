@@ -40,13 +40,13 @@ public partial class TitanWebContext : DbContext
             entity.HasMany(d => d.Items).WithMany(p => p.Categories)
                 .UsingEntity<Dictionary<string, object>>(
                     "CategoryItem",
-                    r => r.HasOne<Item>().WithMany().HasForeignKey("ItemsItemId"),
-                    l => l.HasOne<Category>().WithMany().HasForeignKey("CategoriesCategoryId"),
+                    r => r.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
+                    l => l.HasOne<Category>().WithMany().HasForeignKey("CategoriesId"),
                     j =>
                     {
-                        j.HasKey("CategoriesCategoryId", "ItemsItemId");
+                        j.HasKey("CategoriesId", "ItemsId");
                         j.ToTable("CategoryItem");
-                        j.HasIndex(new[] { "ItemsItemId" }, "IX_CategoryItem_ItemsItemId");
+                        j.HasIndex(new[] { "ItemsId" }, "IX_CategoryItem_ItemsId");
                     });
         });
 
@@ -63,25 +63,25 @@ public partial class TitanWebContext : DbContext
             entity.HasMany(d => d.Sections).WithMany(p => p.Items)
                 .UsingEntity<Dictionary<string, object>>(
                     "ItemSection",
-                    r => r.HasOne<Section>().WithMany().HasForeignKey("SectionsSectionId"),
-                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsItemId"),
+                    r => r.HasOne<Section>().WithMany().HasForeignKey("SectionsId"),
+                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
                     j =>
                     {
-                        j.HasKey("ItemsItemId", "SectionsSectionId");
+                        j.HasKey("ItemsId", "SectionsId");
                         j.ToTable("ItemSection");
-                        j.HasIndex(new[] { "SectionsSectionId" }, "IX_ItemSection_SectionsSectionId");
+                        j.HasIndex(new[] { "SectionsId" }, "IX_ItemSection_SectionsId");
                     });
 
             entity.HasMany(d => d.SubItems).WithMany(p => p.Items)
                 .UsingEntity<Dictionary<string, object>>(
                     "ItemSubItem",
-                    r => r.HasOne<SubItem>().WithMany().HasForeignKey("SubItemsSubItemId"),
-                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsItemId"),
+                    r => r.HasOne<SubItem>().WithMany().HasForeignKey("SubItemsId"),
+                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
                     j =>
                     {
-                        j.HasKey("ItemsItemId", "SubItemsSubItemId");
+                        j.HasKey("ItemsId", "SubItemsId");
                         j.ToTable("ItemSubItem");
-                        j.HasIndex(new[] { "SubItemsSubItemId" }, "IX_ItemSubItem_SubItemsSubItemId");
+                        j.HasIndex(new[] { "SubItemsId" }, "IX_ItemSubItem_SubItemsId");
                     });
         });
 
