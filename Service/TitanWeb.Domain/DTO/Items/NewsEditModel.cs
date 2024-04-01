@@ -19,7 +19,7 @@ namespace TitanWeb.Domain.DTO.Items
         [Required(ErrorMessage = ValidateManagements.NewsDescriptionRequiredMsg)]
         public string Description { get; set; }
 
-        [DisplayName(ValidateManagements.NewsDescription)]
+        [DisplayName(ValidateManagements.NewsImage)]
         public IFormFile ImageFile { get; set; }
     }
 }

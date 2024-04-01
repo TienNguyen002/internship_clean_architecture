@@ -141,5 +141,41 @@ namespace TitanWeb.Application.Services
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }
+
+        /// <summary>
+        /// Add/Update By Find Blog Id, If Id > 0 Update it by Model, else Create New News By Model
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Blog </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> EditBlogsAsync(BlogEditModel model)
+        {
+            var blog = model.Id > 0 ? await _repository.GetById(model.Id) : null;
+            string uploadPath = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
+                                                                     model.ImageFile.FileName,
+                                                                     model.ImageFile.ContentType);
+            if (blog == null)
+            {
+                blog = new Item { CreatedDate = DateTime.Now, };
+            }
+            else blog.UpdatedDate = DateTime.Now;
+
+            blog.Title = model.Title;
+            blog.SubTitle = model.SubTitle;
+            blog.UrlSlug = model.Title.GenerateSlug();
+            blog.Description = model.Description;
+            blog.Image = new Image
+            {
+                ImageUrl = uploadPath,
+            };
+            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
+            foreach (var section in sections)
+            {
+                blog.Sections.Add(section);
+            }
+            await _repository.EditItemAsync(blog);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
     }
 }

@@ -80,8 +80,9 @@
         public static readonly string LogChangeLogo = "\nChanging Logo";
 
         /// <summary>
-        /// Log Func News
+        /// Log Func News, Bloh
         /// </summary>
         public static readonly string LogEditNews = "\nEditting News";
+        public static readonly string LogEditBlog = "\nEditting Blog";
     }
 }

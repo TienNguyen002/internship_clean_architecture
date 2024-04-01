@@ -76,9 +76,11 @@
         public static readonly string FailToChangeLogo = "Fail To Change New Logo";
 
         /// <summary>
-        /// Response Message For Func News
+        /// Response Message For Func News, Blog
         /// </summary>
         public static readonly string SuccessEditNews = "Success Edit News";
         public static readonly string FailToEditNews = "Fail To Edit News";
+        public static readonly string SuccessEditBlog = "Success Edit Blog";
+        public static readonly string FailToEditBlog = "Fail To Edit Blog";
     }
 }

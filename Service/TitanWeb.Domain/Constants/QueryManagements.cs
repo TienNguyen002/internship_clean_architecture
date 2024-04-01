@@ -11,6 +11,11 @@
         public static readonly string NewsSlug = "news";
 
         /// <summary>
+        /// Query For Blog Slug
+        /// </summary>
+        public static readonly string BlogSlug = "blog";
+
+        /// <summary>
         /// Query For Navbar Slug
         /// </summary>
         public static readonly string NavbarSlug = "navbar";

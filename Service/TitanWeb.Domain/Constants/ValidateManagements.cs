@@ -24,6 +24,11 @@
         public const string NewsTitle = "News Title";
         public const string NewsDescription = "News Description";
         public const string NewsImage = "News Image";
+        public const string BlogId = "Blog Id";
+        public const string BlogTitle = "Blog Title";
+        public const string BlogSubTitle = "Blog Sub-Title";
+        public const string BlogDescription = "Blog Description";
+        public const string BlogImage = "Blog Image";
 
         /// <summary>
         /// Validate Length
@@ -58,5 +63,11 @@
         public const string NewsTitleMaxLength = "News Title length only 100";
         public const string NewsDescriptionRequiredMsg = "News Description cannot be empty!!";
         public const string NewsDescriptionMaxLength = "News Description length only 500";
+        public const string BlogTitleRequiredMsg = "Blog Title cannot be empty!!";
+        public const string BlogTitleMaxLength = "Blog Title length only 100";
+        public const string BlogSubTitleRequiredMsg = "Blog Sub-Title cannot be empty!!";
+        public const string BlogSubTitleMaxLength = "Blog Sub-Title length only 100";
+        public const string BlogDescriptionRequiredMsg = "Blog Description cannot be empty!!";
+        public const string BlogDescriptionMaxLength = "Blog Description length only 500";
     }
 }
