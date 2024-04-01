@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class RequestForm
+namespace TitanWeb.Domain.Entities;
+
+public partial class RequestForm : IEntity
 {
-    public int RequestFormId { get; set; }
+    public int Id { get; set; }
 
     public string? Name { get; set; }
 

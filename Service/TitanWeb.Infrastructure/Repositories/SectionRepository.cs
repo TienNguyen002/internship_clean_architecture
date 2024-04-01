@@ -28,7 +28,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(s => s.Image)
                 .Where(s => s.Locale == language);
             return await sections
-                .OrderBy(s => s.SectionId)
+                .OrderBy(s => s.Id)
                 .ToListAsync();
         }
 

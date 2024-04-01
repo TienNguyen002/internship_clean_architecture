@@ -21,7 +21,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(i => i.Items)
                 .Include(i => i.Sections)
                 .Include(i => i.SubItems)
-                .Where(i => i.ImageId == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try
             {

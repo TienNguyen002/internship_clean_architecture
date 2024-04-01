@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class Category
+namespace TitanWeb.Domain.Entities;
+
+public partial class Category : IEntity
 {
-    public int CategoryId { get; set; }
+    public int Id { get; set; }
 
     public string? Name { get; set; }
 

@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class SubItem
+namespace TitanWeb.Domain.Entities;
+
+public partial class SubItem : IEntity
 {
-    public int SubItemId { get; set; }
+    public int Id { get; set; }
 
     public string? TextItem { get; set; }
 

@@ -96,7 +96,7 @@ namespace TitanWeb.Infrastructure.Repositories
         {
             try
             {
-                if (item.ItemId > 0)
+                if (item.Id > 0)
                 {
                     _context.Update(item);
                 }
@@ -126,7 +126,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(i => i.SubItems)
                 .Include(i => i.Categories)
                 .Include(i => i.Sections)
-                .Where(i => i.ItemId == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try
             {
@@ -148,7 +148,7 @@ namespace TitanWeb.Infrastructure.Repositories
         public async Task<bool> ChangeLogoImage(int imageId)
         {
             var image = await _context.Set<Image>()
-                .Where(i => i.ImageId == imageId).FirstOrDefaultAsync();
+                .Where(i => i.Id == imageId).FirstOrDefaultAsync();
             var itemsToUpdate = await _context.Set<Item>()
                 .Include(i => i.Image)
                 .Where(i => i.UrlSlug.Contains(QueryManagements.NavbarSlug))

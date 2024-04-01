@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class Image
+namespace TitanWeb.Domain.Entities;
+
+public partial class Image : IEntity
 {
-    public int ImageId { get; set; }
+    public int Id { get; set; }
 
     public string? ImageUrl { get; set; }
 

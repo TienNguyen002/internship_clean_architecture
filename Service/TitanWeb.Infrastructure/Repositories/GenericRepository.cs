@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using TitanWeb.Domain.Contracts;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Infrastructure.Contexts;
 
 namespace TitanWeb.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IEntity
     {
         protected readonly TitanWebContext _context;
 
@@ -62,7 +63,7 @@ namespace TitanWeb.Infrastructure.Repositories
                     query = query.Include(includeProperty);
                 }
             }
-            return await query.FirstOrDefaultAsync();
+            return await query.FirstOrDefaultAsync(e => e.Id == id);
         }
     }
 }

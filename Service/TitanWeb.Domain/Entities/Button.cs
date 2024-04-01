@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class Button
+namespace TitanWeb.Domain.Entities;
+
+public partial class Button : IEntity
 {
-    public int ButtonId { get; set; }
+    public int Id { get; set; }
 
     public string? Label { get; set; }
 

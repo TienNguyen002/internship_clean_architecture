@@ -1,8 +1,10 @@
-﻿namespace TitanWeb.Domain.Entities;
+﻿using TitanWeb.Domain.Contracts;
 
-public partial class Item
+namespace TitanWeb.Domain.Entities;
+
+public partial class Item : IEntity
 {
-    public int ItemId { get; set; }
+    public int Id { get; set; }
 
     public string? BoldTitle { get; set; }
 
