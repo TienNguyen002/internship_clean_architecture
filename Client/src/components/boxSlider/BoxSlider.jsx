@@ -64,7 +64,9 @@ const BoxSlider = (props) => {
                   </div>
                 ) : (
                   <p className="desc">
-                    {item.description} <br />
+                    <p dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(item.description),
+                      }}></p> <br />
                     {item.buttonStatus ? (
                       <Link to="/career">
                       <button className="btn-lastestjobs">

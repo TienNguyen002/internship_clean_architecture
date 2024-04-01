@@ -1,3 +1,4 @@
+import { Quill } from "react-quill";
 export const queryDefault = {
   sectionSlug: "",
   pageSizeDefault: 10,
@@ -10,6 +11,8 @@ export const slugName = {
   logo: "logo",
   banner: "banner",
   footer: "footer",
+  news: "news",
+  blogs: "blogs"
 };
 
 export const language = {
@@ -28,6 +31,7 @@ export const numberLength = {
   medium: 5,
   large: 3,
   huge: 15,
+  max: 100
 };
 
 export const sectionName = {
@@ -96,3 +100,45 @@ export const formData = {
   subject: "",
   message: "",
 };
+
+export const btnValue = {
+  variant:"outlined", sizeM:"medium", colorErr:"error", colorSuccess:"success", typeSubmit:"submit"
+}
+export const editModules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link", "image", "video"],
+    ["clean"],
+  ],
+  clipboard: {
+    matchVisual: false,
+  },
+  imageResize: {
+    parchment: Quill.import("parchment"),
+    modules: ["Resize", "DisplaySize"],
+  },
+};
+export const editFormats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "video",
+]

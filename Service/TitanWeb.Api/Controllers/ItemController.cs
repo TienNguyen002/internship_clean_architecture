@@ -123,6 +123,30 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
+        /// Add/Update Blog
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Blog </returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("editBlog")]
+        public async Task<ActionResult> EditBlog([FromForm] BlogEditModel model)
+        {
+            _logger.LogInformation(LogManagements.ValidateInput);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            _logger.LogInformation(LogManagements.LogEditBlog);
+            var blogEdit = await _service.EditBlogsAsync(model);
+            if (!blogEdit)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditBlog));
+            }
+            var result = _mapper.Map<ItemDTO>(model);
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditBlog));
+        }
+
+        /// <summary>
         /// Get Item By Id
         /// </summary>
         /// <param name="id"> Id Of Item want to get </param>
@@ -155,30 +179,6 @@ namespace TitanWeb.Api.Controllers
             }
             var result = _mapper.Map<ItemDTO>(newItem);
             return Ok(ApiResponse.Success(newItem, ResponseManagements.SuccessChangeLogo));
-        }
-
-        /// <summary>
-        /// Add/Update Blog
-        /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Blog </returns>
-        /// <exception cref="Exception"></exception>
-        [HttpPost("editBlog")]
-        public async Task<ActionResult> EditBlog([FromForm] BlogEditModel model)
-        {
-            _logger.LogInformation(LogManagements.ValidateInput);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            _logger.LogInformation(LogManagements.LogEditBlog);
-            var blogEdit = await _service.EditBlogsAsync(model);
-            if (!blogEdit)
-            {
-                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditBlog));
-            }
-            var result = _mapper.Map<ItemDTO>(model);
-            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditBlog));
         }
     }
 }

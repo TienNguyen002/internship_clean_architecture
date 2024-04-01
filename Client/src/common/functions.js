@@ -17,7 +17,7 @@ export const queryString = function(obj) {
 }
 
 export const convertDate = (inputDate) => {
-  let date = new Date(inputDate);   
+  let date = new Date(inputDate);
 
   let year = date.getFullYear();
   let month = date.getMonth() + 1;

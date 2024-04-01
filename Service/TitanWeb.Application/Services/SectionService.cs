@@ -41,10 +41,10 @@ namespace TitanWeb.Application.Services
         }
 
         /// <summary>
-        /// Get Section By Slug
+        /// Get All Sections By Slug
         /// </summary>
-        /// <param name="slug"> UrlSlug want to get Section </param>
-        /// <returns> Section With UrlSlug want to get </returns>
+        /// <param name="slug"> UrlSlug want to get all Sections </param>
+        /// <returns> A List Of Sections With UrlSlug want to get </returns>
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<IList<SectionDTO>> GetAllSectionBySlugAsync(string slug)
         {

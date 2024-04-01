@@ -2,7 +2,7 @@ import React from 'react';
 import './AdminNavbar.css';
 import { Link } from 'react-router-dom';
 
-const data = require("../../../imgURL.json"); 
+const data = require("../../../imgURL.json");
 const adminLogo = data.adminLogo;
 
 const AdminNavbar = () => {
@@ -15,7 +15,7 @@ const AdminNavbar = () => {
       </div>
       <div className='admin-left-icons'>
         <form className='admin-search-form'>
-          <input type="text" placeholder="Tìm kiếm..." />
+          <input type="text" placeholder="Searching..." />
           <button type="submit"><i className="fa-solid fa-search"></i></button>
         </form>
       </div>

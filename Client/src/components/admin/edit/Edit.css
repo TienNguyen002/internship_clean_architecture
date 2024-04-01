@@ -1,0 +1,71 @@
+.edit-form {
+    padding: 50px 0 70px;
+}
+
+.gallery {
+    padding: 20px 15px;
+    margin: 0 251.5px;
+    text-align: center;
+}
+
+.img-glalery {
+    width: 50%;
+    border: 1px solid var(--gray-color);
+}
+
+.title {
+    padding: 20px 15px;
+    margin: 0 251.5px;
+    display: flex;
+    gap: 10%;
+}
+
+.text-title {
+    font-size: 30px;
+    font-weight: 300;
+    color: var(--primary-color);
+}
+
+.input-title {
+    width: 70%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    background: var(--input-color);
+    border: 0.1px solid var(--gray-color);
+}
+
+.desc-edit {
+    padding: 20px 15px;
+    margin: 0 251.5px;
+    text-align: left;
+}
+
+.text-desc {
+    font-size: 30px;
+    color: var(--primary-color);
+}
+
+.ql-container {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: var(--input-color);
+}
+
+.ql-snow.ql-toolbar {
+    display: block;
+    background: var(--toolbar-color);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.ql-editor {
+    min-height: 18em;
+}
+
+.btn {
+    text-align: center;
+    padding: 50px;
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: auto auto;
+}

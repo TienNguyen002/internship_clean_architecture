@@ -19,7 +19,7 @@
   },
   "request": {
     "Name": "Name *",
-    "Phone": "PHONE",
+    "Phone": "Phone",
     "Subject": "Subject *",
     "Message": "You're looking for *",
     "Error": "Please enter required fields marked (*)",
