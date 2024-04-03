@@ -51,19 +51,5 @@ namespace TitanWeb.Api.Controllers
             _logger.LogInformation(LogManagements.LogReturnSectionBySlug + slug);
             return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionBySlug + slug));
         }
-
-        /// <summary>
-        /// Get All Sections By Slug
-        /// </summary>
-        /// <param name="slug"> UrlSlug want to get All Section </param>
-        /// <returns> List Of Section With UrlSlug want to get </returns>
-        [HttpGet("list/{slug}")]
-        public async Task<ActionResult<IList<SectionDTO>>> GetAllSectionBySlug(string slug)
-        {
-            _logger.LogInformation(LogManagements.LogGetAllSections + slug);
-            var sections = await _service.GetAllSectionBySlugAsync(slug);
-            _logger.LogInformation(LogManagements.LogReturnAllSectionsBySlug + slug);
-            return Ok(ApiResponse.Success(sections, ResponseManagements.SuccessGetAllSectionsBySlug + slug));
-        }
     }
 }
