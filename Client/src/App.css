@@ -24,8 +24,21 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--light-color);
 }
 
 p {
   margin: 10px 0px;
 }
+
+@media screen and (max-width: 768px) {
+  .item {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .img {
+    width: 100%;
+    height: auto;
+  }
+}
+

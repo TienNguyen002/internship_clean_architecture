@@ -45,13 +45,6 @@ export const sectionName = {
   LastestJobs: "Careers"
 };
 
-export const titleName = {
-  WeProvide:"WE PROVIDE",
-  EngagementModel:"ENGAGEMENT MODELS",
-  Innovation:"INNOVATIONS",
-  Domain:"DOMAINS & TECHNOLOGIES"
-};
-
 export const sidebarLinks = [
   { path: '/admin', title: 'Dashboard', className: 'large' },
   { path: '/admin/', title: 'HomePage', className: 'large' },
@@ -59,12 +52,48 @@ export const sidebarLinks = [
   { path: '/admin/blogs', title: 'Blogs' },
 ];
 
+export const titleLinks = {
+  "Services": {
+    link: "/services",
+  },
+  "Domains": {
+    link: "/services/domains",
+  },
+  "Innovations": {
+    link: "/innovations",
+  },
+  "Models": {
+    link: "/services/models",
+  },
+  "Clients": {
+    link: "/customers",
+  },
+  "As Recognized By": {
+    link: "",
+  },
+  "Careers": {
+    link: "/careers"
+  },
+  "Customers": {
+    link: "/customers/#testimonials"
+  },
+  "News": {
+    link: "/news"
+  },
+  "Blogs": {
+    link: "/blogs"
+  }
+}
+
 export const sliderNumber = {
   oneSlideNumber : 1,
   defaultSlideNumber : 3,
   ourClientSlideNumber : 4,
   recognizedSlideNumber : 5
 }
+
+export const sliderResponsive = {
+};
 
 export const boxSliderClassNameConfig = {
   "Domains": {
@@ -142,3 +171,14 @@ export const editFormats = [
   "image",
   "video",
 ]
+
+export const deleteForm = {
+  title: "Do you want to delete?",
+  text: "This cannot reverse!",
+  icon: "error",
+  confirmBtnColor: "#3085d6",
+  cancelBtnColor: "#d33",
+  confirmBtnDelete: "DELETE",
+  resultTitle: "DELETED",
+  resultIcon: "success",
+};

@@ -15,6 +15,15 @@ namespace TitanWeb.Domain.DTO.Items
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.NewsTitleMaxLength)]
         public string Title { get; set; }
 
+        [DisplayName(ValidateManagements.NewsSlug)]
+        [Required(ErrorMessage = ValidateManagements.NewsSlugRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.NewsSlugMaxLength)]
+        public string UrlSlug { get; set; }
+
+        [DisplayName(ValidateManagements.NewsShortDescription)]
+        [Required(ErrorMessage = ValidateManagements.NewsShortDescriptionRequiredMsg)]
+        public string ShortDescription { get; set; }
+
         [DisplayName(ValidateManagements.NewsDescription)]
         [Required(ErrorMessage = ValidateManagements.NewsDescriptionRequiredMsg)]
         public string Description { get; set; }

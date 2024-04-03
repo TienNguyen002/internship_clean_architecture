@@ -11,6 +11,7 @@ namespace TitanWeb.Domain.DTO.Items
         public string Title { get; set; }
         public string UrlSlug { get; set; }
         public string? SubTitle { get; set; }
+        public string? ShortDescription { get; set; }
         public string? Description { get; set; }
         public string? Address { get; set; }
         public string? TelNumber { get; set; }

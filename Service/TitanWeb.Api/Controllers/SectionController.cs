@@ -46,7 +46,7 @@ namespace TitanWeb.Api.Controllers
             var section = await _service.GetSectionBySlugAsync(slug);
             if(section == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundSectionSlugMsg + slug));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundSectionSlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnSectionBySlug + slug);
             return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionBySlug + slug));

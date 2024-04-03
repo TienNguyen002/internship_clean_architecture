@@ -3,11 +3,12 @@ import Box from "../../components/box/Box";
 import './Service.css'
 
 import { getAllSection } from "../../api/ItemApi";
-import { titleName } from "../../enum/EnumApi";
 import { useSelector } from "react-redux";
+import { useTranslation } from 'react-i18next';
 
 function Service() {
   const [box, setBox] = useState([]);
+  const { t: translate }  = useTranslation();
 
   const data = require("../../imgURL.json");
   const servicesBanner = data.servicesBanner;
@@ -17,7 +18,7 @@ function Service() {
   );
 
   const serviceContent = box.filter(
-    (item) => item.title === titleName.WeProvide || item.title === titleName.EngagementModel || item.title === titleName.Innovation || item.title === titleName.Domain 
+    (item) => item.title === translate('titleName.WeProvide') || item.title === translate('titleName.EngagementModel') || item.title === translate('titleName.Innovation') || item.title === translate('titleName.Domain')
   );
 
   useEffect(() => {
@@ -26,12 +27,12 @@ function Service() {
         setBox(data);
       }
     });
-  }, []);
+  }, [currentLanguage]);
 
   return (
     <div className="App">
       <div className="service-page-banner">
-        <h1 class="service-page-title">Services</h1>
+        <h1 class="service-page-title">{translate('titleName.Services')}</h1>
         <img className="service-page-image" src={servicesBanner} alt=""></img>
       </div>
       {serviceContent.length > 0

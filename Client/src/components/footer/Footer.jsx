@@ -5,6 +5,7 @@ import { slugName, footerName, language } from "../../enum/EnumApi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
 
 import "./Footer.css";
 
@@ -55,7 +56,7 @@ const Footer = (props) => {
       <div className="box-footer-google">
         <div className="footer-container">
           <div className="box-footer-google-title">
-            <a>{translate('footer.Contact')}</a>
+            <Link to="contact-us"><a>{translate("footer.Contact")}</a></Link>
           </div>
           <div className="box-footer-google-description">
             <a onClick={toggleMap}>
@@ -108,7 +109,10 @@ const Footer = (props) => {
                               src={subitem.image.imageUrl}
                               className="mail-icon"
                             />
-                           <span className="space-item-text"> {subitem.text}</span>
+                            <span className="space-item-text">
+                              {" "}
+                              {subitem.text}
+                            </span>
                           </a>
                         </div>
                       ))
@@ -147,15 +151,15 @@ const Footer = (props) => {
                         </a>
                       ))
                     : null}
+                  <img
+                    className="scroll-to-top"
+                    onClick={scrollToTop}
+                    id="back-to-top"
+                    src={upTop}
+                  ></img>
                 </div>
               ))
             : null}
-          <img
-            className="scroll-to-top"
-            onClick={scrollToTop}
-            id="back-to-top"
-            src={upTop}
-          ></img>
         </div>
       </div>
     </div>

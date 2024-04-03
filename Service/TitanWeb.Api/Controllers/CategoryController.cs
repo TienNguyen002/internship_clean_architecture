@@ -32,7 +32,7 @@ namespace TitanWeb.Api.Controllers
             var category = await _service.GetCategoryBySlugAsync(slug, language);
             if(category == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundCategoryBySlugMsg + slug));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundCategoryBySlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnCategoryBySlug + slug);
             return Ok(ApiResponse.Success(category, ResponseManagements.SuccessGetCategoryBySlug + slug));

@@ -22,10 +22,12 @@ const BoxSlider = (props) => {
     logoBoxStyle,
     hasBorder,
     hasSubTitle,
+    sliderResponsive,
   } = props;
   return (
     <Swiper
       slidesPerView={slideNumber || sliderNumber.defaultSlideNumber}
+      breakpoints={sliderResponsive}
       rewind={true}
       navigation={switchNavigation}
       autoplay={{
@@ -68,7 +70,7 @@ const BoxSlider = (props) => {
                         __html: DOMPurify.sanitize(item.description),
                       }}></p> <br />
                     {item.buttonStatus ? (
-                      <Link to="/career">
+                      <Link to="/careers">
                       <button className="btn-lastestjobs">
                         {item.buttonLabel}
                       </button>

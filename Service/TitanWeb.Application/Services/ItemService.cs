@@ -1,5 +1,4 @@
 ﻿using MapsterMapper;
-using SlugGenerator;
 using TitanWeb.Api.Media;
 using TitanWeb.Domain.Collections;
 using TitanWeb.Domain.Constants;
@@ -78,9 +77,6 @@ namespace TitanWeb.Application.Services
         public async Task<bool> EditNewsAsync(NewsEditModel model)
         {
             var news = model.Id > 0 ? await _repository.GetById(model.Id) : null;
-            string uploadPath = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType);
             if (news == null)
             {
                 news = new Item { CreatedDate = DateTime.Now, };
@@ -88,16 +84,30 @@ namespace TitanWeb.Application.Services
             else news.UpdatedDate = DateTime.Now;
 
             news.Title = model.Title;
-            news.UrlSlug = model.Title.GenerateSlug();
+            news.UrlSlug = model.UrlSlug;
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
+            {
+                int save = await _unitOfWork.Commit();
+                return save < 0;
+            }
+            news.ShortDescription = model.ShortDescription;
             news.Description = model.Description;
-            news.Image = new Image
+            if(model.ImageFile != null)
             {
-                ImageUrl = uploadPath,
-            };
-            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
-            foreach(var section in sections)
+                news.Image = new Image
+                {
+                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
+                                                                     model.ImageFile.FileName,
+                                                                     model.ImageFile.ContentType),
+                };
+            }
+            if(news.Sections.Count() == 0)
             {
-                news.Sections.Add(section);
+                var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
+                foreach (var section in sections)
+                {
+                    news.Sections.Add(section);
+                }
             }
             await _repository.EditItemAsync(news);
             int saved = await _unitOfWork.Commit();
@@ -150,10 +160,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> EditBlogsAsync(BlogEditModel model)
         {
-            var blog = model.Id > 0 ? await _repository.GetById(model.Id) : null;
-            string uploadPath = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType);
+            var blog = model.Id > 0 ? await _repository.GetById(model.Id) : null; 
             if (blog == null)
             {
                 blog = new Item { CreatedDate = DateTime.Now, };
@@ -162,17 +169,31 @@ namespace TitanWeb.Application.Services
 
             blog.Title = model.Title;
             blog.SubTitle = model.SubTitle;
-            blog.UrlSlug = model.Title.GenerateSlug();
-            blog.Description = model.Description;
-            blog.Image = new Image
+            blog.UrlSlug = model.UrlSlug;
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
             {
-                ImageUrl = uploadPath,
-            };
-            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
-            foreach (var section in sections)
-            {
-                blog.Sections.Add(section);
+                int save = await _unitOfWork.Commit();
+                return save < 0;
             }
+            blog.ShortDescription = model.ShortDescription;
+            blog.Description = model.Description;
+            if (model.ImageFile != null)
+            {
+                blog.Image = new Image
+                {
+                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
+                                                                            model.ImageFile.FileName,
+                                                                            model.ImageFile.ContentType),
+                };
+            }
+            if(blog.Sections.Count() == 0)
+            {
+                var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
+                foreach (var section in sections)
+                {
+                    blog.Sections.Add(section);
+                }
+            }  
             await _repository.EditItemAsync(blog);
             int saved = await _unitOfWork.Commit();
             return saved > 0;

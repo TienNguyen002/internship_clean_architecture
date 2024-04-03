@@ -47,7 +47,7 @@ namespace TitanWeb.Api.Controllers
             var image = await _imageService.GetImageByIdAsync(id);
             if(image == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundImageIdMsg + id));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundImageIdMsg + id));
             }
             _logger.LogInformation(LogManagements.LogReturnImageById + id);
             return Ok(ApiResponse.Success(image, ResponseManagements.SuccessGetImageById + id));

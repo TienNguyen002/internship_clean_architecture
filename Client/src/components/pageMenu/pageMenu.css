@@ -40,6 +40,10 @@
 
 .menu a {
     font-size: 22px;
-    color: white;
+    color: var(--light-color);
+ }
+
+ .menu li {
+    cursor: pointer;
  }
 

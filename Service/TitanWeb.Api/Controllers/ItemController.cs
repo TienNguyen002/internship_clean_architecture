@@ -55,7 +55,7 @@ namespace TitanWeb.Api.Controllers
             var item = await _service.GetItemByIdAsync(id);
             if(item == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemIdMsg + id));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemIdMsg + id));
             }
             _logger.LogInformation(LogManagements.LogReturnItemById + id);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemById + id));
@@ -73,7 +73,7 @@ namespace TitanWeb.Api.Controllers
             var item = await _service.GetItemBySlugAsync(slug);
             if(item == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemSlugMsg + slug));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemSlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnItemBySlug + slug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemBySlug + slug));
@@ -92,7 +92,7 @@ namespace TitanWeb.Api.Controllers
             var item = await _service.GetItemsByCategorySlugAsync(categorySlug, language);
             if (item == null)
             {
-                return NotFound(ApiResponse.Fail(HttpStatusCode.NotFound, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));
+                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));
             }
             _logger.LogInformation(LogManagements.LogReturnItemByCategorySlug + categorySlug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemByCategorySlug + categorySlug));
@@ -107,11 +107,6 @@ namespace TitanWeb.Api.Controllers
         [HttpPost("editNews")]
         public async Task<ActionResult> EditNews([FromForm] NewsEditModel model)
         {
-            _logger.LogInformation(LogManagements.ValidateInput);
-            if(!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             _logger.LogInformation(LogManagements.LogEditNews);
             var newsEdit = await _service.EditNewsAsync(model);
             if (!newsEdit)
@@ -131,11 +126,6 @@ namespace TitanWeb.Api.Controllers
         [HttpPost("editBlog")]
         public async Task<ActionResult> EditBlog([FromForm] BlogEditModel model)
         {
-            _logger.LogInformation(LogManagements.ValidateInput);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             _logger.LogInformation(LogManagements.LogEditBlog);
             var blogEdit = await _service.EditBlogsAsync(model);
             if (!blogEdit)

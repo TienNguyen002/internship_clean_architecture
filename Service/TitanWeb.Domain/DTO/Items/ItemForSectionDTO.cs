@@ -6,6 +6,7 @@
         public string Title { get; set; }
         public string UrlSlug { get; set; }
         public string? SubTitle { get; set; }
+        public string? ShortDescription { get; set; }
         public string? Description { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const Career = () => {
   const data = require("../../imgURL.json");
-  const bannerBG = data.bannerBG;
+  const careersBanner = data.careersBanner;
   const careerImg = data.careerImg;
   const { t: translate } = useTranslation();
 
@@ -12,7 +12,7 @@ const Career = () => {
     <>
       <div className="career-banner">
         <h1 class="career-title">{translate('career.Title')}</h1>
-        <img className="career-banner-image" src={bannerBG} alt=""></img>
+        <img className="career-banner-image" src={careersBanner} alt=""></img>
       </div>
         <div className="career-container">
       <div className="career-content">

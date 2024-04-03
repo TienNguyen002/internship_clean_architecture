@@ -4,8 +4,13 @@
     "domainBG": "https://www.titancorpvn.com/assets/images/paralax-domains.jpg",
     "ourClientBG": "https://www.titancorpvn.com/assets/images/our-clients.jpg",
     "adminLogo": "https://jobseekers.vn/wp-content/uploads/2018/01/Logo_Official.png",
-    "bannerBG": "https://www.titancorpvn.com/uploads/banners/careers.jpg",
+    "careersBanner": "https://www.titancorpvn.com/uploads/banners/careers.jpg",
     "careerImg": "https://www.titancorpvn.com/assets/images/careers.jpg",
     "servicesBanner": "https://www.titancorpvn.com/uploads/banners/services.jpg",
+    "newsBanner": "https://www.titancorpvn.com/uploads/banners/news.jpg",
+    "innovationsBanner": "https://www.titancorpvn.com/uploads/banners/innovation.jpg",
+    "customersBanner": "https://www.titancorpvn.com/uploads/banners/clients.jpg",
+    "contactUsBanner": "https://www.titancorpvn.com/uploads/banners/contact-us.jpg",
+    "aboutUsBanner": "https://www.titancorpvn.com/uploads/banners/about-us.jpg",
     "editImageFrame": "https://www.digitalcitizen.life/wp-content/uploads/2020/10/photo_gallery-1-596x225.jpg"
 }

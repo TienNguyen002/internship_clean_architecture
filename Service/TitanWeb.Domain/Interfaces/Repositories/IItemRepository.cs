@@ -13,5 +13,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
         Task<bool> EditItemAsync(Item item);
         Task<bool> DeleteItemAsync(int id);
         Task<bool> ChangeLogoImage(int imageId);
+        Task<bool> IsItemSlugExitedAsync(int id, string slug);
     }
 }

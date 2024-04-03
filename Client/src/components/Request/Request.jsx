@@ -115,9 +115,11 @@ const Request = (props) => {
             </div>
             <div className="form-group">
               <div className="request-item">
+                <div className="recaptcha">     
                 <ReCAPTCHA
                   sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
                   onChange={(val) => setCapVal(val)}/>
+                </div>
               </div>
               <div className="request-item">
                 <button type="submit" className="btn-request">

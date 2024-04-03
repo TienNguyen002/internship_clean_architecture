@@ -1,0 +1,50 @@
+.about-page-banner {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 160px;
+    line-height: 1;
+  }
+  
+  .about-page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+    font-size: 72px;
+    color: var(--light-color);
+    text-transform: uppercase;
+    padding: 15px 40px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .about-page-image {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .about-page-container {
+    margin: 0 332.5px;
+    padding: 0 15px;
+  }
+
+  .about-page-content {
+    text-align: left;
+  }
+
+  .about-page-content h1{
+    color: var(--medium-gray);
+    font-size: 44px;
+    margin: 40px 0 30px;
+    font-weight: 400;
+  }
+
+  .about-page-content p{
+    color: var(--gray-color);
+    font-weight: 300;
+    margin: 0 0 10px;
+    padding: 0 0 20px;
+    font-size: 22px;
+  }

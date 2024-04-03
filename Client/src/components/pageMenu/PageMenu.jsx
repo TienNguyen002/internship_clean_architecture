@@ -34,7 +34,7 @@ function PageMenu() {
                 </a>
               </li>
               <li>
-                <a href="https://blog.titancorpvn.com" target="_blog_titan">
+                <a href="blogs" target="_blog_titan">
                   {translate('menu.Blogs')}
                 </a>
               </li>

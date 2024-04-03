@@ -1,72 +1,48 @@
 .navbar {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: transparent;
   color: var(--light-color);
   opacity: 1;
   width: 100%;
   height: 85px;
   position: fixed;
-  top: 0px;
-  padding: 20px 50px 20px;
+  padding: 15px 50px 10px;
   z-index: 10;
 }
 
-.topright {
-  position: absolute;
-  top: 8px;
-  right: 16px;
-  font-size: 18px;
-}
-
 .menuCloseBtn {
-  padding: 0;
-  margin: 0;
+  position: fixed;
   border: none;
   background-color: transparent;
   color: var(--light-color);
+  letter-spacing: .5px;
   font-size: 26px;
   width: 82px;
   top: 32px;
-  right: 90px;
-  font-weight: 40px;
+  right: 62px;
+  font-weight: 300;
   cursor: pointer;
 }
 
-/* Hide scrollbar on body when popup is open */
+.fa-x {
+  width: 22px;
+}
+
 body.popup-open {
   overflow: hidden;
 }
 
-/* Style scrollbar in the popup */
-.popup {
-  overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #888 transparent;
-}
-
-.navbar a {
-  color: #ffffff;
-}
-
-.navbar .log {
-  font-weight: 400;
-}
-
 .navbar.scroll-down {
   background-color: var(--secondary-color);
-  transition-delay: 200ms;
   transition: background-color 1s ease, opacity 1s ease;
 }
 .navbar.scroll-up {
   background-color: transparent;
-  transition-delay: 200ms;
   transition: background-color 1s ease, opacity 1s ease;
 }
 
-.bar-nav {
+.fa-bars {
   transform: scale(1.6);
 }
 
@@ -82,6 +58,9 @@ body.popup-open {
   background-color: var(--primary-color);
   z-index: 100;
   display: block;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-color);
 }
 
 .logo {
@@ -90,7 +69,6 @@ body.popup-open {
 }
 .grid-container {
   display: grid;
-  column-gap: 15px;
   grid-template-columns: auto auto auto;
 }
 
@@ -114,4 +92,50 @@ body.popup-open {
 
 .fa-flag {
   cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .navbar {
+    height: 60px; 
+  }
+  .menuCloseBtn {
+    top: 22px; 
+    right: 32px;
+    width: 60px; 
+    font-size: 20px; 
+  }
+  .logo {
+    width: 120px; 
+  }
+  .grid-container {
+    grid-template-columns: auto auto auto; 
+    justify-content: center; 
+  }
+  .grid-item {
+    padding: 2px;
+    font-size: 18px; 
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    padding: 10px;
+    height: 50px;
+  }
+  .menuCloseBtn {
+    top: 18px; 
+    right: 28px;
+    width: 50px; 
+    font-size: 18px; 
+  }
+  .logo {
+    width: 100px; 
+  }
+  .grid-item {
+    padding: 2px;
+    font-size: 18px; 
+  }
+  .grid-container {
+    margin-right: 60px;
+  }
 }

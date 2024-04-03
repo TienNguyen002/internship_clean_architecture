@@ -14,6 +14,8 @@ public partial class Item : IEntity
 
     public string? SubTitle { get; set; }
 
+    public string? ShortDescription { get; set; }
+
     public string? Description { get; set; }
 
     public string? Address { get; set; }

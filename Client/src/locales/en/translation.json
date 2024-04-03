@@ -17,6 +17,17 @@
     "Careers": "CAREERS",
     "Contact": "CONTACT US"
   },
+  "titleName" :{
+    "Services": "SERVICES",
+    "WeProvide":"WE PROVIDE",
+    "EngagementModel":"ENGAGEMENT MODELS",
+    "Innovation":"INNOVATIONS",
+    "Domain":"DOMAINS & TECHNOLOGIES",
+    "Customer": "CUSTOMER TESTIMONIALS",
+    "News": "NEWS & EVENTS",
+    "Contact": "CONTACT US",
+    "About": "ABOUT US"
+  },
   "request": {
     "Name": "Name *",
     "Phone": "Phone",
@@ -48,9 +59,35 @@
     "List3": "Good career growth opportunities",
     "List4": "Interesting and challenging projects",
     "List5": "Healthy environment for self-realization and creativity",
-    "List6": "Competitive salary, that depends on skills &amp; capabilities.",
-    "Required": "We need various resources with skills on a &quot; first come first serve &quot; basis. Only qualified and shorted-list candidates will be contacted.",
+    "List6": "Competitive salary, that depends on skills & capabilities.",
+    "Required": "We need various resources with skills on a 'first come first serve' basis. Only qualified and shorted-list candidates will be contacted.",
     "Contact": "If you are interested in this position, please send us detailed CV to ",
     "Email": "recruitment@titancorpvn.com"
+  },
+  "contact": {
+    "Title": "REQUEST FOR INFORMATION",
+    "SubTitle": "Any question? Let us know",
+    "Paragraph1": "We are always glad to hear your comments regarding our services.",
+    "Paragraph2": "Whether you have a question, wish to get a quote for your project or you are looking for a product, we will be happy to assist you.",
+    "Paragraph3": "Please don't hesitate to get in touch with any questions or enquiries."
+  },
+  "about": {
+    "Title": "WHO ARE WE?",
+    "Intro1": "Titan Technology Corporation is a software outsourcing services company founded in 2013 by a professional team, with a big vision and mission to provide the best services to our clients.",
+    "Intro2": "We are delivering a leading service for global clients in various categories, committed to the highest level of customer satisfaction, contributing to the nation’s prosperity and providing to our employees with the most favorable working environment, enabling them to express their own color under Titan Technology’s home.",
+    "Intro3": "We have ability to offer comprehensive knowledge, experience of various domains and industries in software development thank for our proven Engagement Models, help us not only deliver high-quality services but also minimize costs and maximize benefits for our valued clients.",
+    "Intro4": "With great resource of talent and long-year working experience, we confidence to broaden our client data list to other oversea markets in the upcoming year and become a leading global corporation in providing comprehensive software development."
+  },
+  "badRequest": {
+    "Error": "400 - Bad Request",
+    "ErrorInfo": "Invalid Request",
+    "Detail": "It seems the parameters in your URL are not correct",
+    "BackHome": "Go To Homepage"
+  },
+  "notFound": {
+    "Error": "404 - Page Not Found",
+    "ErrorInfo": "The page you are looking for might have been removed",
+    "Detail": "Had its name changed or is temporarily unavailable",
+    "BackHome": "Go To Homepage"
   }
 }

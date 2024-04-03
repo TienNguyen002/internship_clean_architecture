@@ -1,0 +1,64 @@
+.contact-page-banner {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 160px;
+    line-height: 1;
+  }
+  
+  .contact-page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+    font-size: 72px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    padding: 15px 40px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .contact-page-image {
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  .contact-us-content {
+    display: flex;
+    padding: 50px 0 100px;
+  }
+
+  .contact-us-text {
+    padding: 90px 0 0 250px
+  }
+
+  .contact-us-text h3{
+    text-align: left;
+    font-size: 34px;
+    margin: 0 0 8px;
+    color: var(--medium-gray);
+    font-weight: 400;
+  }
+
+  .contact-us-text h4{
+    text-align: left;
+    font-size: 34px;
+    margin: 0 0 8px;
+    color: var(--medium-gray);
+    font-weight: 300;
+  }
+
+
+  .contact-us-text-paragraph {
+    text-align: justify;
+    margin: 0 0 10px;
+    color: var(--gray-color);
+    font-weight: 300;
+    font-size: 22px;
+  }
+
+  .contact-us-form {
+    margin-right: 120px
+  }

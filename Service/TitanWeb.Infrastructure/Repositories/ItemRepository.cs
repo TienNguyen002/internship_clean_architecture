@@ -167,5 +167,18 @@ namespace TitanWeb.Infrastructure.Repositories
                 return false;
             }
         }
+
+        /// <summary>
+        /// This method checks if a slug already exists in the database
+        /// </summary>
+        /// <param name="id"> Id Of Item want to find </param>
+        /// <param name="slug"> Slug Of Item want to check </param>
+        /// <returns> Image Item Changed </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> IsItemSlugExitedAsync(int id, string slug)
+        {
+            return await _context.Set<Item>()
+                .AnyAsync(t => t.Id != id && t.UrlSlug == slug);
+        }
     }
 }

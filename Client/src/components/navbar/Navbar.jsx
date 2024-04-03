@@ -46,7 +46,7 @@ const Navbar = () => {
       {logo.length > 0
         ? logo.map((item, index) => (
             <div className="navbar" key={index}>
-              <img className="logo" src={item.imageUrl} alt="logo" />
+              <Link to="/"><img className="logo" src={item.imageUrl} alt="logo" /></Link>
               <div className="grid-container">
               <Link to="/home"><div className="grid-item">{translate('navbar.Home')}</div></Link> 
                 <span onClick={handleLanguageSwitch} className="grid-item">
@@ -66,7 +66,7 @@ const Navbar = () => {
               togglePopup();
               document.body.classList.remove("popup-open");
             }}
-            className="topright menuCloseBtn pointer-btn"
+            className="menuCloseBtn pointer-btn"
           >
             Close <i class="fa-solid fa-x"></i>
           </button>

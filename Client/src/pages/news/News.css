@@ -1,0 +1,27 @@
+.news-page-banner {
+    position: relative;
+    overflow: hidden;
+    height: auto;
+    min-height: 160px;
+    line-height: 1;
+  }
+  
+  .news-page-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 2;
+    font-size: 54px;
+    background: var(--banner-title);
+    color: var(--light-color);
+    text-transform: uppercase;
+    padding: 15px 40px;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .news-page-image {
+    width: 100vw;
+    height: 100vh;
+  }

@@ -7,12 +7,15 @@ import {
   sliderNumber,
   boxSliderClassNameConfig,
   slugName,
+  titleLinks,
+  sliderResponsive,
 } from "../../enum/EnumApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import BoxSlider from "../boxSlider/BoxSlider";
+import { Link } from "react-router-dom";
 
 const Box = (props) => {
   const { name, title, items, description, backgroundUrl } = props;
@@ -52,6 +55,7 @@ const Box = (props) => {
             swiperStyle="domainSwiper"
             slideNumber={sliderNumber.defaultSlideNumber}
             switchNavigation={true}
+            sliderResponsive={sliderResponsive.defaultSlideNumber}
           />
         );
       case sectionName.Model:
@@ -265,7 +269,7 @@ const Box = (props) => {
               boxSliderClassNameConfig[name]?.titleStyle || "box-title"
             }
           >
-            <a>{title}</a>
+            <Link to={titleLinks[name]?.link || ""}><a>{title}</a></Link>
           </h1>
         </div>
         <div className={boxSliderClassNameConfig[name]?.boxdesc || "desc"}>

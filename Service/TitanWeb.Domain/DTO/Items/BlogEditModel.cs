@@ -20,10 +20,19 @@ namespace TitanWeb.Domain.DTO.Items
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogTitleMaxLength)]
         public string Title { get; set; }
 
+        [DisplayName(ValidateManagements.BlogSlug)]
+        [Required(ErrorMessage = ValidateManagements.BlogSlugRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogSlugMaxLength)]
+        public string UrlSlug { get; set; }
+
         [DisplayName(ValidateManagements.BlogSubTitle)]
         [Required(ErrorMessage = ValidateManagements.BlogSubTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogSubTitleMaxLength)]
         public string SubTitle { get; set; }
+
+        [DisplayName(ValidateManagements.BlogShortDescription)]
+        [Required(ErrorMessage = ValidateManagements.BlogShortDescriptionRequiredMsg)]
+        public string ShortDescription { get; set; }
 
         [DisplayName(ValidateManagements.BlogDescription)]
         [Required(ErrorMessage = ValidateManagements.BlogDescriptionRequiredMsg)]

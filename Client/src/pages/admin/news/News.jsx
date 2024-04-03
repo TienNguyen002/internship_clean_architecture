@@ -43,7 +43,7 @@ function EditToolbar(props) {
   );
 }
 
-export default function News() {
+export default function AdNews() {
   const [rows, setRows] = useState([]);
   const [rowModesModel, setRowModesModel] = useState({});
   const navigate = useNavigate();
