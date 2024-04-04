@@ -24,7 +24,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<CategoryDTO> GetCategoryBySlugWithLanguageAsync(string slug, string language)
         {
-            var category = await _repository.GetCategoryBySlugWithLanguageAsync(slug, language);
+            var category = await _repository.GetCategoryBySlugAsync(slug, language);
             return _mapper.Map<CategoryDTO>(category);
         }
     }

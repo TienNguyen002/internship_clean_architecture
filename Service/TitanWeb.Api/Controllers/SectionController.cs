@@ -1,11 +1,13 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.Interfaces.Services;
+using TitanWeb.Infrastructure.Contexts;
 
 namespace TitanWeb.Api.Controllers
 {
@@ -13,14 +15,16 @@ namespace TitanWeb.Api.Controllers
     [ApiController]
     public class SectionController : ControllerBase
     {
-        private readonly ISectionService _service; 
+        private readonly ISectionService _service;
         private readonly ILogger<SectionController> _logger;
         private readonly IMapper _mapper;
-        public SectionController(ISectionService service, ILogger<SectionController> logger, IMapper mapper)
+        private readonly TitanWebContext _context;
+        public SectionController(ISectionService service, ILogger<SectionController> logger, IMapper mapper, TitanWebContext context)
         {
             _service = service;
             _logger = logger;
             _mapper = mapper;
+            _context = context;
         }
 
         /// <summary>
@@ -48,7 +52,7 @@ namespace TitanWeb.Api.Controllers
         {
             _logger.LogInformation(LogManagements.LogGetSectionBySlug + slug);
             var section = await _service.GetSectionBySlugAsync(slug);
-            if(section == null)
+            if (section == null)
             {
                 return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundSectionSlugMsg + slug));
             }
@@ -89,7 +93,48 @@ namespace TitanWeb.Api.Controllers
             {
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteSection + id));
             }
-            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteSection + id)); ;
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteSection + id));
+        }
+
+        [HttpPut("moveSection/{sourceSectionId}to{destinationSectionId}")]
+        public IActionResult MoveSection(int sourceSectionId, int destinationSectionId)
+        {
+            // Get the source and destination sections
+            var sourceSection = _context.Sections.FirstOrDefault(s => s.Id == sourceSectionId);
+            var destinationSection = _context.Sections.FirstOrDefault(s => s.Id == destinationSectionId);
+
+            // Check if the source and destination sections exist
+            if (sourceSection == null || destinationSection == null)
+            {
+                return NotFound();
+            }
+
+            // Calculate the new order values
+            var sourceOrder = sourceSection.SectionOrder;
+            var destinationOrder = destinationSection.SectionOrder;
+            sourceSection.SectionOrder = destinationOrder;
+
+            if (destinationOrder < sourceOrder)
+            {
+                // Move the source section to the left
+                _context.Sections.Where(s => s.SectionOrder >= destinationOrder && s.SectionOrder < sourceOrder)
+                    .OrderBy(s => s.SectionOrder)
+                    .ToList()
+                    .ForEach(s => s.SectionOrder++);
+            }
+            else if (destinationOrder > sourceOrder)
+            {
+                // Move the source section to the right
+                _context.Sections.Where(s => s.SectionOrder > sourceOrder && s.SectionOrder <= destinationOrder)
+                    .OrderByDescending(s => s.SectionOrder)
+                    .ToList()
+                    .ForEach(s => s.SectionOrder--);
+            }
+
+            // Save the changes
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
