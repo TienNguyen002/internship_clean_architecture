@@ -34,6 +34,8 @@ namespace TitanWeb.Api.Extensions
             builder.Services.AddScoped<IRequestFormService, RequestFormService>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<ISubItemRepository, SubItemRepository>();
+            builder.Services.AddScoped<ISubItemService, SubItemService>();
 
             return builder;
         }

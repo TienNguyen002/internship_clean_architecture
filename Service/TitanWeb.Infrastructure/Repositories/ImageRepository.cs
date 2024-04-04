@@ -28,7 +28,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 _context.Remove(imageToDelete);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

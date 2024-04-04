@@ -8,11 +8,11 @@ export const queryDefault = {
 };
 
 export const slugName = {
-  logo: "logo",
+  navbar: "navbar",
   banner: "banner",
   footer: "footer",
   news: "news",
-  blogs: "blogs"
+  blogs: "blogs",
 };
 
 export const language = {
@@ -26,12 +26,12 @@ export const delaySlide = {
 };
 
 export const numberLength = {
-  zero :0,
+  zero: 0,
   small: 1,
   medium: 5,
   large: 3,
   huge: 15,
-  max: 100
+  max: 100,
 };
 
 export const sectionName = {
@@ -42,81 +42,80 @@ export const sectionName = {
   New: "News",
   Blog: "Blogs",
   Model: "Models",
-  LastestJobs: "Careers"
+  LastestJobs: "Careers",
 };
 
 export const sidebarLinks = [
-  { path: '/admin', title: 'Dashboard', className: 'large' },
-  { path: '/admin/', title: 'HomePage', className: 'large' },
-  { path: '/admin/news', title: 'News' },
-  { path: '/admin/blogs', title: 'Blogs' },
+  { path: "/admin", title: "Dashboard", className: "large" },
+  { path: "/admin/", title: "HomePage", className: "large" },
+  { path: "/admin/news", title: "News" },
+  { path: "/admin/blogs", title: "Blogs" },
 ];
 
 export const titleLinks = {
-  "Services": {
+  Services: {
     link: "/services",
   },
-  "Domains": {
+  Domains: {
     link: "/services/domains",
   },
-  "Innovations": {
+  Innovations: {
     link: "/innovations",
   },
-  "Models": {
+  Models: {
     link: "/services/models",
   },
-  "Clients": {
+  Clients: {
     link: "/customers",
   },
   "As Recognized By": {
     link: "",
   },
-  "Careers": {
-    link: "/careers"
+  Careers: {
+    link: "/careers",
   },
-  "Customers": {
-    link: "/customers/#testimonials"
+  Customers: {
+    link: "/customers/#testimonials",
   },
-  "News": {
-    link: "/news"
+  News: {
+    link: "/news",
   },
-  "Blogs": {
-    link: "/blogs"
-  }
-}
-
-export const sliderNumber = {
-  oneSlideNumber : 1,
-  defaultSlideNumber : 3,
-  ourClientSlideNumber : 4,
-  recognizedSlideNumber : 5
-}
-
-export const sliderResponsive = {
+  Blogs: {
+    link: "/blogs",
+  },
 };
 
+export const sliderNumber = {
+  oneSlideNumber: 1,
+  defaultSlideNumber: 3,
+  ourClientSlideNumber: 4,
+  recognizedSlideNumber: 5,
+};
+
+export const sliderResponsive = {};
+
 export const boxSliderClassNameConfig = {
-  "Domains": {
+  Domains: {
     boxBody: "box-home-body-domain",
     boxdesc: "hidden",
     titleStyle: "domain-title",
   },
-  "Clients": {
+  Clients: {
     boxBody: "box-home-body-outclient",
     boxContainer: "container-outclient",
     boxdesc: "hidden",
-    titleStyle: "outclient-title"
+    titleStyle: "outclient-title",
   },
   "As Recognized By": {
     boxBody: "home-recognized-box",
     boxContainer: "container-recognized",
     titleStyle: "recognized-title",
-    boxdesc: "hidden"
+    boxdesc: "hidden",
   },
-  "Customers": {
-    boxBody: "box-body-customer"
-  }
-}
+  Customers: {
+    boxBody: "box-body-customer",
+  },
+};
 
 export const error = {
   tooShort: "Too short",
@@ -131,8 +130,12 @@ export const formData = {
 };
 
 export const btnValue = {
-  variant:"outlined", sizeM:"medium", colorErr:"error", colorSuccess:"success", typeSubmit:"submit"
-}
+  variant: "outlined",
+  sizeM: "medium",
+  colorErr: "error",
+  colorSuccess: "success",
+  typeSubmit: "submit",
+};
 export const editModules = {
   toolbar: [
     [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -170,7 +173,7 @@ export const editFormats = [
   "link",
   "image",
   "video",
-]
+];
 
 export const deleteForm = {
   title: "Do you want to delete?",

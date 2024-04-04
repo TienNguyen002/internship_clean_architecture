@@ -52,7 +52,15 @@ export default function MainSlider(props) {
           {banner.length > 0
             ? banner.map((item, index) => (
                 <SwiperSlide className="banner" key={index}>
-                  <img className="banner-img" src={item.imageUrl} alt="" />
+                  <img
+                    className="banner-img"
+                    src={
+                      item.imageUrl.startsWith("http")
+                        ? item.imageUrl
+                        : `https://localhost:7118/${item.imageUrl}`
+                    }
+                    alt=""
+                  />
                   <div className="text_main_slide">
                     <a className="title_main_slide">
                       <strong>{item.boldTitle}</strong>

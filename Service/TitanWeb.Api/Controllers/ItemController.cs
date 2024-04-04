@@ -137,15 +137,15 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get Item By Id
+        /// Delete Item By Id
         /// </summary>
-        /// <param name="id"> Id Of Item want to get </param>
-        /// <returns> Get Item By Id </returns>
+        /// <param name="id"> Id Of Item want to delete </param>
+        /// <returns> Delete Item By Id </returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteItem(int id)
         {
             _logger.LogInformation(LogManagements.LogDeleteItem + id);
-            var result = await _service.DeleteNewsAsync(id);
+            var result = await _service.DeleteItemAsync(id);
             if (!result)
             {
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteItem + id));
@@ -169,6 +169,44 @@ namespace TitanWeb.Api.Controllers
             }
             var result = _mapper.Map<ItemDTO>(newItem);
             return Ok(ApiResponse.Success(newItem, ResponseManagements.SuccessChangeLogo));
+        }
+
+        /// <summary>
+        /// Add/Update Banner
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Banner </returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("editBanner")]
+        public async Task<ActionResult> EditBanner([FromForm] BannerEditModel model)
+        {
+            _logger.LogInformation(LogManagements.LogEditBanner);
+            var bannerEdit = await _service.EditBannerAsync(model);
+            if (!bannerEdit)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditBanner));
+            }
+            var result = _mapper.Map<ItemDTO>(model);
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditBanner));
+        }
+
+        /// <summary>
+        /// Add/Update Section Item
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Section Item </returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("editSectionItem")]
+        public async Task<ActionResult> EditSectionItem([FromForm] SectionItemEditModel model)
+        {
+            _logger.LogInformation(LogManagements.LogEditSectionItem);
+            var itemEdit = await _service.EditSectionItemAsync(model);
+            if (!itemEdit)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditSectionItem));
+            }
+            var result = _mapper.Map<ItemDTO>(model);
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditSectionItem));
         }
     }
 }

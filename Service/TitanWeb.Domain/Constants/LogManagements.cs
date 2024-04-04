@@ -53,7 +53,7 @@
         public static readonly string LogReturnSection= "\nReturn Sections Result";
         public static readonly string LogReturnSectionBySlug = "\nReturn Section By Slug ";
         public static readonly string LogReturnAllSectionsBySlug = "\nReturn All Sections By Slug ";
-        public static readonly string LogCreateSection = "\nCreating Section";
+        public static readonly string LogEditSection = "\nEditting Section";
         public static readonly string LogDeleteSection = "\nDelete Section By Id ";
 
         /// <summary>
@@ -84,5 +84,21 @@
         /// </summary>
         public static readonly string LogEditNews = "\nEditting News";
         public static readonly string LogEditBlog = "\nEditting Blog";
+
+        /// <summary>
+        /// Log Func Banner
+        /// </summary>
+        public static readonly string LogEditBanner = "\nEditting Banner";
+
+        /// <summary>
+        /// Log Func Section Item
+        /// </summary>
+        public static readonly string LogEditSectionItem = "\nEditting Section Item";
+
+        /// <summary>
+        /// Log Func Section Item
+        /// </summary>
+        public static readonly string LogEditSubItem = "\nEditting Sub-Item";
+        public static readonly string LogDeleteSubItem = "\nDelete Sub-Item By Id ";
     }
 }

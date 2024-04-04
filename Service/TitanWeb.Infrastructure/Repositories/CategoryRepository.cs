@@ -10,7 +10,7 @@ namespace TitanWeb.Infrastructure.Repositories
         public CategoryRepository(TitanWebContext context) : base(context) { }
 
         /// <summary>
-        /// Get Category by UrlSlug
+        /// Get Category by UrlSlug With Language
         /// </summary>
         /// <param name="slug"> UrlSlug of Category want to get </param>
         /// <param name="language"> Language of Category want to get (like: en, ja) </param>

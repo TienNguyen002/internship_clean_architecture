@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MapsterMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
+using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.Interfaces.Services;
 
 namespace TitanWeb.Api.Controllers
@@ -13,10 +15,12 @@ namespace TitanWeb.Api.Controllers
     {
         private readonly ISectionService _service; 
         private readonly ILogger<SectionController> _logger;
-        public SectionController(ISectionService service, ILogger<SectionController> logger)
+        private readonly IMapper _mapper;
+        public SectionController(ISectionService service, ILogger<SectionController> logger, IMapper mapper)
         {
             _service = service;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -50,6 +54,42 @@ namespace TitanWeb.Api.Controllers
             }
             _logger.LogInformation(LogManagements.LogReturnSectionBySlug + slug);
             return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionBySlug + slug));
+        }
+
+        /// <summary>
+        /// Add/Update Section
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Section </returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("editSection")]
+        public async Task<ActionResult> EditSection([FromForm] SectionEditModel model)
+        {
+            _logger.LogInformation(LogManagements.LogEditSection);
+            var sectionEdit = await _service.EditSectionAsync(model);
+            if (!sectionEdit)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditSection));
+            }
+            var result = _mapper.Map<SectionDTO>(model);
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditSection));
+        }
+
+        /// <summary>
+        /// Get Section By Id
+        /// </summary>
+        /// <param name="id"> Id Of Section want to get </param>
+        /// <returns> Get Section By Id </returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteSection(int id)
+        {
+            _logger.LogInformation(LogManagements.LogDeleteSection + id);
+            var result = await _service.DeleteSectionAsync(id);
+            if (!result)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteSection + id));
+            }
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteSection + id)); ;
         }
     }
 }

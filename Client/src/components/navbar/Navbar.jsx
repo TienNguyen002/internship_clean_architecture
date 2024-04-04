@@ -6,7 +6,7 @@ import { getItemByCategory } from "../../api/ItemApi";
 import { language, slugName } from "../../enum/EnumApi";
 import { useDispatch, useSelector } from "react-redux";
 import { changeLanguage } from "../../redux/actions";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const { t: translate, i18n } = useTranslation();
@@ -14,7 +14,7 @@ const Navbar = () => {
   const [logo, setLogo] = useState([]);
 
   const payload = {
-    categorySlug: slugName.logo,
+    categorySlug: slugName.navbar,
     language: language.english,
   };
   const currentLanguage = useSelector(
@@ -22,13 +22,13 @@ const Navbar = () => {
   );
   const dispatch = useDispatch();
   const handleLanguageSwitch = () => {
-    if (currentLanguage === language.english){
-      i18n.changeLanguage(language.japanese)
+    if (currentLanguage === language.english) {
+      i18n.changeLanguage(language.japanese);
       dispatch(changeLanguage(language.japanese));
-    }else{
-      i18n.changeLanguage(language.english)
+    } else {
+      i18n.changeLanguage(language.english);
       dispatch(changeLanguage(language.english));
-    } 
+    }
   };
   useEffect(() => {
     getItemByCategory(payload).then((data) => {
@@ -46,11 +46,16 @@ const Navbar = () => {
       {logo.length > 0
         ? logo.map((item, index) => (
             <div className="navbar" key={index}>
-              <Link to="/"><img className="logo" src={item.imageUrl} alt="logo" /></Link>
+              <Link to="/">
+                <img className="logo" src={item.imageUrl} alt="logo" />
+              </Link>
               <div className="grid-container">
-              <Link to="/home"><div className="grid-item">{translate('navbar.Home')}</div></Link> 
+                <Link to="/home">
+                  <div className="grid-item">{translate("navbar.Home")}</div>
+                </Link>
                 <span onClick={handleLanguageSwitch} className="grid-item">
-                  <i className="fa-solid fa-flag"></i> {translate('navbar.Lang')}
+                  <i className="fa-solid fa-flag"></i>{" "}
+                  {translate("navbar.Lang")}
                 </span>
                 <a onClick={togglePopup} className="grid-item">
                   <i className="fa-solid fa-bars"></i>
@@ -77,7 +82,7 @@ const Navbar = () => {
   );
 };
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("scroll", function () {
     var navbar = document.querySelector(".navbar");
     if (navbar) {

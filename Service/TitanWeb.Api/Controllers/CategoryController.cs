@@ -20,7 +20,7 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get Category by UrlSlug
+        /// Get Category by UrlSlug With Language
         /// </summary>
         /// <param name="slug"> UrlSlug of Category want to get </param>
         /// <param name="language"> Language of Category want to get (like: en, ja) </param>
@@ -29,7 +29,7 @@ namespace TitanWeb.Api.Controllers
         public async Task<ActionResult<CategoryDTO>> GetCategoryBySlug(string slug, string language)
         {
             _logger.LogInformation(LogManagements.LogGetCategoryBySlug + slug);
-            var category = await _service.GetCategoryBySlugAsync(slug, language);
+            var category = await _service.GetCategoryBySlugWithLanguageAsync(slug, language);
             if(category == null)
             {
                 return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundCategoryBySlugMsg + slug));

@@ -68,6 +68,19 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
+        /// Get All Item By Slug
+        /// </summary>
+        /// <param name="slug"> UrlSlug want to get All Item </param>
+        /// <returns> A List Item With UrlSlug want to get </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<Item>> GetAllItemBySlugAsync(string slug)
+        {
+            return await _context.Set<Item>()
+                .Where(s => s.UrlSlug.Contains(slug))
+                .ToListAsync();
+        }
+
+        /// <summary>
         /// Get Item By Category Slug
         /// </summary>
         /// <param name="categorySlug"> Slug of Category want to get Items </param>
@@ -106,7 +119,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -133,7 +146,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 _context.Remove(itemToDelete);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -162,7 +175,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -171,9 +184,9 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <summary>
         /// This method checks if a slug already exists in the database
         /// </summary>
-        /// <param name="id"> Id Of Item want to find </param>
+        /// <param name="id"> Id Of Item want to compare </param>
         /// <param name="slug"> Slug Of Item want to check </param>
-        /// <returns> Image Item Changed </returns>
+        /// <returns> Item Slug Existed (true, false) </returns>
         /// <exception cref="Exception"></exception>
         public async Task<bool> IsItemSlugExitedAsync(int id, string slug)
         {

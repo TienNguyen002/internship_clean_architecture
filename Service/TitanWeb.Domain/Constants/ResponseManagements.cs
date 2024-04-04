@@ -45,10 +45,11 @@
         public static readonly string SuccessGetAllSections = "Success Get All Sections";
         public static readonly string SuccessGetSectionBySlug = "Success Get Section By Slug ";
         public static readonly string SuccessGetAllSectionsBySlug = "Success Get All Sections By Slug ";
-        public static readonly string SuccessCreateSection = "Success Create New Section";
-        public static readonly string FailToCreateSection = "Fail To Create New Section";
+        public static readonly string SuccessEditSection = "Success Edit New Section";
+        public static readonly string FailToEditSection = "Fail To Edit New Section";
         public static readonly string SuccessDeleteSection = "Has Delete Success Section with Id ";
         public static readonly string NotFoundSectionSlugMsg = "Not found Section With Slug ";
+        public static readonly string FailToDeleteSection = "Fail To Delete Section with Id ";
 
         /// <summary>
         /// Response Message For Func Request Form
@@ -82,5 +83,25 @@
         public static readonly string FailToEditNews = "Fail To Edit News";
         public static readonly string SuccessEditBlog = "Success Edit Blog";
         public static readonly string FailToEditBlog = "Fail To Edit Blog";
+
+        /// <summary>
+        /// Response Message For Func Banner
+        /// </summary>
+        public static readonly string SuccessEditBanner = "Success Edit News";
+        public static readonly string FailToEditBanner = "Fail To Edit News";
+
+        /// <summary>
+        /// Response Message For Func Section Item
+        /// </summary>
+        public static readonly string SuccessEditSectionItem = "Success Edit Section Item";
+        public static readonly string FailToEditSectionItem = "Fail To Edit Section Item";
+
+        /// <summary>
+        /// Response Message For Func Section Item
+        /// </summary>
+        public static readonly string SuccessEditSubItem = "Success Edit Sub-Item";
+        public static readonly string FailToEditSubItem = "Fail To Edit Sub-Item";
+        public static readonly string FailToDeleteSubItem = "Fail To Delete New Sub-Item";
+        public static readonly string SuccessDeleteSubItem = "Has Delete Success Sub-Item with Id ";
     }
 }

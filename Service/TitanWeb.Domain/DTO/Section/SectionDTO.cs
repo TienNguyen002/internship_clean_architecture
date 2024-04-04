@@ -11,5 +11,7 @@ namespace TitanWeb.Application.DTO.Section
         public string? Description { get; set; }
         public IList<ItemForSectionDTO> Items { get; set; }
         public string BackgroundUrl { get; set; }
+        public string Locale { get; set; }
+        public int SectionOrder { get; set; }
     }
 }

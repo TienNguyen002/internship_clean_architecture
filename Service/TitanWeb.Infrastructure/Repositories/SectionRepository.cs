@@ -28,7 +28,7 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(s => s.Image)
                 .Where(s => s.Locale == language);
             return await sections
-                .OrderBy(s => s.Id)
+                .OrderBy(s => s.SectionOrder)
                 .ToListAsync();
         }
 
@@ -65,6 +65,94 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(s => s.Items)
                 .Where(s => s.UrlSlug.Contains(slug))
                 .ToListAsync();
+        }
+
+        /// <summary>
+        /// Add Section If Model Has No Id / Update Item If Model Has Id
+        /// </summary>
+        /// <param name="item"> Model to add/update </param>
+        /// <returns> Added/Updated Section </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> EditSectionAsync(Section section)
+        {
+            try
+            {
+                if (section.Id > 0)
+                {
+                    _context.Update(section);
+                }
+                else
+                {
+                    _context.Add(section);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// This method checks if a slug already exists in the database
+        /// </summary>
+        /// <param name="id"> Id Of Section want to find </param>
+        /// <param name="slug"> Slug Of Section want to check </param>
+        /// <returns> Section Slug Existed (true, false) </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> IsSectionSlugExitedAsync(int id, string slug)
+        {
+            return await _context.Set<Section>()
+                .AnyAsync(t => t.Id != id && t.UrlSlug == slug);
+        }
+
+        /// <summary>
+        /// Delete Section By Id
+        /// </summary>
+        /// <param name="id"> Id Of Section want to delete </param>
+        /// <returns> Deleted Section </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> DeleteSectionAsync(int id)
+        {
+            var sectionToDelete = await _context.Set<Section>()
+                .Include(i => i.Image)
+                .Include(i => i.Items)
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+            try
+            {
+                _context.Remove(sectionToDelete);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Count all Section in DB with language (en, ja)
+        /// </summary>
+        /// <param name="language">Language Section want to count</param>
+        /// <returns>Number of section with language in DB</returns>
+        /// <exception cref="Exception"></exception>
+        public Task<int> CountSectionByLanguage(string language)
+        {
+            return _context.Set<Section>().Where(c => c.Locale == language).CountAsync();
+        }
+
+        /// <summary>
+        /// Get Section by UrlSlug With Language
+        /// </summary>
+        /// <param name="slug"> UrlSlug of Section want to get</param>
+        /// <param name="language"> Language of Section want to get (like: en, ja) </param>
+        /// <returns> Section Has Slug want to get </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<Section> GetSectionBySlugWithLanguageAsync(string slug, string language)
+        {
+            return await _context.Set<Section>()
+                .Where(s => s.UrlSlug.Contains(slug) && s.Locale == language)
+                .FirstOrDefaultAsync();
         }
     }
 }

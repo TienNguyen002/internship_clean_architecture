@@ -15,6 +15,8 @@ public partial class Section : IEntity
     public string? Description { get; set; }
 
     public string Locale { get; set; }
+    
+    public int SectionOrder { get; set; }
 
     public int? ImageId { get; set; }
 

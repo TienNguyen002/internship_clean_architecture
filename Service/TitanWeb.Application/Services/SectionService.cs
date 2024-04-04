@@ -1,5 +1,9 @@
 ﻿using MapsterMapper;
+using TitanWeb.Api.Media;
 using TitanWeb.Application.DTO.Section;
+using TitanWeb.Domain.DTO.Section;
+using TitanWeb.Domain.Entities;
+using TitanWeb.Domain.Interfaces;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Domain.Interfaces.Services;
 
@@ -10,10 +14,14 @@ namespace TitanWeb.Application.Services
 
         private readonly ISectionRepository _repository;
         private readonly IMapper _mapper;
-        public SectionService(ISectionRepository repository, IMapper mapper)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMediaManager _mediaManager;
+        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _mediaManager = mediaManager;
         }
 
         /// <summary>
@@ -50,6 +58,62 @@ namespace TitanWeb.Application.Services
         {
             var section = await _repository.GetAllSectionBySlugAsync(slug);
             return _mapper.Map<IList<SectionDTO>>(section);
+        }
+
+        /// <summary>
+        /// Add/Update By Find Section Id, If Id > 0 Update it by Model, else Create New News By Model
+        /// </summary>
+        /// <param name="model"> Model to add/update </param>
+        /// <returns> Added/Updated Section </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> EditSectionAsync(SectionEditModel model)
+        {
+            var section = model.Id > 0 ? await _repository.GetById(model.Id) : null;
+            if (section == null)
+            {
+                section = new Section {  };
+            }
+
+            section.Name = model.Name;
+            section.Title = model.Title;
+            section.UrlSlug = model.UrlSlug;
+            if (await _repository.IsSectionSlugExitedAsync(model.Id, model.UrlSlug))
+            {
+                int save = await _unitOfWork.Commit();
+                return save < 0;
+            }
+            section.Description = model.Description;
+            if (model.BackgroundImage != null)
+            {
+                section.Image = new Image
+                {
+                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.BackgroundImage.OpenReadStream(),
+                                                                     model.BackgroundImage.FileName,
+                                                                     model.BackgroundImage.ContentType),
+                };
+            }
+            section.Locale = model.Locale;
+            var sectionCount = await _repository.CountSectionByLanguage(model.Locale);
+            if (sectionCount > 0)
+            {
+                section.SectionOrder = sectionCount + 1;
+            }
+            await _repository.EditSectionAsync(section);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
+
+        /// <summary>
+        /// Delete Section By Id
+        /// </summary>
+        /// <param name="id"> Id Of Section want to delete </param>
+        /// <returns> Deleted Section </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> DeleteSectionAsync(int id)
+        {
+            await _repository.DeleteSectionAsync(id);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
         }
     }
 }

@@ -16,15 +16,15 @@ namespace TitanWeb.Application.Services
         }
 
         /// <summary>
-        /// Get Category by UrlSlug
+        /// Get Category by UrlSlug With Language
         /// </summary>
         /// <param name="slug"> UrlSlug of Category want to get </param>
         /// <param name="language"> Language of Category want to get (like: en, ja) </param>
         /// <returns> Category Has Slug want to get with language, Map Data to CategoryDTO </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<CategoryDTO> GetCategoryBySlugAsync(string slug, string language)
+        public async Task<CategoryDTO> GetCategoryBySlugWithLanguageAsync(string slug, string language)
         {
-            var category = await _repository.GetCategoryBySlugAsync(slug, language);
+            var category = await _repository.GetCategoryBySlugWithLanguageAsync(slug, language);
             return _mapper.Map<CategoryDTO>(category);
         }
     }
