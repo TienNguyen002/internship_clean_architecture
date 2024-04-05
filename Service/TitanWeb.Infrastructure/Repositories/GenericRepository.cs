@@ -55,7 +55,7 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<T> GetByIdWithInclude(int id, params Expression<Func<T, object>>[] includeProperties)
         {
-            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+            IQueryable<T> query = _context.Set<T>();
             foreach (var includeProperty in includeProperties)
             {
                 query = query.Include(includeProperty);

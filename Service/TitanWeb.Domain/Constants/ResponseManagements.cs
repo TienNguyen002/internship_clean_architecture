@@ -71,10 +71,12 @@
         public static readonly string NotFoundCategoryBySlugMsg = "Not found Any Category With Slug ";
 
         /// <summary>
-        /// Response Message For Func Logo
+        /// Response Message For Func Logo, Button Status
         /// </summary>
         public static readonly string SuccessChangeLogo = "Success Change New Logo";
         public static readonly string FailToChangeLogo = "Fail To Change New Logo";
+        public static readonly string SuccessChangeButtonStatus = "Success Change Button Status";
+        public static readonly string FailToChangeButtonStatus = "Fail To Change Button Status";
 
         /// <summary>
         /// Response Message For Func News, Blog

@@ -36,6 +36,8 @@ namespace TitanWeb.Api.Extensions
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ISubItemRepository, SubItemRepository>();
             builder.Services.AddScoped<ISubItemService, SubItemService>();
+            builder.Services.AddScoped<IButtonRepository, ButtonRepository>();
+            builder.Services.AddScoped<IButtonService, ButtonService>();
 
             return builder;
         }

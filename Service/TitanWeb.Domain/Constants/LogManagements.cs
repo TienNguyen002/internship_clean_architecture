@@ -75,9 +75,10 @@
         public static readonly string LogDeleteCategory = "\nDelete Category By Id ";
 
         /// <summary>
-        /// Log Func Logo
+        /// Log Func Logo, Button Status
         /// </summary>
         public static readonly string LogChangeLogo = "\nChanging Logo";
+        public static readonly string LogChangeButtonStatus = "\nChanging Button Status";
 
         /// <summary>
         /// Log Func News, Blog
