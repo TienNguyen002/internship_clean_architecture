@@ -52,6 +52,7 @@
         /// </summary>
         public const string BlogId = "Blog Id";
         public const string BlogTitle = "Blog Title";
+        public const string BlogSubTitle = "Blog Sub-Title";
         public const string BlogSlug = "Blog Slug";
         public const string BlogShortDescription = "Blog Short Description";
         public const string BlogDescription = "Blog Description";
@@ -164,6 +165,8 @@
         /// </summary>
         public const string BlogTitleRequiredMsg = "Blog Title cannot be empty!!";
         public const string BlogTitleMaxLength = "Blog Title length only 100";
+        public const string BlogSubTitleRequiredMsg = "Blog Sub-Title cannot be empty!!";
+        public const string BlogSubTitleMaxLength = "Blog Sub-Title length only 100";
         public const string BlogSlugRequiredMsg = "Blog Slug cannot be empty!!";
         public const string BlogSlugMaxLength = "Blog Slug length only 100";
         public const string BlogShortDescriptionRequiredMsg = "Blog Short Description cannot be empty!!";
