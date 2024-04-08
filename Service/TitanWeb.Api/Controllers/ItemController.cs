@@ -32,11 +32,6 @@ namespace TitanWeb.Api.Controllers
         public async Task<ActionResult<ItemDTO>> GetPagedItem([AsParameters] ItemQuery query,
             PagingModel model)
         {
-            _logger.LogInformation(LogManagements.ValidateInput);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             _logger.LogInformation(LogManagements.LogGetItemByQuery);
             var result = await _service.GetPagedItemAsync(query, model);
             _logger.LogInformation(LogManagements.LogReturnItemByQuery);

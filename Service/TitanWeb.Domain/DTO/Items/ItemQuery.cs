@@ -7,7 +7,6 @@ namespace TitanWeb.Domain.DTO.Items
     public class ItemQuery
     {
         [DisplayName(ValidateManagements.SectionSlug)]
-        [Required(ErrorMessage = ValidateManagements.SectionSlugRequiredMsg)]
         public string SectionSlug { get; set; }
     }
 }
