@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using TitanWeb.Api.Media;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.DTO.Section;
@@ -6,6 +7,7 @@ using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Domain.Interfaces.Services;
+using TitanWeb.Infrastructure.Contexts;
 
 namespace TitanWeb.Application.Services
 {
@@ -16,12 +18,14 @@ namespace TitanWeb.Application.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMediaManager _mediaManager;
-        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager)
+        private readonly TitanWebContext _context;
+        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager, TitanWebContext context)
         {
             _repository = repository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _mediaManager = mediaManager;
+            _context = context;
         }
 
         /// <summary>
@@ -112,6 +116,35 @@ namespace TitanWeb.Application.Services
         public async Task<bool> DeleteSectionAsync(int id)
         {
             await _repository.DeleteSectionAsync(id);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
+
+        /// <summary>
+        /// Move Section 
+        /// </summary>
+        /// <param name="sourceSection">Current Section</param>
+        /// <param name="destinationSection">Destination Section want to move to </param>
+        /// <example>
+        ///     A has order 1, B has order 2, C has order 3
+        ///     This will have 2 case:
+        ///     Case 1: A move to B => B will has order 1, A will has order 2, C no change
+        ///     Case 2: C move to A => C will has order 1, A will has order 2 andconf remo B will increase 1 so that has order 3
+        /// </example>
+        /// <returns>Section Order changed</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> MoveSection(string sourceSection, string destinationSection)
+        {
+            var sourceSections = await _repository.GetAllSectionBySlugAsync(sourceSection);
+            var destinationSections = await _repository.GetAllSectionBySlugAsync(destinationSection);
+
+            var currentOrder = sourceSections.Min(s => s.SectionOrder);
+            var destinationOrder = destinationSections.Min(s => s.SectionOrder);
+            foreach (var section in sourceSections)
+            {
+                section.SectionOrder = destinationOrder;
+            }
+            await _repository.MoveSection(currentOrder, destinationOrder);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }

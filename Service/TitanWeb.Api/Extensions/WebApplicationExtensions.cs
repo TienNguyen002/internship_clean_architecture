@@ -74,11 +74,8 @@ namespace TitanWeb.Api.Extensions
 
         public static WebApplication SetupRequestPipeline(this WebApplication app)
         {
-            if (app.Environment.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI();
-            }
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseCors("TitanWeb");

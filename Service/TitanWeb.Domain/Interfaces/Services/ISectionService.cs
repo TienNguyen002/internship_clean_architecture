@@ -10,5 +10,6 @@ namespace TitanWeb.Domain.Interfaces.Services
         Task<IList<SectionDTO>> GetAllSectionBySlugAsync(string slug);
         Task<bool> EditSectionAsync(SectionEditModel model);
         Task<bool> DeleteSectionAsync(int id);
+        Task<bool> MoveSection(string sourceSection, string destinationSection);
     }
 }

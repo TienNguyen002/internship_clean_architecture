@@ -50,6 +50,8 @@
         public static readonly string SuccessDeleteSection = "Has Delete Success Section with Id ";
         public static readonly string NotFoundSectionSlugMsg = "Not found Section With Slug ";
         public static readonly string FailToDeleteSection = "Fail To Delete Section with Id ";
+        public static readonly string SuccessMoveSection = "Has Move Section {1} to {2}";
+        public static readonly string FailToMoveSection = "Fail To Move Section {1} to {2}";
 
         /// <summary>
         /// Response Message For Func Request Form

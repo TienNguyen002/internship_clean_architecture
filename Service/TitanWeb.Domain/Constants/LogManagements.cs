@@ -55,6 +55,7 @@
         public static readonly string LogReturnAllSectionsBySlug = "\nReturn All Sections By Slug ";
         public static readonly string LogEditSection = "\nEditting Section";
         public static readonly string LogDeleteSection = "\nDelete Section By Id ";
+        public static readonly string LogMoveSection = "\nMove Section {1} to {2}";
 
         /// <summary>
         /// Log Func Request Form

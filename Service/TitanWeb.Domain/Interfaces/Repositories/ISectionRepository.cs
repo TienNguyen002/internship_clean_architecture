@@ -12,5 +12,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
         Task<bool> IsSectionSlugExitedAsync(int id, string slug);
         Task<bool> DeleteSectionAsync(int id);
         Task<int> CountSectionByLanguage(string language);
+        Task<bool> MoveSection(int currentOrder, int destinationOrder);
     }
 }

@@ -154,5 +154,44 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Where(s => s.UrlSlug.Contains(slug) && s.Locale == language)
                 .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Change Section Order
+        /// </summary>
+        /// <param name="currentOrder">Current Section Order</param>
+        /// <param name="destinationOrder">Destination Order want to move to </param>
+        /// <example>
+        ///     A has order 1, B has order 2, C has order 3
+        ///     This will have 2 case:
+        ///     Case 1: A move to B => B will has order 1, A will has order 2, C no change
+        ///     Case 2: C move to A => C will has order 1, A will has order 2 and B will increase 1 so that has order 3
+        /// </example>
+        /// <returns>Section Order changed</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> MoveSection(int currentOrder, int destinationOrder)
+        {
+            try
+            {
+                if (destinationOrder < currentOrder)
+                {
+                    _context.Sections.Where(s => s.SectionOrder >= destinationOrder && s.SectionOrder < currentOrder)
+                        .OrderBy(s => s.SectionOrder)
+                        .ToList()
+                        .ForEach(s => s.SectionOrder++);
+                }
+                else if (destinationOrder > currentOrder)
+                {
+                    _context.Sections.Where(s => s.SectionOrder > currentOrder && s.SectionOrder <= destinationOrder)
+                       .OrderByDescending(s => s.SectionOrder)
+                       .ToList()
+                       .ForEach(s => s.SectionOrder--);
+                }
+                return true;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
     }
 }

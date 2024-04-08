@@ -8,12 +8,14 @@ namespace TitanWeb.Api.Response
         public bool IsSuccess => Errors.Count == 0;
         public HttpStatusCode StatusCode { get; init; }
         public string Message { get; init; }
+        public IList<string> Messages { get; init; }
         public IList<string> Errors { get; init; }
         protected ApiResponse()
         {
             StatusCode = HttpStatusCode.OK;
             Errors = new List<string>();
         }
+
         public static ApiResponse<T> Success<T>(
             T result,
             string message,
@@ -24,6 +26,19 @@ namespace TitanWeb.Api.Response
                 Message = message,
                 Result = result,
                 StatusCode = statusCode
+            };
+        }
+
+        public static ApiResponse<T> SuccessMsg<T>(
+            T result,
+            HttpStatusCode statusCode,
+            params string[] messages)
+        {
+            return new ApiResponse<T>
+            {
+                Result = result,
+                StatusCode = statusCode,
+                Messages = new List<string>(messages)
             };
         }
 

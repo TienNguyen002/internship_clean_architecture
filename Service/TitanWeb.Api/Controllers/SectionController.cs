@@ -6,6 +6,7 @@ using TitanWeb.Api.Response;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Section;
+using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Services;
 using TitanWeb.Infrastructure.Contexts;
 
@@ -96,45 +97,22 @@ namespace TitanWeb.Api.Controllers
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteSection + id));
         }
 
-        [HttpPut("moveSection/{sourceSectionId}to{destinationSectionId}")]
-        public IActionResult MoveSection(int sourceSectionId, int destinationSectionId)
+        /// <summary>
+        /// Move Section
+        /// </summary>
+        /// <param name="sourceSection">Section want to move</param>
+        /// <param name="destinationSection">Place Section want to move to</param>
+        /// <returns> Section moved </returns>
+        [HttpPut("moveSection/{sourceSection}to{destinationSection}")]
+        public async Task<ActionResult> MoveSection(string sourceSection, string destinationSection)
         {
-            // Get the source and destination sections
-            var sourceSection = _context.Sections.FirstOrDefault(s => s.Id == sourceSectionId);
-            var destinationSection = _context.Sections.FirstOrDefault(s => s.Id == destinationSectionId);
-
-            // Check if the source and destination sections exist
-            if (sourceSection == null || destinationSection == null)
+            _logger.LogInformation(LogManagements.LogMoveSection, sourceSection, destinationSection);
+            var result = await _service.MoveSection(sourceSection, destinationSection);
+            if (!result)
             {
-                return NotFound();
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToMoveSection, sourceSection, destinationSection));
             }
-
-            // Calculate the new order values
-            var sourceOrder = sourceSection.SectionOrder;
-            var destinationOrder = destinationSection.SectionOrder;
-            sourceSection.SectionOrder = destinationOrder;
-
-            if (destinationOrder < sourceOrder)
-            {
-                // Move the source section to the left
-                _context.Sections.Where(s => s.SectionOrder >= destinationOrder && s.SectionOrder < sourceOrder)
-                    .OrderBy(s => s.SectionOrder)
-                    .ToList()
-                    .ForEach(s => s.SectionOrder++);
-            }
-            else if (destinationOrder > sourceOrder)
-            {
-                // Move the source section to the right
-                _context.Sections.Where(s => s.SectionOrder > sourceOrder && s.SectionOrder <= destinationOrder)
-                    .OrderByDescending(s => s.SectionOrder)
-                    .ToList()
-                    .ForEach(s => s.SectionOrder--);
-            }
-
-            // Save the changes
-            _context.SaveChanges();
-
-            return Ok();
+            return Ok(ApiResponse.SuccessMsg(result, HttpStatusCode.OK, ResponseManagements.SuccessMoveSection, sourceSection, destinationSection));
         }
     }
 }
