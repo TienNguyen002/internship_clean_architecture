@@ -1,6 +1,4 @@
-﻿using MapsterMapper;
-using TitanWeb.Api.Media;
-using TitanWeb.Domain.DTO.SubItem;
+﻿using TitanWeb.Domain.DTO.SubItem;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces;
 using TitanWeb.Domain.Interfaces.Repositories;
@@ -12,16 +10,14 @@ namespace TitanWeb.Application.Services
     {
         private readonly ISubItemRepository _repository;
         private readonly IItemRepository _itemRepository;
-        private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediaManager _mediaManager;
-        public SubItemService(ISubItemRepository repository, IItemRepository itemRepository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager)
+        private readonly ICloundinaryService _cloundinaryService;
+        public SubItemService(ISubItemRepository repository, IItemRepository itemRepository, IUnitOfWork unitOfWork, ICloundinaryService cloundinaryService)
         {
             _repository = repository;
             _itemRepository = itemRepository;
-            _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _mediaManager = mediaManager;
+            _cloundinaryService = cloundinaryService;
         }
 
         /// <summary>
@@ -43,9 +39,7 @@ namespace TitanWeb.Application.Services
             {
                 subItem.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
                 };
             }
             var items = await _itemRepository.GetAllItemBySlugAsync(model.ItemSlug);

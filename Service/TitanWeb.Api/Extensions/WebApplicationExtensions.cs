@@ -1,6 +1,9 @@
+using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Serilog;
 using TitanWeb.Api.Media;
+using TitanWeb.Application.Media;
 using TitanWeb.Application.Services;
 using TitanWeb.Domain.Interfaces;
 using TitanWeb.Domain.Interfaces.Repositories;
@@ -22,6 +25,13 @@ namespace TitanWeb.Api.Extensions
             builder.Configuration
                         .GetConnectionString("DefaultConnection")));
 
+            builder.Services.Configure<CloudConfiguration>(builder.Configuration.GetSection("CloudinarySettings"));
+            builder.Services.AddSingleton(x =>
+            {
+                var config = x.GetService<IOptions<CloudConfiguration>>().Value;
+                return new Cloudinary(new Account(config.CloudName, config.ApiKey, config.ApiSecret));
+            });
+
             builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
@@ -38,6 +48,7 @@ namespace TitanWeb.Api.Extensions
             builder.Services.AddScoped<ISubItemService, SubItemService>();
             builder.Services.AddScoped<IButtonRepository, ButtonRepository>();
             builder.Services.AddScoped<IButtonService, ButtonService>();
+            builder.Services.AddScoped<ICloundinaryService, CloudinaryService>();
 
             return builder;
         }

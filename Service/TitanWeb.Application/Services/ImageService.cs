@@ -13,13 +13,13 @@ namespace TitanWeb.Application.Services
         private readonly IImageRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IMediaManager _mediaManager;
-        public ImageService(IImageRepository repository, IUnitOfWork unitOfWork, IMapper mapper, IMediaManager mediaManager)
+        private readonly ICloundinaryService _cloundinaryService;
+        public ImageService(IImageRepository repository, IUnitOfWork unitOfWork, IMapper mapper, ICloundinaryService cloundinaryService)
         {
             _repository = repository;
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _mediaManager = mediaManager;
+            _cloundinaryService = cloundinaryService;
         }
 
         /// <summary>
@@ -53,13 +53,10 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> AddImageAsync(ImageEditModel model)
         {
-            string uploadPath = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType);
             var image = new Image()
             {
                 Hyperlink = model.Hyperlink,
-                ImageUrl = uploadPath,
+                ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
                 IsLogo = model.IsLogo,
             };
             await _repository.Add(image);

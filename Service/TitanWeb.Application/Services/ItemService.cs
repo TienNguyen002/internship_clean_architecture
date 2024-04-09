@@ -1,5 +1,4 @@
 ﻿using MapsterMapper;
-using TitanWeb.Api.Media;
 using TitanWeb.Domain.Collections;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO;
@@ -18,15 +17,20 @@ namespace TitanWeb.Application.Services
         private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediaManager _mediaManager;
-        public ItemService(IItemRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager, ISectionRepository sectionRepository, ICategoryRepository categoryRepository)
+        private readonly ICloundinaryService _cloundinaryService;
+        public ItemService(IItemRepository repository, 
+            IMapper mapper, 
+            IUnitOfWork unitOfWork,
+            ISectionRepository sectionRepository, 
+            ICategoryRepository categoryRepository,
+            ICloundinaryService cloundinaryService)
         {
             _repository = repository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _mediaManager = mediaManager;
             _sectionRepository = sectionRepository;
             _categoryRepository = categoryRepository;
+            _cloundinaryService = cloundinaryService;
         }
 
         /// <summary>
@@ -98,9 +102,7 @@ namespace TitanWeb.Application.Services
             {
                 news.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
@@ -181,12 +183,9 @@ namespace TitanWeb.Application.Services
             blog.Description = model.Description;
             if (model.ImageFile != null)
             {
-                await _mediaManager.DeleteFileAsync(blog.Image.ImageUrl);
                 blog.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
@@ -231,9 +230,7 @@ namespace TitanWeb.Application.Services
             {
                 banner.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.BackgroundImage.OpenReadStream(),
-                                                                     model.BackgroundImage.FileName,
-                                                                     model.BackgroundImage.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName),
                 };
             }
             var category = await _categoryRepository.GetCategoryBySlugAsync(model.CategorySlug, model.Locale);
@@ -275,9 +272,7 @@ namespace TitanWeb.Application.Services
             {
                 item.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.ImageFile.OpenReadStream(),
-                                                                     model.ImageFile.FileName,
-                                                                     model.ImageFile.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
                 };
             }
             item.Button.Label = model.ButtonLabel;

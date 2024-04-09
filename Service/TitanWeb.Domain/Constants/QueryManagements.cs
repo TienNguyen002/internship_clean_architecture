@@ -19,5 +19,10 @@
         /// Query For Navbar Slug
         /// </summary>
         public static readonly string NavbarSlug = "navbar";
+
+        /// <summary>
+        /// Query For Cloud Folder
+        /// </summary>
+        public static readonly string ImageFolder = "Image";
     }
 }

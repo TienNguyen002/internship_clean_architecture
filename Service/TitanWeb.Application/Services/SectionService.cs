@@ -17,15 +17,13 @@ namespace TitanWeb.Application.Services
         private readonly ISectionRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMediaManager _mediaManager;
-        private readonly TitanWebContext _context;
-        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, IMediaManager mediaManager, TitanWebContext context)
+        private readonly ICloundinaryService _cloundinaryService;
+        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, ICloundinaryService cloundinaryService)
         {
             _repository = repository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _mediaManager = mediaManager;
-            _context = context;
+            _cloundinaryService = cloundinaryService;
         }
 
         /// <summary>
@@ -91,9 +89,7 @@ namespace TitanWeb.Application.Services
             {
                 section.Image = new Image
                 {
-                    ImageUrl = await _mediaManager.SaveImgFileAsync(model.BackgroundImage.OpenReadStream(),
-                                                                     model.BackgroundImage.FileName,
-                                                                     model.BackgroundImage.ContentType),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName),
                 };
             }
             section.Locale = model.Locale;
