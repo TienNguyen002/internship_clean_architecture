@@ -84,7 +84,7 @@ cursor: pointer;
 
 @media only screen and (max-width: 768px) {
   .description_main_slide {
-    font-size: 16px; 
+    font-size: 18px; 
     max-width: 80%; 
     text-align: center; 
     margin: 0 auto 20px; 
@@ -108,7 +108,7 @@ cursor: pointer;
     bottom: 3%; 
   }
   .text_main_slide {
-    font-size: 18px; 
+    font-size: 20px; 
     bottom: 5%; 
   }
 }
@@ -124,6 +124,10 @@ cursor: pointer;
   .main-slider-swiper .swiper-button-next,
   .main-slider-swiper .swiper-button-prev {
     top: 93%;
+    right: 35%;
+  }
+  .main-slider-swiper .swiper-button-prev {
+    left: 35%; 
   }
   .swiper-pagination {
     font-size: 16px; 

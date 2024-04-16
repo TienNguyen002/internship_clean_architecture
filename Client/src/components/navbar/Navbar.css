@@ -4,10 +4,10 @@
   justify-content: space-between;
   color: var(--light-color);
   opacity: 1;
-  width: 100%;
+  width: 100vw;
   height: 85px;
   position: fixed;
-  padding: 15px 50px 10px;
+  padding: 15px 40px 10px;
   z-index: 10;
 }
 
@@ -94,48 +94,60 @@ body.popup-open {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 980px) {
   .navbar {
-    height: 60px; 
+    height: 70px; 
+    padding: 8px 30px;
   }
   .menuCloseBtn {
-    top: 22px; 
-    right: 32px;
-    width: 60px; 
-    font-size: 20px; 
+    top: 20px; 
+    right: 55px;
+    width: 80px; 
+    font-size: 24px; 
   }
   .logo {
     width: 120px; 
   }
-  .grid-container {
-    grid-template-columns: auto auto auto; 
-    justify-content: center; 
-  }
   .grid-item {
     padding: 2px;
     font-size: 18px; 
+    margin-right: 24px;
   }
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 768px) {
   .navbar {
-    padding: 10px;
-    height: 50px;
+    height: 60px; 
+    padding: 6px 30px;
   }
   .menuCloseBtn {
-    top: 18px; 
-    right: 28px;
-    width: 50px; 
-    font-size: 18px; 
+    top: 20px; 
+    font-size: 22px; 
   }
   .logo {
     width: 100px; 
   }
   .grid-item {
-    padding: 2px;
     font-size: 18px; 
+    margin-right: 24px;
   }
-  .grid-container {
-    margin-right: 60px;
+}
+
+@media only screen and (max-width: 480px) {
+  .navbar {
+    height: 50px; 
+    padding: 5px 20px;
+  }
+  .menuCloseBtn {
+    top: 20px; 
+    font-size: 20px; 
+  }
+  .logo {
+    width: 75px; 
+  }
+  .grid-item {
+    padding: 0;
+    font-size: 16px; 
+    margin-right: 24px;
   }
 }

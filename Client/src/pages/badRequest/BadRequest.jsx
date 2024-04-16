@@ -10,7 +10,7 @@ const BadRequest = () => {
   return (
     <>
       <div className="service-page-banner">
-        <img className="service-page-image" src={servicesBanner} alt=""></img>
+        <img className="service-page-image" src={servicesBanner} alt="Service AltImage"></img>
       </div>
       <div className="bad-request-container">
       <h1>{translate('badRequest.Error')}</h1>

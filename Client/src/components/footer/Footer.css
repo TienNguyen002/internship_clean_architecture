@@ -16,9 +16,13 @@
 .box-footer-google-title {
     font-size: 28px;
     text-transform: uppercase;
-    margin-left: 40px;
     cursor: pointer;
     color: var(--light-color);
+}
+
+.box-footer-google-description {
+    cursor: pointer;
+    font-size: 22px;
 }
 
 .footer-container {
@@ -67,6 +71,7 @@
 }
 .footer-item a{
     cursor: pointer;
+    color: var(--medium-gray);
 }
 .box-footer-location .footer-item a {
     font-size: 22px;
@@ -129,11 +134,6 @@
     height: 500px;
 }
 
-.box-footer-google-description {
-    cursor: pointer;
-    font-size: 22px;
-}
-
 #back-to-top {
     position: absolute;
     z-index: 5;
@@ -147,65 +147,144 @@
 
     @media only screen and (max-width: 980px) {
         .footer-container {
-        flex-direction: column;
-        align-items: center; 
+            flex-direction: column;
+            align-items: center; 
         }
         .footer-item {
-        width: 100%; 
-        padding: 0 10px; 
-        text-align: center;
-        margin-bottom: 30px; 
+            width: 80%; 
+            padding: 0 10px; 
+            text-align: center;
+            margin-bottom: 30px; 
         }
         .footer-item h3 {
             font-size: 30px;
+            padding-bottom: 14px;
+            margin-bottom: 14px;
+        }
+        .box-footer-google {
+            padding: 30px 0;
+        }
+        .box-footer-google-title {
+            font-size: 26px;
+        }
+        .box-footer-google-description {
+            font-size: 20px;
+        }
+        .box-footer-location .footer-item a {
+            font-size: 20px;
+        }
+        .box-footer-support a {
+            font-size: 21px;
+        }
+        .space-item {
+            margin-bottom: 25px;
+        }
+        .socials-icon {
+            max-height: 22px;
+            padding: 0 16px;
+        }
+        .box-footer-bottom-copyright {
+            font-size: 20px;
+        }
+        .box-footer-bottom-socials {
+            font-size: 17px;
+            padding-top: 15px; 
+        }
+        .scroll-to-top{
+            width: 45px;
         }
     }
 
     @media only screen and (max-width: 768px) {
         .footer-container {
-        width: 90%; 
-        padding: 20px 0;
-        flex-direction: column;
-        align-items: center; 
+            width: 90%; 
+            padding: 20px 0;
         }
         .footer-item {
-        width: 80%; 
-        padding: 0 30px; 
-        text-align: center;
+            width: 70%; 
+            padding: 0 30px; 
+            margin-bottom: 10px; 
+        }
+        .footer-item h3 {
+            font-size: 26px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+        }
+        .box-footer-google {
+            padding: 20px 0;
+        }
+        .box-footer-google-title {
+            font-size: 25px;
+        }
+        .box-footer-google-description {
+            font-size: 19px;
+        }
+        .box-footer-location .footer-item a {
+            font-size: 18px;
+        }
+        .space-item {
+            margin-bottom: 20px;
         }
         .box-footer-bottom-copyright{
-        font-size: 18px; 
+            font-size: 18px; 
         }
         .box-footer-bottom-socials {
-        font-size: 18px;
-        padding-top: 10px; 
+            font-size: 18px;
+            padding-top: 10px; 
+            margin-left: 60px;
         }
         .scroll-to-top{
-        width: 50px;
-        cursor: pointer;
+            width: 40px;
+        }
+        .box-footer-support a {
+            font-size: 20px;
+        }
+        .socials-icon {
+            max-height: 20px;
+            padding: 0 12px;
         }
     }
   
   @media only screen and (max-width: 480px) {
       .footer-item h3 {
-          font-size: 20px;
+        font-size: 20px;
+        padding-bottom: 8px;
+        margin-bottom: 8px;
       }
-
+      .footer-item {
+        margin-bottom: 5px; 
+      }
+      .box-footer-location .footer-item a {
+        font-size: 16px;
+      }
       .footer-item p {
           font-size: 18px;
       }
-
-      .box-footer-bottom .footer-container {
-          flex-direction: column;
-          align-items: center;
+      .box-footer-google {
+        padding: 10px 0;
       }
-
+      .box-footer-google-title {
+        font-size: 24px;
+      }
+      .box-footer-google-description {
+        font-size: 18px;
+      }
+      .space-item {
+        margin-bottom: 15px;
+      }
       .box-footer-bottom-copyright {
         font-size: 17px;
       }
       .box-footer-bottom-socials {
           font-size: 16px;
           padding: 0;
-          margin-left: 90px;
+          margin-left: 150px;
       }
+      .box-footer-support a {
+        font-size: 18px;
+      }
+      .socials-icon {
+        max-height: 18px;
+        padding: 0 10px;
+    }
   }

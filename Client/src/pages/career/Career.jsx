@@ -12,12 +12,12 @@ const Career = () => {
     <>
       <div className="career-banner">
         <h1 class="career-title">{translate('career.Title')}</h1>
-        <img className="career-banner-image" src={careersBanner} alt=""></img>
+        <img className="career-banner-image" src={careersBanner} alt="Career Banner AltImage"></img>
       </div>
         <div className="career-container">
       <div className="career-content">
-          <div >
-            <img className="career-image" src={careerImg} alt=""></img>
+          <div className="career-image-wrap" >
+            <img className="career-image" src={careerImg} alt="Career AltImage"></img>
           </div>
           <div className="career-description">
             <p>

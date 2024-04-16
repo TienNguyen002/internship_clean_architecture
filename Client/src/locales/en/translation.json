@@ -26,7 +26,8 @@
     "Customer": "CUSTOMER TESTIMONIALS",
     "News": "NEWS & EVENTS",
     "Contact": "CONTACT US",
-    "About": "ABOUT US"
+    "About": "ABOUT US",
+    "Blog": "BLOGS"
   },
   "request": {
     "Name": "Name *",
@@ -72,11 +73,42 @@
     "Paragraph3": "Please don't hesitate to get in touch with any questions or enquiries."
   },
   "about": {
-    "Title": "WHO ARE WE?",
+    "Title1": "WHO ARE WE?",
     "Intro1": "Titan Technology Corporation is a software outsourcing services company founded in 2013 by a professional team, with a big vision and mission to provide the best services to our clients.",
     "Intro2": "We are delivering a leading service for global clients in various categories, committed to the highest level of customer satisfaction, contributing to the nation’s prosperity and providing to our employees with the most favorable working environment, enabling them to express their own color under Titan Technology’s home.",
     "Intro3": "We have ability to offer comprehensive knowledge, experience of various domains and industries in software development thank for our proven Engagement Models, help us not only deliver high-quality services but also minimize costs and maximize benefits for our valued clients.",
-    "Intro4": "With great resource of talent and long-year working experience, we confidence to broaden our client data list to other oversea markets in the upcoming year and become a leading global corporation in providing comprehensive software development."
+    "Intro4": "With great resource of talent and long-year working experience, we confidence to broaden our client data list to other oversea markets in the upcoming year and become a leading global corporation in providing comprehensive software development.",
+    "Topic1": "Vision",
+    "Topic1Description": "Titan Technology, the place where people want to work.",
+    "Topic2": "Missions",
+    "Topic2Description1": "To be a change leader in the Vietnam software industry, to promote Vietnamese software development competencies in the global market.",
+    "Topic2Description2": "To deliver the best services and highest satisfaction clients and partners & employees.",
+    "Topic2Description3": "To enable our partners to enhance their business value through the use of information technology.",
+    "Topic3": "Core Values",
+    "Topic3Description1": "Customer oriented and focused.",
+    "Topic3Description2": "Commitment to results and predictable delivery.",
+    "Topic3Description3": "Taking ownership - a culture of dedication, quality and pride in work.",
+    "Topic3Description4": "Respect for the individual and continuous investment for human resource development.",
+    "Title2": "WHY TITAN TECHNOLOGY?",
+    "Topic4": "We possess the most competitive and sustainable advantages to stand out in the software development market:",
+    "Topic4Description1": "Proven Development Process and Quality by Applying CMMi L3 best practices and Agile development methodologies.",
+    "Topic4Description2": "Intellectual Property Protection by following ISMS (ISO 27001:2013).",
+    "Topic4Description3": "Flexible Engagement Model that fits with every client’s development stage.",
+    "Topic4Description4": "Experienced management team working in the software industry with big companies around the world.",
+    "Topic4Description5": "Developer team is all professional with customer-oriented mindset proven by their dedication to quality, pride to work, commitment to results and predictable delivery.",
+    "Title3": "TITAN TECHNOLOGY’S CULTURE",
+    "Topic5": "Our culture is encapsulated through the motto “Inspire your work”",
+    "Topic5Description1": "We focused on building trusted, enthusiasm and ownership spirit among employees by demonstrating that we are trustworthy, willing to trust our employees and continuous investment in our own human resources such as:",
+    "Topic5Description2": "Friendly and helpful team mate in a comfortable working conditions.",
+    "Topic5Description3": "Good career growth opportunities.",
+    "Topic5Description4": "Healthy environment for self-realization and creativity.",
+    "Topic5Description5": "Competitive salary, that worthily based on skills & capabilities.",
+    "Topic5Description6": "Titan Technology is a place where everyone shares ideas, responsibilities and enjoy the benefits, a place where all employees contribute to the company thru’ their sense of ownership, dedication and commitment.",
+    "Title4": "CONTACT US",
+    "Topic6": "TITAN TECHNOLOGY CORPORATION",
+    "Topic6Description1": "Headquarter: 40 Lam Son Street, Ward 2, Tan Binh District, Ho Chi Minh City, Vietnam",
+    "Topic6Description2": "Tel: +84-28-3997-7233",
+    "Topic6Description3": "E-mail: info@titancorpvn.com"
   },
   "badRequest": {
     "Error": "400 - Bad Request",
@@ -89,5 +121,16 @@
     "ErrorInfo": "The page you are looking for might have been removed",
     "Detail": "Had its name changed or is temporarily unavailable",
     "BackHome": "Go To Homepage"
+  },
+  "editBlog": {
+    "Title": "Typing your title here",
+    "Author": "Typing author here",
+    "Slug": "Typing your slug here",
+    "ShortDescription": "Typing your short desciption here"
+  },
+  "editNews": {
+    "Title": "Typing your title here",
+    "Slug": "Typing slug here",
+    "ShortDescription": "Typing your short desciption here"
   }
 }

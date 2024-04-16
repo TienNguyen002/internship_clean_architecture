@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "../box/Box.css";
-import { delaySlide, sectionName, sliderNumber } from "../../enum/EnumApi";
+import { delaySlide, sliderNumber, sliderResponsive } from "../../enum/EnumApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -14,7 +14,6 @@ const BoxSlider = (props) => {
     slideNumber,
     switchNavigation,
     slideDelay,
-    swiperStyle,
     items,
     itemStyle,
     titleItem,
@@ -22,12 +21,14 @@ const BoxSlider = (props) => {
     logoBoxStyle,
     hasBorder,
     hasSubTitle,
-    sliderResponsive,
+    sectionSliderNumber,
+    hasShort
   } = props;
+
   return (
     <Swiper
       slidesPerView={slideNumber || sliderNumber.defaultSlideNumber}
-      breakpoints={sliderResponsive}
+      breakpoints={ sectionSliderNumber || sliderResponsive.DefaultBreakpoints}
       rewind={true}
       navigation={switchNavigation}
       autoplay={{
@@ -43,8 +44,10 @@ const BoxSlider = (props) => {
                 <div>
                   <img
                     className={logoBoxStyle || "item-logo"}
-                    src={item.imageUrl}
-                    alt=""
+                    src={  item.imageUrl.startsWith("http")
+                        ? item.imageUrl
+                        : `${process.env.REACT_APP_API_DEFAULT}${item.imageUrl}`}
+                    alt="Item AltImage"
                   />
                 </div>
                 <h1 className={titleItem || "title-item"}>{item.title}</h1>
@@ -66,14 +69,24 @@ const BoxSlider = (props) => {
                   </div>
                 ) : (
                   <p className="desc">
-                    <p dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(item.description),
-                      }}></p> <br />
+                    {hasShort ? (
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(item.shortDescription),
+                        }}
+                      ></p>
+                    ) : (
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(item.description),
+                        }}
+                      ></p>
+                    )} <br />
                     {item.buttonStatus ? (
                       <Link to="/careers">
-                      <button className="btn-lastestjobs">
-                        {item.buttonLabel}
-                      </button>
+                        <button className="btn-lastestjobs">
+                          {item.buttonLabel}
+                        </button>
                       </Link>
                     ) : null}
                   </p>

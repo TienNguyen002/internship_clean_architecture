@@ -11,7 +11,7 @@ const Domain = () => {
   return (
     <div className="domain-page-banner">
       <h1 class="domain-page-title">{translate('titleName.Domain')}</h1>
-      <img className="domain-page-image" src={servicesBanner} alt=""></img>
+      <img className="domain-page-image" src={servicesBanner} alt="Domain AltImage"></img>
     </div>
   )
 }

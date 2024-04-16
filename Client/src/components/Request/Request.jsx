@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./Request.css";
-import { formData, error, numberLength } from "../../enum/EnumApi";
+import { formData, error, numberLength, titleLinks } from "../../enum/EnumApi";
 import { postRequestForm } from "../../api/ItemApi";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Request = (props) => {
+  const navigate = useNavigate();
   const { title, description, label } = props;
   const { t: translate } = useTranslation();
   const [inputFields, setInputFields] = useState(formData);
@@ -25,35 +27,30 @@ const Request = (props) => {
     }
     if (inputValues.message.length < numberLength.huge) {
       errors.message = error.tooShort;
-    } else errors = {};
+    }
     return errors;
   };
-  const handleSubmit = (e) => {
+  const finishSubmit = (e) => {
     e.preventDefault();
     setErrors(validateValues(inputFields));
-    setSubmitting(true);
-  };
-  const finishSubmit = (e) => {
-    handleSubmit(e);
-    let data = new FormData(e.target);
-    data.forEach((x) => console.log(x));
-    postRequestForm(data).then((data) => {
-      if (data) {
-        setInputFields({
-          name: data.name,
-          email: data.email,
-          phone: data.phone,
-          subject: data.subject,
-          message: data.message,
-        });
-      } else setInputFields(formData);
-    });
-  };
-  useEffect(() => {
-    if ( Object.keys(errors).length === numberLength.zero && capVal && submitting) {
-      finishSubmit();
+    if (Object.keys(errors).length === numberLength.zero && capVal) {
+      setSubmitting(true);
+      let data = new FormData(e.target);
+      postRequestForm(data).then((data) => {
+        if (data) {
+          setInputFields({
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            subject: data.subject,
+            message: data.message,
+          });
+          navigate(titleLinks.contactUs);
+        } else setInputFields(formData);
+      });
     }
-  }, [errors]);
+  };
+  
   return (
     <>
       <div className="box-body-request">
@@ -74,9 +71,9 @@ const Request = (props) => {
           <form method="post" encType="multipart/form-data" onSubmit={finishSubmit} className="request-grid">
             <div className="form-group">
               <div className="request-item">
-                <input placeholder = { translate("request.Name") } type="text" name="name" value={inputFields.name}
+                <input placeholder={translate("request.Name")} type="text" name="name" value={inputFields.name}
                   onChange={(e) => setInputFields({ ...inputFields, name: e.target.value })}
-                  className={ errors.name ? "request-input input-error" : "request-input" }/>
+                  className={errors.name ? "request-input input-error" : "request-input"}/>
                 <div className="request-icon">
                   <i className="fa-regular fa-user" />
                 </div>
@@ -84,13 +81,13 @@ const Request = (props) => {
               <div className="request-item">
                 <input placeholder="E-mail *" type="email" name="email" value={inputFields.email}
                   onChange={(e) => setInputFields({ ...inputFields, email: e.target.value })}
-                  className={ errors.email ? "request-input input-error" : "request-input" }/>
+                  className={errors.email ? "request-input input-error" : "request-input"}/>
                 <div className="request-icon">
                   <i className="fa-regular fa-envelope"></i>
                 </div>
               </div>
               <div className="request-item">
-                <input placeholder={ translate("request.Phone") } type="number" name="phone" value={inputFields.phone}
+                <input placeholder={translate("request.Phone")} type="number" name="phone" value={inputFields.phone}
                   onChange={(e) => setInputFields({ ...inputFields, phone: e.target.value })}
                   className="request-input"/>
                 <div className="request-icon">
@@ -100,25 +97,27 @@ const Request = (props) => {
             </div>
             <div className="form-group">
               <div className="request-item">
-                <input placeholder={ translate("request.Subject") } type="text" name="subject" value={inputFields.subject}
-                  onChange={(e) => setInputFields({ ...inputFields, subject: e.target.value })}
+                <input placeholder={translate("request.Subject")} type="text" name="subject" value={inputFields.subject}
+                  onChange={(e) =>setInputFields({ ...inputFields, subject: e.target.value })}
                   className={errors.subject ? "request-input input-error" : "request-input"}/>
                 <div className="request-icon">
                   <i className="fa-solid fa-book"></i>
                 </div>
               </div>
               <div className="request-item">
-                <textarea placeholder={ translate("request.Message") } type="text" name="message" value={inputFields.message}
+                <textarea placeholder={translate("request.Message")} type="text" name="message" value={inputFields.message}
                   onChange={(e) => setInputFields({ ...inputFields, message: e.target.value })}
-                  className={ errors.message ? "request-textarea input-error" : "request-textarea"}/>
+                  className={errors.message ? "request-textarea input-error" : "request-textarea"}
+                />
               </div>
             </div>
             <div className="form-group">
               <div className="request-item">
-                <div className="recaptcha">     
-                <ReCAPTCHA
-                  sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
-                  onChange={(val) => setCapVal(val)}/>
+                <div className="recaptcha">
+                  <ReCAPTCHA
+                    sitekey={process.env.REACT_APP_RECAPTCHA_KEY}
+                    onChange={(val) => setCapVal(val)}
+                  />
                 </div>
               </div>
               <div className="request-item">

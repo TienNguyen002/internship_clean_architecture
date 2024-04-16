@@ -6,6 +6,9 @@
 }
 
 .career-banner-image{
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
     max-width: 1903px;
     height: 100vh;
 }
@@ -33,7 +36,7 @@
   }
 
 .career-image {
-    padding: 0px 15px 0px 35px;
+    padding: 0px 15px 0px 45px;
     height: 577.27px;
     width: 523.33px;
 }
@@ -41,7 +44,7 @@
 .career-container {
     padding-right: 15px;
     padding-left: 15px;
-    margin: 0px 251.5px 0px;
+    margin: 0px 251.5px;
 }
 
 .career-description {
@@ -55,3 +58,81 @@
 .career-description li {
     margin: 0px 0px 0px 15px;
 }
+    @media only screen and (max-width: 1660px) {
+        .career-image {
+            padding: 0;
+            height: 500px;
+            width: 400px;
+        }
+        .career-container {
+            padding-right: 0;
+            padding-left: 0;
+            margin: 0px 200px;
+        }
+        .career-description {
+            padding: 0px 30px;
+        }
+        .career-title {
+            font-size: 46px;
+            padding: 15px 40px;
+        }
+    }
+
+    @media only screen and (max-width: 1280px) {
+        .career-content {
+            flex-direction: column;
+        }
+        .career-container {
+            margin: 0px 150px;
+        }
+        .career-image-wrap {
+            text-align: center;
+        }
+        .career-title {
+            font-size: 32px;
+            padding: 15px 40px;
+        }
+    }
+
+    @media only screen and (max-width: 980px) {
+        .career-description {
+            padding: 0px 25px;
+        }
+        .career-container {
+            margin: 0px 100px;
+        }
+    }
+
+    @media only screen and (max-width: 768px) {
+        .career-description {
+            padding: 0px 20px;
+        }
+        .career-image {
+            height: 400px;
+            width: 300px;
+        }
+        .career-container {
+            margin: 0px 50px;
+        }
+        .career-title {
+            font-size: 22px;
+            padding: 10px 30px;
+        }
+    }
+
+    @media only screen and (max-width: 480px) {
+        .career-description {
+            padding: 0px 15px;
+        }
+        .career-image {
+            height: 300px;
+            width: 200px;
+        }
+        .career-container {
+            margin: 0px 20px;
+        }
+        .career-title {
+            font-size: 18px;
+            padding: 5px 20px;
+        }
+    }

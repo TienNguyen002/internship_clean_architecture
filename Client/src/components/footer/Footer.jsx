@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getFooter, getSectionBySlug } from "../../api/ItemApi";
-import { slugName, footerName, language } from "../../enum/EnumApi";
+import { getFooter } from "../../api/ItemApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +11,8 @@ import "./Footer.css";
 const Footer = (props) => {
   const [footer, setFooter] = useState([]);
   const [isActive, setIsActive] = useState(false);
-  const data = require("../../imgURL.json"); // read file JSON
-  const upTop = data.upTop; // Get the value "upTop" from the JSON file
+  const data = require("../../imgURL.json");
+  const upTop = data.upTop;
   const googleMap = data.googleMap;
   const { locale } = props;
   const { t: translate }  = useTranslation();
@@ -62,7 +61,6 @@ const Footer = (props) => {
             <a onClick={toggleMap}>
               {translate('footer.Map')}
               <FontAwesomeIcon className="location-icon" icon={faLocationDot} />
-              <img src="" />
             </a>
           </div>
         </div>
@@ -71,6 +69,7 @@ const Footer = (props) => {
       <div className="map-container">
         <div className={`map-show ${isActive ? "active" : ""}`}>
           <iframe
+            title="map"
             src={googleMap}
             height="450px"
             width="100%"
@@ -108,6 +107,7 @@ const Footer = (props) => {
                             <img
                               src={subitem.image.imageUrl}
                               className="mail-icon"
+                              alt="Mail Icon"
                             />
                             <span className="space-item-text">
                               {" "}
@@ -147,6 +147,7 @@ const Footer = (props) => {
                           <img
                             src={subitem.image.imageUrl}
                             className="socials-icon"
+                            alt="Socials Icon"
                           />
                         </a>
                       ))
@@ -156,6 +157,7 @@ const Footer = (props) => {
                     onClick={scrollToTop}
                     id="back-to-top"
                     src={upTop}
+                    alt="ScrollTop Icon"
                   ></img>
                 </div>
               ))

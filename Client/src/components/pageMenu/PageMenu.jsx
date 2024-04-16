@@ -10,7 +10,7 @@ function PageMenu() {
         <ul data-menu="home" className="menu">
           <li className="menu-part current">
             <a href="/" rel="home">
-              <u>{translate('menu.Home')}</u>
+              {translate('menu.Home')}
             </a>
           </li>
           <li className="menu-part">
@@ -34,7 +34,7 @@ function PageMenu() {
                 </a>
               </li>
               <li>
-                <a href="blogs" target="_blog_titan">
+                <a href="/blogs" target="_blog_titan">
                   {translate('menu.Blogs')}
                 </a>
               </li>

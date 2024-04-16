@@ -10,7 +10,7 @@ const NotFound = () => {
   return (
     <>
       <div className="service-page-banner">
-        <img className="service-page-image" src={servicesBanner} alt=""></img>
+        <img className="service-page-image" src={servicesBanner} alt="Service AltImmage"></img>
       </div>
       <div className="not-found-container">
       <h1>{translate('notFound.Error')}</h1>

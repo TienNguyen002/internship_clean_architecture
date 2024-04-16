@@ -1,18 +1,25 @@
 import { Quill } from "react-quill";
+import CottageIcon from "@mui/icons-material/Cottage";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import FeedIcon from "@mui/icons-material/Feed";
+import FeedbackIcon from "@mui/icons-material/Feedback";
+
 export const queryDefault = {
   sectionSlug: "",
   pageSizeDefault: 10,
+  pageSizeDefaultNewsBlogs: 3,
   pageNumberDefault: 1,
   sortOrderASC: "ASC",
   sortOrderDESC: "DESC",
 };
 
 export const slugName = {
-  navbar: "navbar",
+  logo: "navbar",
   banner: "banner",
   footer: "footer",
   news: "news",
   blogs: "blogs",
+  navbar: "navbar",
 };
 
 export const language = {
@@ -46,43 +53,44 @@ export const sectionName = {
 };
 
 export const sidebarLinks = [
-  { path: "/admin", title: "Dashboard", className: "large" },
-  { path: "/admin/", title: "HomePage", className: "large" },
-  { path: "/admin/news", title: "News" },
-  { path: "/admin/blogs", title: "Blogs" },
+  { path: "/admin", title: "Home Page", icon: <CottageIcon /> },
+  { path: "/admin/news", title: "News", icon: <NewspaperIcon /> },
+  { path: "/admin/blogs", title: "Blogs", icon: <FeedIcon /> },
+  { path: "/admin/request", title: "Requests", icon: <FeedbackIcon /> },
 ];
 
 export const titleLinks = {
-  Services: {
+  "Services": {
     link: "/services",
   },
-  Domains: {
+  "Domains": {
     link: "/services/domains",
   },
-  Innovations: {
+  "Innovations": {
     link: "/innovations",
   },
-  Models: {
+  "Models": {
     link: "/services/models",
   },
-  Clients: {
+  "Clients": {
     link: "/customers",
   },
   "As Recognized By": {
     link: "",
   },
-  Careers: {
+  "Careers": {
     link: "/careers",
   },
-  Customers: {
+  "Customers": {
     link: "/customers/#testimonials",
   },
-  News: {
+  "News": {
     link: "/news",
   },
-  Blogs: {
+  "Blogs": {
     link: "/blogs",
   },
+  contactUs: "/contact-us"
 };
 
 export const sliderNumber = {
@@ -92,15 +100,77 @@ export const sliderNumber = {
   recognizedSlideNumber: 5,
 };
 
-export const sliderResponsive = {};
+export const sliderResponsive = {
+  DefaultBreakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    480: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    980: {
+      slidesPerView: 3,
+    },
+  },
+  DomainBreakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    480: {
+      slidesPerView: 1,
+    },
+    768: {
+      slidesPerView: 2,
+    },
+    980: {
+      slidesPerView: 3,
+    },
+  },
+  ClientsBreakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    480: {
+      slidesPerView: 2,
+    },
+    768: {
+      slidesPerView: 3,
+    },
+    980: {
+      slidesPerView: 4,
+    },
+  },
+  RecognizedBreakpoints: {
+    0: {
+      slidesPerView: 2,
+    },
+    480: {
+      slidesPerView: 3,
+    },
+    768: {
+      slidesPerView: 4,
+    },
+    980: {
+      slidesPerView: 5,
+    },
+  },
+  OneItemBreakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+  },
+};
 
 export const boxSliderClassNameConfig = {
-  Domains: {
+  "Domains": {
     boxBody: "box-home-body-domain",
     boxdesc: "hidden",
     titleStyle: "domain-title",
   },
-  Clients: {
+  "Clients": {
     boxBody: "box-home-body-outclient",
     boxContainer: "container-outclient",
     boxdesc: "hidden",
@@ -112,9 +182,15 @@ export const boxSliderClassNameConfig = {
     titleStyle: "recognized-title",
     boxdesc: "hidden",
   },
-  Customers: {
+  "Customers": {
     boxBody: "box-body-customer",
   },
+  "News": {
+    boxBody: "box-body-news-blog",
+  },
+  "Blogs": {
+    boxBody: "box-body-news-blog",
+  }
 };
 
 export const error = {
@@ -135,6 +211,7 @@ export const btnValue = {
   colorErr: "error",
   colorSuccess: "success",
   typeSubmit: "submit",
+  colorAdd: "primary"
 };
 export const editModules = {
   toolbar: [
@@ -173,7 +250,7 @@ export const editFormats = [
   "link",
   "image",
   "video",
-];
+]
 
 export const deleteForm = {
   title: "Do you want to delete?",
@@ -185,3 +262,38 @@ export const deleteForm = {
   resultTitle: "DELETED",
   resultIcon: "success",
 };
+
+export const styleDrawer = {
+  drawerWidth: 240,
+  color: "inherit",
+  ariaLabel: "open drawer",
+  edge: "start",
+
+  styleDrawerHeader: {
+    minHeight: 48,
+    ml: "auto",
+    justifyContent: "center",
+    gap: 18,
+  },
+  styleListItem: {
+    display: "block"
+  },
+  dNone: "none",
+  dBlock: "block",
+  styleListItemButton: {
+    minHeight: 48,
+    px: 2.5,
+  }
+};
+
+export const widthTable = {
+  ss: 100,
+  s: 200,
+  md: 300,
+  l: 400,
+  xl: 500,
+}
+
+export const timeout = {
+  quick: 50,
+}

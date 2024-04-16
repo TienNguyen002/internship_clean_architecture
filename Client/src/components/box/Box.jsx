@@ -6,19 +6,18 @@ import {
   sectionName,
   sliderNumber,
   boxSliderClassNameConfig,
-  slugName,
   titleLinks,
   sliderResponsive,
 } from "../../enum/EnumApi";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import BoxSlider from "../boxSlider/BoxSlider";
 import { Link } from "react-router-dom";
 
 const Box = (props) => {
-  const { name, title, items, description, backgroundUrl } = props;
+  const { name, title, items, description } = props;
   const [showPopup, setShowPopup] = useState(false);
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(null);
   const data = require("../../imgURL.json");
@@ -55,7 +54,7 @@ const Box = (props) => {
             swiperStyle="domainSwiper"
             slideNumber={sliderNumber.defaultSlideNumber}
             switchNavigation={true}
-            sliderResponsive={sliderResponsive.defaultSlideNumber}
+            sectionSliderNumber={sliderResponsive.DomainBreakpoints}
           />
         );
       case sectionName.Model:
@@ -81,6 +80,7 @@ const Box = (props) => {
             textBoxStyle="hidden"
             switchNavigation={true}
             slideNumber={sliderNumber.ourClientSlideNumber}
+            sectionSliderNumber={sliderResponsive.ClientsBreakpoints}
           />
         );
       case sectionName.Customer:
@@ -96,6 +96,7 @@ const Box = (props) => {
                 clickable: true,
               }}
               modules={[Autoplay, Pagination]}
+              breakpoints={sliderResponsive.oneSlideNumber}
             >
               {items.length > 0
                 ? items.map((item, index) => (
@@ -146,6 +147,7 @@ const Box = (props) => {
                       <img
                         className="customer-popup-image"
                         src={items[selectedSlideIndex].imageUrl}
+                        alt="Customer Popup AltImage"
                       />
                     </div>
                     <div className="customer-popup-context-selection">
@@ -176,6 +178,7 @@ const Box = (props) => {
             titleItem="hidden"
             textBoxStyle="hidden"
             slideNumber={sliderNumber.recognizedSlideNumber}
+            sectionSliderNumber={sliderResponsive.RecognizedBreakpoints}
           />
         );
       case sectionName.LastestJobs:
@@ -190,6 +193,7 @@ const Box = (props) => {
             swiperStyle="item-one-colum"
             textBoxStyle="text-one-colum"
             slideNumber={sliderNumber.oneSlideNumber}
+            sectionSliderNumber={sliderResponsive.OneItemBreakpoints}
           />
         );
       case sectionName.New:
@@ -201,20 +205,22 @@ const Box = (props) => {
             textBoxStyle="news-blog-text"
             titleItem="blog-new-title"
             logoBoxStyle="news-blog-logo"
-            switchNavigation={true}
-          />
+            slidedelay="false"
+            hasShort={true}
+            />
         );
-      case sectionName.Blog:
-        return (
-          <BoxSlider
+        case sectionName.Blog:
+          return (
+            <BoxSlider
             items={items}
             title={title}
             description={description}
             textBoxStyle="news-blog-text"
             titleItem="blog-new-title"
             logoBoxStyle="news-blog-logo"
-            switchNavigation={true}
+            switchNavigation={false}
             hasSubTitle={true}
+            hasShort={true}
           />
         );
       default:
@@ -230,6 +236,7 @@ const Box = (props) => {
               swiperStyle="item-one-colum"
               textBoxStyle="text-one-colum"
               slideNumber={sliderNumber.oneSlideNumber}
+              sectionSliderNumber={sliderResponsive.OneItemBreakpoints}
             />
           );
         } else if (items.length <= numberLength.large) {

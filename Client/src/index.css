@@ -23,10 +23,12 @@
   --bullet-hover: #0d569b;
   --border-top-dashed: #ced4da;
   --input-focus: #80bdff;
+  --active-menu: #c3defa;
   --error-bg: #f2dede;
   --error-border: #ebccd1;
   --error-text: #721c24;
   --light-orange: #c48b18;
   --medium-orange: #ff3c00;
   --banner-title: #186ab4cc;
+  --border: #ccc;
 }

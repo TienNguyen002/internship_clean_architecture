@@ -33,7 +33,7 @@ function Service() {
     <div className="App">
       <div className="service-page-banner">
         <h1 class="service-page-title">{translate('titleName.Services')}</h1>
-        <img className="service-page-image" src={servicesBanner} alt=""></img>
+        <img className="service-page-image" src={servicesBanner} alt="Service AltImmage"></img>
       </div>
       {serviceContent.length > 0
         ? serviceContent.map((item, index) => (

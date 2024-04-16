@@ -13,14 +13,17 @@ import BadRequest from "../pages/badRequest/BadRequest";
 import NotFound from "../pages/notFound/NotFound";
 import AdNews from '../pages/admin/news/News';
 import AdBlogs from "../pages/admin/blogs/Blogs";
-import Edit from "../components/admin/edit/Edit";
+import DashBoard from "../pages/admin/dashBoard/DashBoard";
+import AdRequest from "../pages/admin/requests/Request";
 
 export const routes = [
   { path: "/", element: <HomePage /> },
   { path: "/home/", element: <HomePage /> },
   { path: "/careers/", element: <Career /> },
   { path: "/news/", element: <News /> },
+  { path: "/news/page/:pageNumber", element:<News/>},
   { path: "/blogs/", element: <Blog /> },
+  { path: "/blogs/page/:pageNumber", element:<Blog/>},
   { path: "/services", element: <Service /> },
   { path: "/contact-us", element: <ContactUs /> },
   { path: "/about-us", element: <AboutUs /> },
@@ -33,9 +36,8 @@ export const routes = [
 ];
 
 export const adminRoutes = [
-  { path: "/admin/news", element: <AdNews /> },
+  { path: "/admin", element: <DashBoard /> },
+  { path: `/admin/news`, element: <AdNews /> },
   { path: "/admin/blogs", element: <AdBlogs /> },
-  { path: "/admin/news/edit", element: <Edit/> },
-  { path: "/admin/news/edit/:id", element: <Edit/> },
-  { path: "/admin/blogs/edit", element: <Edit/> },
+  { path: "/admin/request", element: <AdRequest /> },
 ];

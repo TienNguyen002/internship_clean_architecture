@@ -31,7 +31,7 @@ function Model() {
     <div className="App">
       <div className="model-page-banner">
       <h1 className="model-page-title">{translate('titleName.EngagementModel')}</h1>
-      <img className="model-page-image" src={servicesBanner} alt=""></img>
+      <img className="model-page-image" src={servicesBanner} alt="Model AltImage"></img>
     </div>
       {modelContent.length > 0 ? modelContent.map((item, index) => (
         <Box

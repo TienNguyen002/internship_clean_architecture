@@ -30,7 +30,7 @@ const Customer = () => {
   return (
     <div className="App">
       <div className="customer-page-banner">
-          <img className="customer-page-image" src={customersBanner} alt=""></img>
+          <img className="customer-page-image" src={customersBanner} alt="Customer AltImage"></img>
         </div>
         {modelContent.length > 0 ? modelContent.map((item, index) => (
           <Box

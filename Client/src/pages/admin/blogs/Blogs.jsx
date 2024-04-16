@@ -1,11 +1,17 @@
 import React from 'react'
+import Table from '../../../components/admin/table/Table'
+import { slugName } from '../../../enum/EnumApi'
+import { Box } from '@mui/material'
+import SideBar from '../../../components/admin/sideBar/SideBar'
 
 const AdBlogs = () => {
   return (
-    <div className='blogs-container'>
-    <h1>Blogs</h1>
-    <p>This is the Blogs page content.</p>
-  </div>
+    <Box sx={{ display: 'flex' }}>
+    <SideBar />
+    <Box component="main" sx={{ overflow: "auto" }}>
+      <Table name= {slugName.blogs} />
+    </Box>
+  </Box>
   )
 }
 

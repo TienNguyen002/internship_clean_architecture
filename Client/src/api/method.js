@@ -41,3 +41,28 @@ export async function post_api(your_api, formData){
     alert("Can't post the request", error.message);
   }
 }
+
+export async function upload_image(your_api, file){
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
+
+  try {
+    const response = await axios({
+      method: "post",
+      url: your_api,
+      data: formData,
+      headers: {
+        accept: "multipart/form-data",
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const data = response.data;
+    const url = data.url;
+
+    return url;
+  } catch (error) {
+    alert("Error uploading to Cloudinary: ", error);
+    return null;
+  }
+};

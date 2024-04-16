@@ -25,3 +25,6 @@ export const convertDate = (inputDate) => {
 
   return day + '/' + month + '/' + year;
 }
+export const splitUrl = (url) => {
+  url.split("/").slice(-3).join("/")
+}

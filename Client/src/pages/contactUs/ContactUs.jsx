@@ -32,7 +32,7 @@ const ContactUs = () => {
     <div className="App">
       <div className="contact-page-banner">
         <h1 className="contact-page-title">{translate('titleName.Contact')}</h1>
-        <img className="contact-page-image" src={contactUsBanner} alt=""></img>
+        <img className="contact-page-image" src={contactUsBanner} alt="Contact AltImage"></img>
       </div>
       <div className="contact-us-content">
         <div className="contact-us-text">

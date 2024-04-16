@@ -8,9 +8,17 @@
     "careerImg": "https://www.titancorpvn.com/assets/images/careers.jpg",
     "servicesBanner": "https://www.titancorpvn.com/uploads/banners/services.jpg",
     "newsBanner": "https://www.titancorpvn.com/uploads/banners/news.jpg",
+    "blogsBanner": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/blog-banner.jpg",
+    "blogsTitleB": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/B.png",
+    "blogsTitleL": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/L.png",
+    "blogsTitleO": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/O.png",
+    "blogsTitleG": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/G.png",
+    "blogsTitleS": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/S.png",
     "innovationsBanner": "https://www.titancorpvn.com/uploads/banners/innovation.jpg",
     "customersBanner": "https://www.titancorpvn.com/uploads/banners/clients.jpg",
     "contactUsBanner": "https://www.titancorpvn.com/uploads/banners/contact-us.jpg",
     "aboutUsBanner": "https://www.titancorpvn.com/uploads/banners/about-us.jpg",
-    "editImageFrame": "https://www.digitalcitizen.life/wp-content/uploads/2020/10/photo_gallery-1-596x225.jpg"
+    "editImageFrame": "https://www.digitalcitizen.life/wp-content/uploads/2020/10/photo_gallery-1-596x225.jpg",
+    "aboutUsImg1": "https://www.titancorpvn.com/uploads/banners/home-banner-3.jpg",
+    "aboutUsImg2": "https://hca.org.vn/userfiles/images/Hinh%20Tin%20Hoi%20Vien/tintan2.jpg"
 }
