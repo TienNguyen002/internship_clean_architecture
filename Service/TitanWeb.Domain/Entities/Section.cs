@@ -1,4 +1,5 @@
-﻿using TitanWeb.Domain.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+using TitanWeb.Domain.Contracts;
 
 namespace TitanWeb.Domain.Entities;
 
@@ -15,7 +16,7 @@ public partial class Section : IEntity
     public string? Description { get; set; }
 
     public string Locale { get; set; }
-    
+
     public int SectionOrder { get; set; }
 
     public int? ImageId { get; set; }
@@ -23,4 +24,6 @@ public partial class Section : IEntity
     public virtual Image? Image { get; set; }
 
     public virtual ICollection<Item> Items { get; set; } = new List<Item>();
+    [Timestamp]
+    public byte[] RowVersion { get; set; } = null!;
 }

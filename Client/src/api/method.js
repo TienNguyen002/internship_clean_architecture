@@ -1,4 +1,5 @@
 import axios from "axios";
+import { SwalEnum } from "../enum/EnumApi";
 
 export async function get_api(your_api) {
   try {
@@ -42,27 +43,53 @@ export async function post_api(your_api, formData){
   }
 }
 
+/**
+ * Performs a PUT request to a specific API.
+ *
+ * @param {string} your_api - The URL of the API you want to send a PUT request to.
+ * @returns {Promise<any|null>} - The result from the API if successful, null if there's an error.
+ */
+export async function put_api(your_api) {
+  try {
+    const response = await axios({
+      method: "put",
+      url: your_api,
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = response.data;
+    if (data.isSuccess) {
+      return data.result;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    alert("Can't put the request", error.message);
+    return null;
+  }
+}
+
 export async function upload_image(your_api, file){
+  let result = null;
+
   const formData = new FormData();
   formData.append("file", file);
   formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
 
-  try {
-    const response = await axios({
-      method: "post",
-      url: your_api,
-      data: formData,
-      headers: {
-        accept: "multipart/form-data",
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    const data = response.data;
-    const url = data.url;
+await fetch(your_api, {
+  method: "POST",
+  body: formData,
+})
+  .then((response) => response.json())
+  .then((data) => {
+    result = data;
+  })
+  .catch((error) => {
+    alert.error(SwalEnum.alertErrorImg, error);
+  });
 
-    return url;
-  } catch (error) {
-    alert("Error uploading to Cloudinary: ", error);
-    return null;
-  }
+  return result;
 };

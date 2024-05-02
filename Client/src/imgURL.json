@@ -6,6 +6,8 @@
     "adminLogo": "https://jobseekers.vn/wp-content/uploads/2018/01/Logo_Official.png",
     "careersBanner": "https://www.titancorpvn.com/uploads/banners/careers.jpg",
     "careerImg": "https://www.titancorpvn.com/assets/images/careers.jpg",
+    "innovationImg": "https://www.titancorpvn.com/uploads/documents/innovations/TCALL_-__point-to-point_Integrated_communicators.jpeg",
+    "innovationLink": "http://www.tcallsolutions.com",
     "servicesBanner": "https://www.titancorpvn.com/uploads/banners/services.jpg",
     "newsBanner": "https://www.titancorpvn.com/uploads/banners/news.jpg",
     "blogsBanner": "https://blog.titancorpvn.com/wp-content/themes/titantheme/assets/images/blog-banner.jpg",
@@ -20,5 +22,15 @@
     "aboutUsBanner": "https://www.titancorpvn.com/uploads/banners/about-us.jpg",
     "editImageFrame": "https://www.digitalcitizen.life/wp-content/uploads/2020/10/photo_gallery-1-596x225.jpg",
     "aboutUsImg1": "https://www.titancorpvn.com/uploads/banners/home-banner-3.jpg",
-    "aboutUsImg2": "https://hca.org.vn/userfiles/images/Hinh%20Tin%20Hoi%20Vien/tintan2.jpg"
+    "aboutUsImg2": "https://hca.org.vn/userfiles/images/Hinh%20Tin%20Hoi%20Vien/tintan2.jpg",
+    "loaderImage": "https://www.titancorpvn.com/assets/images/logo-blue.png",
+    "mobileDevelopment": "https://www.titancorpvn.com/uploads/documents/domains/Mobile_Development.jpeg",
+    "webAppDevelopment": "https://www.titancorpvn.com/uploads/documents/domains/Web_App_Development.jpeg",
+    "desktopDevelopment": "https://www.titancorpvn.com/uploads/documents/domains/Desktop_Development.jpeg",
+    "cloudBasedDevelopment": "https://www.titancorpvn.com/uploads/documents/domains/Cloud_Based_Development.jpeg",
+    "telecomNetworking": "https://www.titancorpvn.com/uploads/documents/domains/Telecom_Networking.jpeg",
+    "testingQualityAssurance": "https://www.titancorpvn.com/uploads/documents/domains/Testing_Quality_Assurance.jpeg",
+    "blockchainDevelopment": "https://www.titancorpvn.com/uploads/documents/domains/Blockchain_Development.jpeg",
+    "artificialIntelligence": "https://www.titancorpvn.com/uploads/documents/domains/Artificial_Intelligence.jpeg",
+    "erpCrmImplementation": "https://www.titancorpvn.com/uploads/documents/domains/ERP_CRM_Implementation.jpeg"
 }

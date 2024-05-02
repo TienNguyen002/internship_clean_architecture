@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using SlugGenerator;
 using TitanWeb.Domain.Collections;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO;
@@ -15,14 +16,16 @@ namespace TitanWeb.Application.Services
         private readonly IItemRepository _repository;
         private readonly ISectionRepository _sectionRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly ISubItemRepository _subItemRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloundinaryService _cloundinaryService;
-        public ItemService(IItemRepository repository, 
-            IMapper mapper, 
+        public ItemService(IItemRepository repository,
+            IMapper mapper,
             IUnitOfWork unitOfWork,
-            ISectionRepository sectionRepository, 
+            ISectionRepository sectionRepository,
             ICategoryRepository categoryRepository,
+            ISubItemRepository subItemRepository,
             ICloundinaryService cloundinaryService)
         {
             _repository = repository;
@@ -30,6 +33,7 @@ namespace TitanWeb.Application.Services
             _unitOfWork = unitOfWork;
             _sectionRepository = sectionRepository;
             _categoryRepository = categoryRepository;
+            _subItemRepository = subItemRepository;
             _cloundinaryService = cloundinaryService;
         }
 
@@ -75,6 +79,19 @@ namespace TitanWeb.Application.Services
         }
 
         /// <summary>
+        /// Get All Items By Section Slug
+        /// </summary>
+        /// <param name="sectionSlug"> Slug of Section want to get Items </param>
+        /// <param name="urlSlug"> Url Slug of Item not take </param>
+        /// <returns> A List Of Item By Section Slug except item with url slug</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<ItemForSectionDTO>> GetAllItemsBySectionSlugAsync(string sectionSlug, string urlSlug)
+        {
+            var item = await _repository.GetAllItemsBySectionSlugAsync(sectionSlug, urlSlug);
+            return _mapper.Map<IList<ItemForSectionDTO>>(item);
+        }
+
+        /// <summary>
         /// Add/Update By Find News Id, If Id > 0 Update it by Model, else Create New News By Model
         /// </summary>
         /// <param name="model"> Model to add/update </param>
@@ -82,7 +99,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> EditNewsAsync(NewsEditModel model)
         {
-            var news = model.Id > 0 ? await _repository.GetByIdWithInclude(model.Id, i => i.Sections) : null;
+            var news = model.Id > 0 ? await _repository.GetById(model.Id) : null;
             if (news == null)
             {
                 news = new Item { CreatedDate = DateTime.Now, };
@@ -98,15 +115,15 @@ namespace TitanWeb.Application.Services
             }
             news.ShortDescription = model.ShortDescription;
             news.Description = model.Description;
-            if(model.ImageFile != null)
+            if (model.ImageFile != null)
             {
                 news.Image = new Image
                 {
-                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
-            if(news.Sections.Count() == 0)
+            if (news.Sections.Count() == 0)
             {
                 foreach (var section in sections)
                 {
@@ -126,7 +143,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<ItemDTO> GetItemByIdAsync(int id)
         {
-            var item = await _repository.GetByIdWithInclude(id, i => i.Image);
+            var item = await _repository.GetByIdWithInclude(id, i => i.Image, i => i.SubItems);
             return _mapper.Map<ItemDTO>(item);
         }
 
@@ -136,7 +153,7 @@ namespace TitanWeb.Application.Services
         /// <param name="id"> Id Of Item want to delete </param>
         /// <returns> Deleted Item </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> DeleteItemAsync(int id)
+        public async Task<bool> DeleteNewsAsync(int id)
         {
             await _repository.DeleteItemAsync(id);
             int saved = await _unitOfWork.Commit();
@@ -164,7 +181,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> EditBlogsAsync(BlogEditModel model)
         {
-            var blog = model.Id > 0 ? await _repository.GetByIdWithInclude(model.Id, i => i.Sections) : null; 
+            var blog = model.Id > 0 ? await _repository.GetById(model.Id) : null;
             if (blog == null)
             {
                 blog = new Item { CreatedDate = DateTime.Now, };
@@ -185,17 +202,17 @@ namespace TitanWeb.Application.Services
             {
                 blog.Image = new Image
                 {
-                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
-            if(blog.Sections.Count() == 0)
+            if (blog.Sections.Count() == 0)
             {
                 foreach (var section in sections)
                 {
                     blog.Sections.Add(section);
                 }
-            }  
+            }
             await _repository.EditItemAsync(blog);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -209,7 +226,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> EditBannerAsync(BannerEditModel model)
         {
-            var banner = model.Id > 0 ? await _repository.GetByIdWithInclude(model.Id, i => i.Categories) : null;
+            var banner = model.Id > 0 ? await _repository.GetById(model.Id) : null;
             if (banner == null)
             {
                 banner = new Item { CreatedDate = DateTime.Now, };
@@ -230,10 +247,10 @@ namespace TitanWeb.Application.Services
             {
                 banner.Image = new Image
                 {
-                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName, QueryManagements.BannerFolder),
                 };
             }
-            var category = await _categoryRepository.GetCategoryBySlugAsync(model.CategorySlug, model.Locale);
+            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.BannerSlug, model.Locale);
             if (banner.Categories.Count() == 0 && category != null)
             {
                 banner.Categories.Add(category);
@@ -244,44 +261,86 @@ namespace TitanWeb.Application.Services
         }
 
         /// <summary>
-        /// Add/Update By Find Section Item Id, If Id > 0 Update it by Model, else Create New News By Model
+        /// Add/Update By Find Footer Item Id, If Id > 0 Update it by Model, else Create New News By Model
         /// </summary>
         /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Section Item </returns>
+        /// <returns> Added/Updated Footer Item </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> EditSectionItemAsync(SectionItemEditModel model)
+        public async Task<bool> EditFooterItemAsync(FooterEditModel model)
         {
-            var item = model.Id > 0 ? await _repository.GetByIdWithInclude(model.Id, i => i.Sections) : null;
-            if (item == null)
+            var footerItem = model.Id > 0 ? await _repository.GetById(model.Id) : null;
+            if (footerItem == null)
             {
-                item = new Item { CreatedDate = DateTime.Now, };
+                footerItem = new Item { CreatedDate = DateTime.Now, };
             }
-            else item.UpdatedDate = DateTime.Now;
+            else footerItem.UpdatedDate = DateTime.Now;
 
-            item.Title = model.Title;
-            item.SubTitle = model.SubTitle;
-            item.UrlSlug = model.UrlSlug;
-            item.Description = model.Description;
+            footerItem.Title = model.Title;
+            footerItem.UrlSlug = model.Title.GenerateSlug();
+            footerItem.Address = model.Address;
+            footerItem.TelNumber = model.TelNumber;
+            footerItem.Description = model.Description;
+            footerItem.InfoGmail = model.InfoGmail;
+            footerItem.InfoGmail2 = model.InfoGmail2;
+
+            var subItem = await _subItemRepository.GetByItemIdAsync(model.Id);
+            if (subItem == null)
+            {
+                subItem = new SubItem();
+                footerItem.SubItems.Add(subItem);
+            }
+            subItem.Facebook = model.Facebook;
+            subItem.Twitter = model.Twitter;
+            subItem.Linkedin = model.Linkedin;
+            subItem.Youtube = model.Youtube;
+
+            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.FooterSlug, QueryManagements.English);
+            if (footerItem.Categories.Count() == 0 && category != null)
+            {
+                footerItem.Categories.Add(category);
+            }
+            await _subItemRepository.EditSubItemAsync(subItem);
+            await _repository.EditItemAsync(footerItem);
+
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
+
+        public async Task<bool> EditItemAsync(ItemEditModel model)
+        {
+            var updatedItem = model.Id > 0 ? await _repository
+                .GetByIdWithInclude(model.Id, i => i.Sections) : null;
+            if (updatedItem == null)
+            {
+                updatedItem = new Item { CreatedDate = DateTime.Now, };
+            }
+            else updatedItem.UpdatedDate = DateTime.Now;
+
+            updatedItem.Title = model.Title;
+            updatedItem.UrlSlug = model.UrlSlug;
             if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
-            item.Description = model.Description;
+            updatedItem.SubTitle = model.SubTitle;
+            updatedItem.Description = model.Description;
             if (model.ImageFile != null)
             {
-                item.Image = new Image
+                updatedItem.Image = new Image
                 {
-                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
-            item.Button.Label = model.ButtonLabel;
-            var category = await _sectionRepository.GetSectionBySlugWithLanguageAsync(model.SectionSlug, model.Locale);
-            if (item.Sections.Count() == 0 && category != null)
+
+            var newSection = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
+            if (newSection != null)
             {
-                item.Sections.Add(category);
+                updatedItem.Sections.Clear();
+                updatedItem.Sections.Add(newSection);
             }
-            await _repository.EditItemAsync(item);
+
+            await _repository.EditItemAsync(updatedItem);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }

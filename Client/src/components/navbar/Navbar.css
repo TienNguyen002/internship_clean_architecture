@@ -96,58 +96,60 @@ body.popup-open {
 
 @media only screen and (max-width: 980px) {
   .navbar {
-    height: 70px; 
+    height: 70px;
     padding: 8px 30px;
   }
   .menuCloseBtn {
-    top: 20px; 
+    top: 20px;
     right: 55px;
-    width: 80px; 
-    font-size: 24px; 
+    width: 80px;
+    font-size: 24px;
   }
   .logo {
-    width: 120px; 
+    width: 120px;
   }
   .grid-item {
     padding: 2px;
-    font-size: 18px; 
+    font-size: 18px;
     margin-right: 24px;
   }
 }
 
 @media only screen and (max-width: 768px) {
   .navbar {
-    height: 60px; 
+    height: 60px;
     padding: 6px 30px;
   }
   .menuCloseBtn {
-    top: 20px; 
-    font-size: 22px; 
+    top: 20px;
+    font-size: 22px;
+    right: 40px;
   }
   .logo {
-    width: 100px; 
+    width: 100px;
   }
   .grid-item {
-    font-size: 18px; 
+    font-size: 18px;
     margin-right: 24px;
   }
 }
 
 @media only screen and (max-width: 480px) {
   .navbar {
-    height: 50px; 
-    padding: 5px 20px;
+    height: 50px;
+    padding: 5px 10px;
   }
   .menuCloseBtn {
-    top: 20px; 
-    font-size: 20px; 
+    top: 20px;
+    font-size: 20px;
+    right: 30px;
   }
   .logo {
-    width: 75px; 
+    width: 75px;
   }
   .grid-item {
     padding: 0;
-    font-size: 16px; 
+    font-size: 16px;
     margin-right: 24px;
   }
 }

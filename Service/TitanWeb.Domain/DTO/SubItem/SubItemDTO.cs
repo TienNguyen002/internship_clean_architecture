@@ -1,11 +1,11 @@
-﻿using TitanWeb.Domain.DTO.Image;
-
-namespace TitanWeb.Domain.DTO.SubItem
+﻿namespace TitanWeb.Domain.DTO.SubItem
 {
     public class SubItemDTO
     {
         public int Id { get; set; }
-        public string Text { get; set; }
-        public ImageDTO Image { get; set; }
+        public string? Facebook { get; set; }
+        public string? Twitter { get; set; }
+        public string? Linkedin { get; set; }
+        public string? Youtube { get; set; }
     }
 }

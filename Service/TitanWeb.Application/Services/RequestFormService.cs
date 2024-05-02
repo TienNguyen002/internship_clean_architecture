@@ -58,5 +58,18 @@ namespace TitanWeb.Application.Services
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }
+
+        /// <summary>
+        /// Delete Request Form By Id
+        /// </summary>
+        /// <param name="id"> Id Of Request Form want to delete </param>
+        /// <returns> Deleted Request Form </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> DeleteRequestFormAsync(int id)
+        {
+            await _repository.DeleteRequestFormAsync(id);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
     }
 }

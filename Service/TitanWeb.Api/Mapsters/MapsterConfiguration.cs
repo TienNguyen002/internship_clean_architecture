@@ -38,8 +38,7 @@ namespace TitanWeb.Api.Mapsters
                 .Map(desc => desc.Id, src => src.Id);
 
             config.NewConfig<SubItem, SubItemDTO>()
-                .Map(desc => desc.Id, src => src.Id)
-                .Map(desc => desc.Text, src => src.TextItem);
+                .Map(desc => desc.Id, src => src.Id);
         }
     }
 }

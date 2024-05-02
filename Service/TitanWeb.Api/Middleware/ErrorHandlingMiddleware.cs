@@ -32,13 +32,14 @@ namespace TitanWeb.Api.Middleware
             context.Response.ContentType = "application/json";
             var statusCode = (int)HttpStatusCode.InternalServerError;
 
-            if(exception is NotImplementedException) statusCode = (int)HttpStatusCode.NotImplemented;
-            else if(exception is ArgumentException) statusCode = (int)HttpStatusCode.BadRequest;
-            else if(exception is ArgumentNullException) statusCode = (int)HttpStatusCode.BadRequest;
-            else if(exception is NullReferenceException) statusCode = (int)HttpStatusCode.BadRequest;
+            if (exception is NotImplementedException) statusCode = (int)HttpStatusCode.NotImplemented;
+            else if (exception is ArgumentException) statusCode = (int)HttpStatusCode.BadRequest;
+            else if (exception is ArgumentNullException) statusCode = (int)HttpStatusCode.BadRequest;
+            else if (exception is NullReferenceException) statusCode = (int)HttpStatusCode.BadRequest;
+            else if (exception is NotSupportedException) statusCode = (int)HttpStatusCode.BadRequest;
 
             context.Response.StatusCode = statusCode;
-            
+
             var error = new Error
             {
                 StatusCode = statusCode.ToString(),

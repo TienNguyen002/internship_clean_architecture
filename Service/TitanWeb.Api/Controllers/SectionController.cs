@@ -1,39 +1,34 @@
 ﻿using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Section;
-using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Services;
-using TitanWeb.Infrastructure.Contexts;
 
 namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class SectionController : ControllerBase
     {
         private readonly ISectionService _service;
         private readonly ILogger<SectionController> _logger;
         private readonly IMapper _mapper;
-        private readonly TitanWebContext _context;
-        public SectionController(ISectionService service, ILogger<SectionController> logger, IMapper mapper, TitanWebContext context)
+        public SectionController(ISectionService service, ILogger<SectionController> logger, IMapper mapper)
         {
             _service = service;
             _logger = logger;
             _mapper = mapper;
-            _context = context;
         }
 
         /// <summary>
-        /// Get Section By Language
+        /// Get all Sections by Language
         /// </summary>
-        /// <param name="language"> Language want to get Section (en, ja) </param>
-        /// <returns> List Of Sections With Language </returns>
-
+        /// <param name="language"> Language of the Section (en, ja) </param>
+        /// <returns> List of Sections by Language </returns>
         [HttpGet("{language}")]
         public async Task<ActionResult<IList<SectionDTO>>> GetAllSections(string language)
         {
@@ -44,10 +39,28 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
+        /// Get Section by Id
+        /// </summary>
+        /// <param name="id"> Id of the Section to get </param>
+        /// <returns> Section with the specified Id </returns>
+        [HttpGet("byid/{id}")]
+        public async Task<ActionResult<SectionDTO>> GetSectionById(int id)
+        {
+            _logger.LogInformation(LogManagements.LogGetSectionById + id);
+            var section = await _service.GetSectionByIdAsync(id);
+            if (section == null)
+            {
+                return Ok(ApiResponse.Success(section, ResponseManagements.NotFoundSectionIdMsg + id));
+            }
+            _logger.LogInformation(LogManagements.LogReturnSectionById + id);
+            return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionById + id));
+        }
+
+        /// <summary>
         /// Get Section By Slug
         /// </summary>
-        /// <param name="slug"> UrlSlug want to get Section </param>
-        /// <returns> Section With UrlSlug want to get </returns>
+        /// <param name="slug"> UrlSlug of the Section to get </param>
+        /// <returns> Section with specified UrlSlug </returns>
         [HttpGet("byslug/{slug}")]
         public async Task<ActionResult<SectionDTO>> GetSectionBySlug(string slug)
         {
@@ -55,15 +68,43 @@ namespace TitanWeb.Api.Controllers
             var section = await _service.GetSectionBySlugAsync(slug);
             if (section == null)
             {
-                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundSectionSlugMsg + slug));
+                return Ok(ApiResponse.Success(section, ResponseManagements.NotFoundSectionSlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnSectionBySlug + slug);
             return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionBySlug + slug));
         }
 
         /// <summary>
+        /// Find Sections by Slug
+        /// </summary>
+        /// <param name="slug"> Section UrlSlug to search for </param>
+        /// <returns> List of Sections that mathces the UrlSlug </returns>
+        [HttpGet("list/{slug}")]
+        public async Task<ActionResult<IList<SectionDTO>>> GetAllSectionBySlug(string slug)
+        {
+            _logger.LogInformation(LogManagements.LogGetAllSections + slug);
+            var sections = await _service.GetAllSectionBySlugAsync(slug);
+            _logger.LogInformation(LogManagements.LogReturnAllSectionsBySlug + slug);
+            return Ok(ApiResponse.Success(sections, ResponseManagements.SuccessGetAllSectionsBySlug + slug));
+        }
+
+        /// <summary>
         /// Add/Update Section
         /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Section/editSection
+        ///     {
+        ///         "Id"= "216", (Id = 0 to Create, Id != to Update)
+        ///         "Name"= "Services"
+        ///         "Title"= "WE PROVIDE",
+        ///         "UrlSlug"= "services",
+        ///         "Description"= "Professional and trusted services with cost-effective and exceptional expertise to deal with any complexities in scalable projects",
+        ///         "BackgroundImage"="@myImage.png;type=image/png"
+        ///         "Locale"="en" (`en` or `ja`)
+        ///     }
+        /// </remarks>
         /// <param name="model"> Model to add/update </param>
         /// <returns> Added/Updated Section </returns>
         /// <exception cref="Exception"></exception>
@@ -81,10 +122,10 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get Section By Id
+        /// Delete Section By Id
         /// </summary>
-        /// <param name="id"> Id Of Section want to get </param>
-        /// <returns> Get Section By Id </returns>
+        /// <param name="id"> Id of "Section" want to delete </param>
+        /// <returns> Delete Section By Id </returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteSection(int id)
         {
@@ -95,24 +136,6 @@ namespace TitanWeb.Api.Controllers
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteSection + id));
             }
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteSection + id));
-        }
-
-        /// <summary>
-        /// Move Section
-        /// </summary>
-        /// <param name="sourceSection">Section want to move</param>
-        /// <param name="destinationSection">Place Section want to move to</param>
-        /// <returns> Section moved </returns>
-        [HttpPut("moveSection/{sourceSection}to{destinationSection}")]
-        public async Task<ActionResult> MoveSection(string sourceSection, string destinationSection)
-        {
-            _logger.LogInformation(LogManagements.LogMoveSection, sourceSection, destinationSection);
-            var result = await _service.MoveSection(sourceSection, destinationSection);
-            if (!result)
-            {
-                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToMoveSection, sourceSection, destinationSection));
-            }
-            return Ok(ApiResponse.SuccessMsg(result, HttpStatusCode.OK, ResponseManagements.SuccessMoveSection, sourceSection, destinationSection));
         }
     }
 }

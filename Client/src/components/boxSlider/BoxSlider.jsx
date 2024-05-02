@@ -11,6 +11,7 @@ import { convertDate } from "../../common/functions";
 
 const BoxSlider = (props) => {
   const {
+    name,
     slideNumber,
     switchNavigation,
     slideDelay,
@@ -40,13 +41,11 @@ const BoxSlider = (props) => {
       {items.length > 0
         ? items.map((item, index) => (
             <SwiperSlide className={itemStyle || "box-item"} key={index}>
-              <a className="link-to-index" href="/services">
+              <a className="link-to-index" href={`/${name}/${item.urlSlug}`}>
                 <div>
                   <img
                     className={logoBoxStyle || "item-logo"}
-                    src={  item.imageUrl.startsWith("http")
-                        ? item.imageUrl
-                        : `${process.env.REACT_APP_API_DEFAULT}${item.imageUrl}`}
+                    src={item.imageUrl}
                     alt="Item AltImage"
                   />
                 </div>
@@ -83,7 +82,7 @@ const BoxSlider = (props) => {
                       ></p>
                     )} <br />
                     {item.buttonStatus ? (
-                      <Link to="/careers">
+                      <Link to="/careers/">
                         <button className="btn-lastestjobs">
                           {item.buttonLabel}
                         </button>

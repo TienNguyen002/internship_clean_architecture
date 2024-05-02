@@ -64,7 +64,7 @@
         public const string SectionId = "Section Id";
         public const string SectionName = "Section Name";
         public const string SectionTitle = "Section Title";
-        public const string SectionSlug = "Section Slug";
+        public const string SectionSlug = "Section URL Slug";
         public const string SectionDescription = "Section Description";
         public const string SectionBackgroundImage = "Section Background Image";
 
@@ -104,7 +104,24 @@
         public const string SubItemId = "Sub-Item Id";
         public const string SubItemText = "Sub-Item Text";
         public const string SubItemImage = "Sub-Item Image";
-        public const string ItemSlug = "Item Slug";
+        public const string SubItemSlug = "Item Slug";
+
+        /// <summary>
+        /// Validate Footer Item Display Name
+        /// </summary>
+        public const string FooterItemId = "Footer Item Id";
+        public const string FooterItemTitle = "Footer Item Title";
+        public const string FooterItemUrlSlug = "Footer Item UrlSlug";
+        public const string FooterItemAddress = "Footer Item Address";
+        public const string FooterItemTelNumber = "Footer Item TelNumber";
+        public const string FooterItemDescription = "Footer Item Description";
+        public const string FooterItem1stGmail = "Footer Item InfoGmail1";
+        public const string FooterItem2ndGmail = "Footer Item InfoGmail2";
+        public const string FooterItemSkype = "Footer Item Skype";
+        public const string FooterItemFacebook = "Footer Item Facebook";
+        public const string FooterItemTwitter = "Footer Item Twitter";
+        public const string FooterItemLinkedin = "Footer Item Linkedin";
+        public const string FooterItemYoutube = "Footer Item Youtube";
 
         /// <summary>
         /// Validate Length
@@ -224,7 +241,45 @@
         /// </summary>
         public const string SubItemTextRequiredMsg = "Sub-Item Text cannot be empty!!";
         public const string SubItemTextMaxLength = "Sub-Item Text length only 100";
-        public const string ItemSlugRequiredMsg = "Section Item Slug cannot be empty!!";
-        public const string ItemSlugMaxLength = "Section Item Slug length only 100";
+        public const string SubItemSlugRequiredMsg = "Sub-Item Slug cannot be empty!!";
+        public const string SubItemSlugMaxLength = "Sub-Item Slug length only 100";
+
+        /// <summary>
+        /// Reponse Footer Item Error When Validate
+        /// </summary>
+        public const string FooterItemTitleRequiredMsg = "Footer Item Text cannot be empty!!";
+        public const string FooterItemTitleMaxLength = "Footer Item Text length only 100";
+        public const string FooterItemSlugRequiredMsg = "Footer Item Slug cannot be empty!!";
+        public const string FooterItemSlugMaxLength = "Footer Item Slug length only 100";
+
+        //Swagger Docs
+        public const string SwaggerDocDesc = "An API to manage contents on Titan Corp Website";
+        public const string SwaggerDocTOS = "https://example.com/terms";
+        public const string SwaggerDocContactName = "Nguyễn Hoàng Nhật Tiến - Nguyễn Quang Hưng";
+        public const string SwaggerDocContactEmail = "2011391@dlu.edu.vn";
+
+        //Item Edit Model Constants
+        public const string ItemId = "Item Id";
+        public const string ItemTitle = "Item Title";
+        public const string ItemSubTitle = "Customer Position";
+        public const string ItemSlug = "Item URL Slug";
+        public const string ItemDescription = "Item Description";
+        public const string ItemImage = "Item Image";
+        public const string ItemTitleRequiredMsg = "Item Title cannot be empty!";
+        public const string ItemTitleMaxLength = "Item Title length must not be 100 characters";
+        public const string ItemSubTitleMaxLength = "Customer Position must not contain more than 100 characters!";
+
+        //All purpose
+        public const string TitleRequiredMsg = "Title cannot be empty!";
+        public const string ItemRequiredMsg = "Description cannot be empty!";
+        public const string TitleMaxLength = "Title must not contain more than 100 characters!";
+        public const string DescriptionMaxLength = "Description must not contain more than 500 characters!";
+
+        public const string UrlSlugRequiredMsg = "URL Slug cannot be empty!";
+        public const string UrlSlugMaxLength = "URL Slug length only 100!";
+        public const string InvalidUrlSlug = "Invalid URL Slug. Slug can only contain lowercase letters, numbers, and hyphens and must not begin with a number (e.g., 'my-post-123')";
+        public const string SlugPattern = @"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$";
+
+
     }
 }

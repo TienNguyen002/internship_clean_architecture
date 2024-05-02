@@ -1,5 +1,6 @@
 ﻿using MapsterMapper;
 using TitanWeb.Api.Media;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Image;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces;
@@ -56,7 +57,7 @@ namespace TitanWeb.Application.Services
             var image = new Image()
             {
                 Hyperlink = model.Hyperlink,
-                ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName),
+                ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.LogoFolder),
                 IsLogo = model.IsLogo,
             };
             await _repository.Add(image);

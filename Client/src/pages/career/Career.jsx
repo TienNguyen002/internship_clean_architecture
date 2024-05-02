@@ -49,7 +49,7 @@ const Career = () => {
                 {translate('career.Contact')}
               </strong>
               <a href="mailto:recruitment@titancorpvn.com">
-                <strong>{translate('career.Email')}</strong>
+                {translate('career.Email')}
               </a>
             </p>
           </div>
@@ -60,5 +60,3 @@ const Career = () => {
 };
 
 export default Career;
-
-  

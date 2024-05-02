@@ -6,7 +6,7 @@ import SideBar from '../../../components/admin/sideBar/SideBar'
 const AdNews = () => {
   return (
     <Box sx={{ display: 'flex' }}>
-    <SideBar />
+    <SideBar name="News"/>
     <Box component="main" sx={{ overflow: "auto" }}>
       <Table name= {slugName.news} />
     </Box>

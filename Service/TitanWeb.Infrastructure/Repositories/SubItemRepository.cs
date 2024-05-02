@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Infrastructure.Contexts;
@@ -19,12 +20,39 @@ namespace TitanWeb.Infrastructure.Repositories
         {
             var subItemToDelete = await _context.Set<SubItem>()
                 .Include(i => i.Items)
-                .Include(i => i.Image)
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try
             {
                 _context.Remove(subItemToDelete);
+                return true;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is SubItem)
+                    {
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        foreach (var property in proposedValues.Properties)
+                        {
+                            var proposedValue = proposedValues[property];
+                            var databaseValue = databaseValues[property];
+
+                            proposedValues[property] = proposedValue ?? databaseValue;
+                        }
+
+                        entry.OriginalValues.SetValues(databaseValues);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(
+                            ResponseManagements.ConcurrencyConflicts
+                            + entry.Metadata.Name);
+                    }
+                }
                 return true;
             }
             catch (Exception)
@@ -36,7 +64,7 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <summary>
         /// Add Sub Item If Model Has No Id / Update Sub Item If Model Has Id
         /// </summary>
-        /// <param name="item"> Model to add/update </param>
+        /// <param name="subItem"> Model to add/update </param>
         /// <returns> Added/Updated Sub Item </returns>
         /// <exception cref="Exception"></exception>
         public async Task<bool> EditSubItemAsync(SubItem subItem)
@@ -57,6 +85,20 @@ namespace TitanWeb.Infrastructure.Repositories
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Find Sub-Item By Item Id
+        /// </summary>
+        /// <param name="itemId"> Id Of Item want to find </param>
+        /// <returns> Sub Item By Item Id </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<SubItem> GetByItemIdAsync(int itemId)
+        {
+            return await _context.Set<SubItem>()
+                .Include(s => s.Items)
+                .Where(s => s.Items.Any(i => i.Id == itemId))
+                .FirstOrDefaultAsync();
         }
     }
 }

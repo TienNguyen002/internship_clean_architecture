@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Domain.Constants;
-using TitanWeb.Domain.DTO.Items;
-using TitanWeb.Domain.DTO.SubItem;
 using TitanWeb.Domain.Interfaces.Services;
 
 namespace TitanWeb.Api.Controllers
@@ -21,25 +19,6 @@ namespace TitanWeb.Api.Controllers
             _service = service;
             _logger = logger;
             _mapper = mapper;
-        }
-
-        /// <summary>
-        /// Add/Update Sub-Item
-        /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Sub-Item </returns>
-        /// <exception cref="Exception"></exception>
-        [HttpPost("editSubItem")]
-        public async Task<ActionResult> EditSubItem([FromForm] SubItemEditModel model)
-        {
-            _logger.LogInformation(LogManagements.LogEditSubItem);
-            var subItemEdit = await _service.EditSubItemAsync(model);
-            if (!subItemEdit)
-            {
-                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditSubItem));
-            }
-            var result = _mapper.Map<SubItemDTO>(model);
-            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditSubItem));
         }
 
         /// <summary>

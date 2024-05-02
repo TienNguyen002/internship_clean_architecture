@@ -9,6 +9,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+import DOMPurify from "dompurify";
+
 import "./MainSlider.css";
 
 // import required modules
@@ -58,7 +60,11 @@ export default function MainSlider(props) {
                       <strong>{item.boldTitle}</strong>
                       {item.title}
                     </a>
-                    <p className="description_main_slide">{item.description}</p>
+                    <p className="description_main_slide"
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(item.description),
+                        }}
+                      ></p>
                   </div>
                 </SwiperSlide>
               ))

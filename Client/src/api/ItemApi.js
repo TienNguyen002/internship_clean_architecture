@@ -1,4 +1,4 @@
-import { delete_api, get_api, post_api, upload_image } from "./method";
+import { delete_api, get_api, post_api, upload_image, put_api } from "./method";
 import { convertObjToQueryString, queryString } from "../common/functions";
 
 /**
@@ -62,6 +62,16 @@ export function getItemBySectionSlug(payload) {
 }
 
 /**
+ * Retrieves items based on the section slug, urlSlug.
+ *
+ * @param {Object} payload The payload containing parameters for the request.
+ * @return {Promise} A promise resolving to the response from the API.
+ */
+export function getItemByDetailItem(payload) {
+  return get_api(process.env.REACT_APP_API_DETAIL_ITEM_URL + `${queryString(payload)}`);
+}
+
+/**
  * Retrieves an item by its ID.
  *
  * @param {string} id The ID of the item to retrieve.
@@ -69,6 +79,16 @@ export function getItemBySectionSlug(payload) {
  */
 export function getItemById(id) {
   return get_api(process.env.REACT_APP_API_ITEM_ID_URL + `${id}`);
+}
+
+/**
+ * Retrieves an item by its Slug.
+ *
+ * @param {string} slug The Slug of the item to retrieve.
+ * @return {Promise} A promise resolving to the response from the API.
+ */
+export function getItemBySlug(slug) {
+  return get_api(process.env.REACT_APP_API_ITEM_SLUG + `${slug}`);
 }
 
 /**
@@ -107,7 +127,7 @@ export function editNews(formData){
  * @param {FormData} formData The form data containing the blog details.
  * @return {Promise} A promise resolving to the response from the API.
  */
-export function   editBlog(formData){
+export function editBlog(formData){
   return post_api(process.env.REACT_APP_API_CREATE_BLOG_URL, formData)
 }
 
@@ -140,3 +160,97 @@ export function uploadToCloudinary(formData){
 export function uploadImageEditor(file){
   return upload_image(process.env.REACT_APP_CLOUDINARY_NAME, file)
 };
+
+/**
+ * Fetches the logo from the specified API.
+ *
+ * @returns {Promise<any|null>} - The logo data if successful, null if there's an error.
+ */
+export function getLogo(){
+  return get_api(process.env.REACT_APP_API_GET_LOGO)
+}
+
+/**
+ * Posts an image to the specified API.
+ *
+ * @param {FormData} formData - The form data containing the image to post.
+ * @returns {Promise<any|null>} - The result from the API if successful, null if there's an error.
+ */
+export function postImage(formData){
+  return post_api(process.env.REACT_APP_API_POST_IMAGE, formData)
+};
+
+
+/**
+ * Deletes an image with the specified ID from the API.
+ *
+ * @param {string} id - The ID of the image to delete.
+ * @returns {Promise<any|null>} - The result from the API if successful, null if there's an error.
+ */
+export function deleteImage(id) {
+  return delete_api(process.env.REACT_APP_API_POST_IMAGE + `/${id}`);
+}
+
+/**
+ * Changes the logo with the specified ID.
+ *
+ * @param {string} id - The ID of the logo to change.
+ * @returns {Promise<any|null>} - The result from the API if successful, null if there's an error.
+ */
+export function changeLogo(id) {
+  return put_api(process.env.REACT_APP_API_CHANGE_LOGO + `${id}`);
+}
+
+/**
+ * Create or Edit banner data by sending a POST request to the specified API URL.
+ *
+ * @param {Object} formData - The data to be sent for editing the banner.
+ * @returns {Promise} - A Promise that resolves to the response data from the API.
+ */
+export function editBanner(formData){
+  return post_api(process.env.REACT_APP_API_CREATE_BANNER_URL, formData)
+}
+
+/**
+ * Create or Edit section data by sending a POST request to the specified API URL.
+ *
+ * @param {Object} formData - The data to be sent for editing the section.
+ * @returns {Promise} - A Promise that resolves to the response data from the API.
+ */
+export function editSection(formData){
+  return post_api(process.env.REACT_APP_API_CREATE_SECTION_URL, formData)
+}
+
+/**
+ * Deletes an section by its ID.
+ *
+ * @param {string} id The ID of the section to delete.
+ * @return {Promise} A promise resolving to the response from the API.
+ */
+export function deleteSectionById(id) {
+  return delete_api(process.env.REACT_APP_API_SECTION_URL + `/${id}`);
+}
+
+/**
+ * Retrieves an section by its ID.
+ *
+ * @param {string} id The ID of the section to retrieve.
+ * @return {Promise} A promise resolving to the response from the API.
+ */
+export function getSectionById(id) {
+  return get_api(process.env.REACT_APP_API_SECTION_ID+ `${id}`);
+}
+
+/**
+ * Changes status button true or false to display or hide on HomePage
+ */
+export function changeBtnStatus(){
+  return put_api(process.env.REACT_APP_API_CHANGE_BUTTONSTATUS)
+}
+
+/**
+ * Update Footer by formData
+ */
+export function updateFooter(formData){
+  return post_api(process.env.REACT_APP_API_CHANGE_FOOTER, formData)
+}

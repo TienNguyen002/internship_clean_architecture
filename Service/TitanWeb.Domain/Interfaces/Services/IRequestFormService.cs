@@ -7,7 +7,8 @@ namespace TitanWeb.Domain.Interfaces.Services
     public interface IRequestFormService
     {
         Task<PaginationResult<RequestFormDTO>> GetPagedRequestFormAsync(RequestFormQuery query, PagingModel pagingModel);
-
         Task<bool> CreateRequestFormAsync(RequestFormEditModel model);
+        Task<bool> DeleteRequestFormAsync(int id);
+
     }
 }

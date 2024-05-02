@@ -4,6 +4,6 @@ namespace TitanWeb.Domain.Interfaces.Services
 {
     public interface ICategoryService
     {
-        Task<CategoryDTO> GetCategoryBySlugWithLanguageAsync(string slug, string language);
+        Task<CategoryDTO> GetCategoryBySlugAsync(string slug, string language);
     }
 }

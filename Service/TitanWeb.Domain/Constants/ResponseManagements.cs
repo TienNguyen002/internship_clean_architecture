@@ -11,6 +11,11 @@
         public static readonly string NotFoundMsg = "Not found ";
 
         /// <summary>
+        /// Concurrency conflicts
+        /// </summary>
+        public static readonly string ConcurrencyConflicts = "Don't know how to handle concurrency conflicts for";
+
+        /// <summary>
         /// Response Message For Func Image
         /// </summary>
         public static readonly string SuccessGetAllImages = "Success Get All Images";
@@ -28,7 +33,8 @@
         public static readonly string SuccessGetItemByQuery = "Success Get Item By Query";
         public static readonly string SuccessGetItemById = "Success Get Item with Id ";
         public static readonly string SuccessGetItemBySlug = "Success Get Item with Slug ";
-        public static readonly string SuccessGetItemByCategorySlug = "Success Get Item with Category Slug ";
+        public static readonly string SuccessGetItemByCategorySlug = "Success Get All Items with Category Slug ";
+        public static readonly string SuccessGetItemBySectionSlug = "Success Get All Items with Section Slug ";
         public static readonly string SuccessCreateItem = "Success Create New Item";
         public static readonly string FailToCreateItem = "Fail To Create New Item";
         public static readonly string SuccessDeleteItem = "Has Delete Success Item with Id ";
@@ -38,6 +44,9 @@
         public static readonly string NotFoundItemIdMsg = "Not found Item With Id ";
         public static readonly string NotFoundItemSlugMsg = "Not found Item With Slug ";
         public static readonly string NotFoundItemCategorySlugMsg = "Not found Item With Category Slug ";
+        public static readonly string NotFoundItemSectionSlugMsg = "Not found Item With Section Slug ";
+        public static readonly string SuccessEditItem = "Item successfully updated";
+        public static readonly string FailToEditItem = "Failed to update Item";
 
         /// <summary>
         /// Response Message For Func Section
@@ -50,8 +59,8 @@
         public static readonly string SuccessDeleteSection = "Has Delete Success Section with Id ";
         public static readonly string NotFoundSectionSlugMsg = "Not found Section With Slug ";
         public static readonly string FailToDeleteSection = "Fail To Delete Section with Id ";
-        public static readonly string SuccessMoveSection = "Has Move Section {1} to {2}";
-        public static readonly string FailToMoveSection = "Fail To Move Section {1} to {2}";
+        public static readonly string NotFoundSectionIdMsg = "Not found Section With Id ";
+        public static readonly string SuccessGetSectionById = "Success Get Section with Id ";
 
         /// <summary>
         /// Response Message For Func Request Form
@@ -61,6 +70,7 @@
         public static readonly string SuccessCreateRequestForm = "Success Create New Request Form";
         public static readonly string FailToCreateRequestForm = "Fail To Create New Request Form";
         public static readonly string SuccessDeleteRequestForm = "Has Delete Success Request Form with Id ";
+        public static readonly string FailToDeleteRequestForm = "Fail To Delete Request Form with Id ";
 
         /// <summary>
         /// Response Message For Func Category
@@ -91,21 +101,23 @@
         /// <summary>
         /// Response Message For Func Banner
         /// </summary>
-        public static readonly string SuccessEditBanner = "Success Edit News";
-        public static readonly string FailToEditBanner = "Fail To Edit News";
+        public static readonly string SuccessEditBanner = "Success Edit Banner";
+        public static readonly string FailToEditBanner = "Fail To Edit Banner";
 
         /// <summary>
-        /// Response Message For Func Section Item
+        /// Response Message For Func Footer Item
         /// </summary>
-        public static readonly string SuccessEditSectionItem = "Success Edit Section Item";
-        public static readonly string FailToEditSectionItem = "Fail To Edit Section Item";
+        public static readonly string SuccessEditFooterItem = "Success Edit Footer Item";
+        public static readonly string FailToEditFooterItem = "Fail To Edit Footer Item";
 
         /// <summary>
-        /// Response Message For Func Section Item
+        /// Response Message For Func Sub Item
         /// </summary>
         public static readonly string SuccessEditSubItem = "Success Edit Sub-Item";
         public static readonly string FailToEditSubItem = "Fail To Edit Sub-Item";
         public static readonly string FailToDeleteSubItem = "Fail To Delete New Sub-Item";
         public static readonly string SuccessDeleteSubItem = "Has Delete Success Sub-Item with Id ";
+
+        //API Response Message for Item 
     }
 }

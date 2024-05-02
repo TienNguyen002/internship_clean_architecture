@@ -8,5 +8,7 @@ namespace TitanWeb.Domain.Interfaces.Repositories
     {
         Task<IPagedList<RequestForm>> GetPagedRequestFormAsync(RequestFormQuery query,
             IPagingParams pagingParams);
+
+        Task<bool> DeleteRequestFormAsync(int id);
     }
 }

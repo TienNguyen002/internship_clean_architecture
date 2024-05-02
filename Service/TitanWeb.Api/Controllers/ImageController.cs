@@ -10,6 +10,7 @@ namespace TitanWeb.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class ImageController : ControllerBase
     {
         private readonly IImageService _imageService;
@@ -23,9 +24,9 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get All Image
+        /// Get all Images
         /// </summary>
-        /// <returns> Response List Of Image </returns>
+        /// <returns> A list of all Images </returns>
         [HttpGet("getAll")]
         public async Task<ActionResult<IList<ImageDTO>>> GetAllImages()
         {
@@ -38,26 +39,36 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Get Image By Id
         /// </summary>
-        /// <param name="id"> Id of Image Want To Get </param>
-        /// <returns> Response Image By Id want to get </returns>
+        /// <param name="id"> Id of the Image to get </param>
+        /// <returns> The Image to get </returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ImageDTO>> GetImageById(int id)
         {
             _logger.LogInformation(LogManagements.LogGetImageById + id);
             var image = await _imageService.GetImageByIdAsync(id);
-            if(image == null)
+            if (image == null)
             {
-                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundImageIdMsg + id));
+                return Ok(ApiResponse.Success(image, ResponseManagements.NotFoundImageIdMsg + id));
             }
             _logger.LogInformation(LogManagements.LogReturnImageById + id);
             return Ok(ApiResponse.Success(image, ResponseManagements.SuccessGetImageById + id));
         }
 
         /// <summary>
-        /// Add New Image
+        /// Creates a new Image
         /// </summary>
-        /// <param name="model"> Model Of Image To Add </param>
-        /// <returns> Added Image </returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Image
+        ///     {
+        ///         "ImageFile"="@myImage.png;type=image/png",
+        ///         "Hyperlink"= "https://example.com",
+        ///         "IsLogo"="false"
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model of the Image to add </param>
+        /// <returns> The added Image </returns>
         [HttpPost]
         public async Task<ActionResult> AddImage([FromForm] ImageEditModel model)
         {
@@ -77,10 +88,10 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Delete Image By Id
+        /// Delete Image by Id
         /// </summary>
-        /// <param name="id"> Id of Image Want To Delete </param>
-        /// <returns> Deleted Image </returns>
+        /// <param name="id"> Id of the Image To Delete </param>
+        /// <returns> Result of the Delete operation (True/False) </returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteImageById(int id)
         {
@@ -94,9 +105,9 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get All Logo Image
+        /// Get all Logos
         /// </summary>
-        /// <returns> A List Of Logos </returns>
+        /// <returns> A List of Logos </returns>
         [HttpGet("getLogos")]
         public async Task<ActionResult<IList<ImageDTO>>> GetAllLogos()
         {

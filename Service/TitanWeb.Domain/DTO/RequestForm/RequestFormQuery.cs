@@ -6,6 +6,6 @@ namespace TitanWeb.Domain.DTO.RequestForm
     public class RequestFormQuery
     {
         [DisplayName(ValidateManagements.Keyword)]
-        public string Keyword { get; set; } = null;
+        public string? Keyword { get; set; } = null;
     }
 }

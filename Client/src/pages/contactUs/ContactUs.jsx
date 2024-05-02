@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./ContactUs.css";
-import Request from "../../components/request/Request";
 import { getRequestForm } from "../../api/ItemApi";
 import { useSelector } from "react-redux";
 import { useTranslation } from 'react-i18next';
+import Request from "../../components/requestForm/Request";
 
 const ContactUs = () => {
   const { t: translate }  = useTranslation();
@@ -34,6 +34,8 @@ const ContactUs = () => {
         <h1 className="contact-page-title">{translate('titleName.Contact')}</h1>
         <img className="contact-page-image" src={contactUsBanner} alt="Contact AltImage"></img>
       </div>
+      <div className="box-body-contact-page">
+        <div className="contact-page-content-container">
       <div className="contact-us-content">
         <div className="contact-us-text">
           <h3>{translate('contact.Title')}</h3>
@@ -54,6 +56,8 @@ const ContactUs = () => {
           />
           ))
         : null}
+        </div>
+      </div>
         </div>
       </div>
     </div>

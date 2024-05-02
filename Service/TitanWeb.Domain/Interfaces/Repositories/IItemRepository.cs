@@ -8,6 +8,7 @@ namespace TitanWeb.Domain.Interfaces.Repositories
     {
         Task<Item> GetItemBySlugAsync(string slug);
         Task<IList<Item>> GetAllItemBySlugAsync(string slug);
+        Task<IList<Item>> GetAllItemsBySectionSlugAsync(string sectionSlug, string urlSlug);
         Task<IList<Item>> GetItemByCategorySlugAsync(string categorySlug, string language);
         Task<IPagedList<Item>> GetPagedItemAsync(ItemQuery query,
             IPagingParams pagingParams);

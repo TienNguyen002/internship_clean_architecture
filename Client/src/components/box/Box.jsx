@@ -15,14 +15,12 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import BoxSlider from "../boxSlider/BoxSlider";
 import { Link } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 const Box = (props) => {
-  const { name, title, items, description } = props;
+  const { name, title, items, description, backgroundUrl } = props;
   const [showPopup, setShowPopup] = useState(false);
   const [selectedSlideIndex, setSelectedSlideIndex] = useState(null);
-  const data = require("../../imgURL.json");
-  const domainBG = data.domainBG;
-  const ourClientBG = data.ourClientBG;
   const handleSlideClick = (index) => {
     setSelectedSlideIndex(index);
     setShowPopup(true);
@@ -33,18 +31,23 @@ const Box = (props) => {
     document.body.classList.remove("popup-open");
   };
 
-  document.documentElement.style.setProperty("--domainBG", `url(${domainBG})`);
-
-  document.documentElement.style.setProperty(
-    "--ourClientBG",
-    `url(${ourClientBG})`
-  );
-
   const renderBoxSlider = (name) => {
     switch (name) {
+      case sectionName.Service:
+        return (
+          <BoxSlider
+            name={name}
+            items={items}
+            title={title}
+            description={description}
+            switchNavigation={false}
+            sectionSliderNumber={sliderResponsive.ThreeItemBreakpoints}
+          />
+        );
       case sectionName.Domain:
         return (
           <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -60,12 +63,14 @@ const Box = (props) => {
       case sectionName.Model:
         return (
           <BoxSlider
+            name={sectionName.Service}
             items={items}
             title={title}
             description={description}
             logoBoxStyle="item-logo"
-            switchNavigation={true}
+            switchNavigation={false}
             hasBorder={true}
+            sectionSliderNumber={sliderResponsive.ThreeItemBreakpoints}
           />
         );
       case sectionName.Client:
@@ -184,6 +189,7 @@ const Box = (props) => {
       case sectionName.LastestJobs:
         return (
           <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -191,7 +197,7 @@ const Box = (props) => {
             titleItem="hidden"
             logoBoxStyle="img-one-colum"
             swiperStyle="item-one-colum"
-            textBoxStyle="text-one-colum"
+            textBoxStyle="text-one-colum-lastest-jobs"
             slideNumber={sliderNumber.oneSlideNumber}
             sectionSliderNumber={sliderResponsive.OneItemBreakpoints}
           />
@@ -199,6 +205,7 @@ const Box = (props) => {
       case sectionName.New:
         return (
           <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -209,9 +216,10 @@ const Box = (props) => {
             hasShort={true}
             />
         );
-        case sectionName.Blog:
+      case sectionName.Blog:
           return (
             <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -227,6 +235,7 @@ const Box = (props) => {
         if (items.length === numberLength.small) {
           return (
             <BoxSlider
+              name={name}
               items={items}
               title={title}
               description={description}
@@ -264,7 +273,7 @@ const Box = (props) => {
   };
 
   return (
-    <div className={boxSliderClassNameConfig[name]?.boxBody || "box-body"}> 
+    <div className={boxSliderClassNameConfig[name]?.boxBody || "box-body"} style={{ backgroundImage: `url(${backgroundUrl})`, backgroundAttachment: "fixed"}}>
       <div
         className={
           boxSliderClassNameConfig[name]?.boxContainer || "box-container"
@@ -280,7 +289,11 @@ const Box = (props) => {
           </h1>
         </div>
         <div className={boxSliderClassNameConfig[name]?.boxdesc || "desc"}>
-          {description}
+         <p
+           dangerouslySetInnerHTML={{
+           __html: DOMPurify.sanitize(description),
+          }}
+         ></p>
         </div>
         <div className="box-column">{renderBoxSlider(name)}</div>
       </div>

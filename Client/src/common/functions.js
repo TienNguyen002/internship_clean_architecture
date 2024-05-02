@@ -1,3 +1,5 @@
+import { linkSocial } from "../enum/EnumApi";
+
 export const convertObjToQueryString = function(obj) {
     var str = [];
     for (var p in obj)
@@ -27,4 +29,11 @@ export const convertDate = (inputDate) => {
 }
 export const splitUrl = (url) => {
   url.split("/").slice(-3).join("/")
+}
+export const splitIcon = (url) => {
+  return (
+    url === linkSocial.twitter ?
+    url.split("//")[1].split(".")[0]
+    : url.split("/").slice(-3).join("/").split(".")[1]
+  )
 }

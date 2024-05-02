@@ -1,4 +1,5 @@
-﻿using TitanWeb.Domain.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+using TitanWeb.Domain.Contracts;
 
 namespace TitanWeb.Domain.Entities;
 
@@ -20,6 +21,10 @@ public partial class Item : IEntity
 
     public string? Address { get; set; }
 
+    public string? InfoGmail { get; set; }
+
+    public string? InfoGmail2 { get; set; }
+
     public string? TelNumber { get; set; }
 
     public DateTime? CreatedDate { get; set; }
@@ -37,6 +42,8 @@ public partial class Item : IEntity
     public virtual ICollection<Category> Categories { get; set; } = new List<Category>();
 
     public virtual ICollection<Section> Sections { get; set; } = new List<Section>();
-
     public virtual ICollection<SubItem> SubItems { get; set; } = new List<SubItem>();
+
+    [Timestamp]
+    public byte[] RowVersion { get; set; } = null!;
 }

@@ -10,7 +10,7 @@ namespace TitanWeb.Infrastructure.Repositories
         public CategoryRepository(TitanWebContext context) : base(context) { }
 
         /// <summary>
-        /// Get Category by UrlSlug With Language
+        /// Get Category by UrlSlug
         /// </summary>
         /// <param name="slug"> UrlSlug of Category want to get </param>
         /// <param name="language"> Language of Category want to get (like: en, ja) </param>
@@ -25,7 +25,6 @@ namespace TitanWeb.Infrastructure.Repositories
                     .ThenInclude(i => i.Image)
                 .Include(c => c.Items)
                     .ThenInclude(i => i.SubItems)
-                        .ThenInclude(c => c.Image)
                 .Where(c => c.UrlSlug.Contains(slug) && c.Locale == language)
                 .FirstOrDefaultAsync();
         }

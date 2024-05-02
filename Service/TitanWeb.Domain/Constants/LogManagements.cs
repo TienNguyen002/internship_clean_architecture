@@ -36,10 +36,12 @@
         public static readonly string LogGetItemById = "\nGetting Item By Id ";
         public static readonly string LogGetItemBySlug = "\nGetting Item By Slug ";
         public static readonly string LogGetItemByCategorySlug = "\nGetting Item By Category Slug ";
+        public static readonly string LogGetItemBySectionSlug = "\nGetting Item By Section Slug ";
         public static readonly string LogReturnItemByQuery = "\nReturn Items Result";
         public static readonly string LogReturnItemById = "\nReturn Item By Id ";
         public static readonly string LogReturnItemBySlug = "\nReturn Item By Slug ";
         public static readonly string LogReturnItemByCategorySlug = "\nReturn Item By Category Slug ";
+        public static readonly string LogReturnItemBySectionSlug = "\nReturn Item By Section Slug ";
         public static readonly string LogCreateItem = "\nCreating Item";
         public static readonly string LogUpdateImageForItem = "\nUpdating Image For Item With Id ";
         public static readonly string LogDeleteItem = "\nDelete Item By Id ";
@@ -49,13 +51,14 @@
         /// </summary>
         public static readonly string LogGetAllSections = "\nGetting All Sections";
         public static readonly string LogGetAllSectionsBySlug = "\nGetting All Sections By Slug ";
+        public static readonly string LogGetSectionById = "\nGetting Section By Id ";
         public static readonly string LogGetSectionBySlug = "\nGetting Section By Slug ";
-        public static readonly string LogReturnSection= "\nReturn Sections Result";
+        public static readonly string LogReturnSection = "\nReturn Sections Result";
+        public static readonly string LogReturnSectionById = "\nReturn Section By Id";
         public static readonly string LogReturnSectionBySlug = "\nReturn Section By Slug ";
         public static readonly string LogReturnAllSectionsBySlug = "\nReturn All Sections By Slug ";
         public static readonly string LogEditSection = "\nEditting Section";
         public static readonly string LogDeleteSection = "\nDelete Section By Id ";
-        public static readonly string LogMoveSection = "\nMove Section {1} to {2}";
 
         /// <summary>
         /// Log Func Request Form
@@ -93,12 +96,12 @@
         public static readonly string LogEditBanner = "\nEditting Banner";
 
         /// <summary>
-        /// Log Func Section Item
+        /// Log Func Footer Item
         /// </summary>
-        public static readonly string LogEditSectionItem = "\nEditting Section Item";
+        public static readonly string LogEditFooterItem = "\nEditting Footer Item";
 
         /// <summary>
-        /// Log Func Section Item
+        /// Log Func Sub Item
         /// </summary>
         public static readonly string LogEditSubItem = "\nEditting Sub-Item";
         public static readonly string LogDeleteSubItem = "\nDelete Sub-Item By Id ";

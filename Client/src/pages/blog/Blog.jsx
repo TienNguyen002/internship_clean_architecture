@@ -73,9 +73,7 @@ const Blog = () => {
                   <Link to={`/blogs/${item.urlSlug}`}> 
                     <img
                       className="blog-page-item-img"
-                      src={ item.imageUrl.startsWith("http")
-                      ? item.imageUrl
-                      : `${process.env.REACT_APP_API_DEFAULT}${item.imageUrl}`}
+                      src={item.imageUrl}
                       alt="Blog AltImage"
                     />
                       <h1 className="title-blog-page-item">{item.title}</h1>   

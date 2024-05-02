@@ -49,7 +49,6 @@ export default function Table(props) {
       } else setRows([rows.id]);
     }
   }, [rows.id]);
-
   const { data } = useDemoData({
     dataSet: "Commodity",
   });
@@ -61,7 +60,6 @@ export default function Table(props) {
 
   const togglePopup = () => {
     setIsPopupVisible(true);
-    document.body.classList.toggle("popup-open");
   };
 
   const handleAddClick = () => {
@@ -130,14 +128,18 @@ export default function Table(props) {
     {
       field: "imageUrl",
       headerName: "Image",
-      width: widthTable.s,
-      renderCell: (rows) => (<img src={rows.value}/>),
+      minWidth: widthTable.m,
+      maxWidth: widthTable.l,
+      flex: 1,
+      renderCell: (rows) => (<img className="imageUrl-table" src={rows.value}/>),
     },
     {
       field: "title",
       headerName: "Title",
       type: "text",
-      width: widthTable.s,
+      minWidth: widthTable.l,
+      maxWidth: widthTable.m,
+      flex: 1,
       align: "left",
       headerAlign: "left",
     },
@@ -145,50 +147,60 @@ export default function Table(props) {
       field: "shortDescription",
       headerName: "Short Description",
       type: "text",
-      width: widthTable.l,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.xl,
+      flex: 1
     },
     {
       field: "createdDate",
       headerName: "Created Date",
       type: "Date",
-      width: widthTable.ss,
       renderCell: (rows) => convertDate(rows.value),
+      minWidth: widthTable.s,
+      maxWidth: widthTable.s,
+      flex: 1
+
     },
     {
       field: "updatedDate",
       headerName: "Updated Date",
       type: "Date",
-      width: widthTable.ss,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.s,
+      flex: 1,
       renderCell: (rows) => convertDate(rows.value),
     },
     {
       field: "subTitle",
       headerName: "Author",
       type: "text",
-      width: widthTable.ss,
       align: "left",
       headerAlign: "left",
       hide: true,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.s,
+      flex: 1
     },
     {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: widthTable.ss,
       cellClassName: "actions",
       getActions,
+      minWidth: widthTable.ss,
+      maxWidth: widthTable.s,
+      flex: 1
     },
   ];
 
   return (
-    <Box style={{ display: "flex" }}>
+    <Box sx={{ display: "flex" }}>
       <Box
         component="main"
         sx={{
           padding: 10,
-          justifyContent: "center",
-          height: "98vh",
-          width: "100%",
+          height: "fit-content",
+          width: "92%",
           "& .actions": {
             color: "text.secondary",
           },
@@ -200,7 +212,7 @@ export default function Table(props) {
       >
         <div className="data-grid-container">
         <DataGrid
-          rowHeight={200}
+          getRowHeight={() => 'auto'}
           rows={rows}
           columns={columns}
           rowModesModel={rowModesModel}
@@ -216,6 +228,15 @@ export default function Table(props) {
           initialState={{
             ...data.initialState,
             pagination: { paginationModel: { pageSize: 5 } },
+            sorting: {
+              ...data.initialState?.sorting,
+              sortModel: [
+                {
+                  field: 'createdDate',
+                  sort: 'desc',
+                },
+              ],
+            },
           }}
           pageSizeOptions={[5, 10, 25]}
           slotProps={{

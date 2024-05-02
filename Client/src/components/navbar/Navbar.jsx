@@ -28,7 +28,7 @@ const Navbar = () => {
     }else{
       i18n.changeLanguage(language.english)
       dispatch(changeLanguage(language.english));
-    } 
+    }
   };
   useEffect(() => {
     getItemByCategory(payload).then((data) => {
@@ -46,11 +46,22 @@ const Navbar = () => {
       {logo.length > 0
         ? logo.map((item, index) => (
             <div className="navbar" key={index}>
-              <Link to="/"><img className="logo" src={item.imageUrl} alt="logo" /></Link>
+              <Link to="/">
+                <img className="logo" src={item.imageUrl} alt="logo" />
+              </Link>
               <div className="grid-container">
-              <Link to="/home"><div className="grid-item">{translate('navbar.Home')}</div></Link> 
+                <Link to="/home">
+                  <div className="grid-item">{translate("navbar.Home")}</div>
+                </Link>
                 <span onClick={handleLanguageSwitch} className="grid-item">
-                  <i className="fa-solid fa-flag"></i> {translate('navbar.Lang')}
+                  {
+                      item.buttonStatus === true ?
+                    <>
+                      <i className="fa-solid fa-flag"></i>
+                      {item.buttonLabel}
+                    </>
+                      :null
+                  }
                 </span>
                 <a onClick={togglePopup} className="grid-item">
                   <i className="fa-solid fa-bars"></i>

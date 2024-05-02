@@ -14,10 +14,10 @@ namespace TitanWeb.Infrastructure.Repositories
         public ItemRepository(TitanWebContext context) : base(context) { }
 
         /// <summary>
-        /// Find Item By Query User Input
+        /// Retrieves an IQueryable of Item based on the provided ItemQuery.
         /// </summary>
-        /// <param name="query"> Query By User Input To Get Item (Section Slug) </param>
-        /// <returns> Item Get By Query </returns>
+        /// <param name="query"> ItemQuery used to filter the result</param>
+        /// <returns>An IQueryable of Item.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         private IQueryable<Item> GetItemByQueryable(ItemQuery query)
         {
@@ -35,11 +35,11 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Getting List Of Item With Pagination
+        /// Get a paged list of Items based on the provided query and paging parameters
         /// </summary>
-        /// <param name="query"> Query By User Input To Get Item (Section Slug) </param>
-        /// <param name="pagingParams"> Pagination Filter </param>
-        /// <returns> List Of Item Filter By Query With Pagination </returns>
+        /// <param name="query"> Query to filter the Item (by Section Slug). </param>
+        /// <param name="pagingParams"> Pagination Parameters. </param>
+        /// <returns>A paged list Of Items filtered By Query.</returns>
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<IPagedList<Item>> GetPagedItemAsync(ItemQuery query,
             IPagingParams pagingParams)
@@ -52,8 +52,8 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <summary>
         /// Get Item By Slug
         /// </summary>
-        /// <param name="slug"> UrlSlug want to get Item </param>
-        /// <returns> Item With UrlSlug want to get </returns>
+        /// <param name="slug"> UrlSlug of the Item. </param>
+        /// <returns> Item with matching UrlSlug </returns>
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<Item> GetItemBySlugAsync(string slug)
         {
@@ -81,11 +81,11 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Get Item By Category Slug
+        /// Get a List of Items based on category slug and language
         /// </summary>
-        /// <param name="categorySlug"> Slug of Category want to get Items </param>
-        /// <param name="language"> Language of category want to get (en, ja) </param>
-        /// <returns> A List Of Item By Category Slug filter language </returns>
+        /// <param name="categorySlug"> UrlSlug of the Category. </param>
+        /// <param name="language"> Language of the category (en, ja) </param>
+        /// <returns> A list of items filtered by category slug and language. </returns>
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<IList<Item>> GetItemByCategorySlugAsync(string categorySlug, string language)
         {
@@ -93,9 +93,24 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(i => i.Categories)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
-                    .ThenInclude(i => i.Image)
                 .Include(i => i.Button)
                 .Where(s => s.Categories.Any(c => c.UrlSlug.Contains(categorySlug) && c.Locale == language))
+                .ToListAsync();
+        }
+
+        /// <summary>
+        /// Get All Items By Section Slug
+        /// </summary>
+        /// <param name="sectionSlug"> Slug of Section want to get Items </param>
+        /// <param name="urlSlug"> Url Slug of Item not take </param>
+        /// <returns> A List Of Item By Section Slug except item with url slug</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<IList<Item>> GetAllItemsBySectionSlugAsync(string sectionSlug, string urlSlug)
+        {
+            return await _context.Set<Item>()
+                .Include(i => i.Sections)
+                .Include(i => i.Image)
+                .Where(i => i.Sections.Any(c => c.UrlSlug.Contains(sectionSlug) && i.UrlSlug != urlSlug))
                 .ToListAsync();
         }
 
@@ -184,9 +199,9 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <summary>
         /// This method checks if a slug already exists in the database
         /// </summary>
-        /// <param name="id"> Id Of Item want to compare </param>
+        /// <param name="id"> Id Of Item want to find </param>
         /// <param name="slug"> Slug Of Item want to check </param>
-        /// <returns> Item Slug Existed (true, false) </returns>
+        /// <returns> Image Item Changed </returns>
         /// <exception cref="Exception"></exception>
         public async Task<bool> IsItemSlugExitedAsync(int id, string slug)
         {

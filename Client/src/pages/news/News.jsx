@@ -64,9 +64,7 @@ const News = () => {
                   <Link to={`/news/${item.urlSlug}`}> 
                     <img
                       className="news-page-item-img"
-                      src={ item.imageUrl.startsWith("http")
-                      ? item.imageUrl
-                      : `${process.env.REACT_APP_API_DEFAULT}${item.imageUrl}`}
+                      src={item.imageUrl}
                       alt="News AltImage"
                     />
                       <h1 className="title-news-page-item">{item.title}</h1>   

@@ -5,7 +5,7 @@
     min-height: 160px;
     line-height: 1;
   }
-  
+
   .service-page-title {
     position: absolute;
     top: 50%;
@@ -24,4 +24,26 @@
   .service-page-image {
     width: 100vw;
     height: 100vh;
+  }
+
+  .service-page-content .box-home-body-domain .domain-title a{
+    color: var(--medium-gray);
+  }
+
+  .service-page-content .box-home-body-domain .domain-title a :hover{
+    color: var(--primary-color);
+    transition: 0.3s ease;
+  }
+
+  .service-page-content .box-home-body-domain .domain-title{
+    color: var(--medium-gray);
+    margin: 28.5867px 0px 40px;
+  }
+
+  .service-page-content .box-home-body-domain .white{
+    color: var(--medium-gray);
+  }
+
+  .service-page-content .box-home-body-domain .domain-item p{
+    display: none;
   }

@@ -1,9 +1,7 @@
-﻿using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Domain.Constants;
-using TitanWeb.Domain.DTO.Items;
 using TitanWeb.Domain.Interfaces.Services;
 
 namespace TitanWeb.Api.Controllers
@@ -23,13 +21,13 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Change Button Status
         /// </summary>
-        /// <param name="slug"> Slug of button want to change status </param>
-        /// <returns> Change Button Statusd </returns>
+        /// <param name="itemSlug"> Slug of Item want to find to change button status </param>
+        /// <returns> Change Button Status </returns>
         [HttpPut("changeStatus")]
-        public async Task<ActionResult> ChangeButtonStatus(string slug)
+        public async Task<ActionResult> ChangeButtonStatus(string itemSlug)
         {
             _logger.LogInformation(LogManagements.LogChangeButtonStatus);
-            var button = await _service.ChangeButtonStatus(slug);
+            var button = await _service.ChangeButtonStatus(itemSlug);
             if (!button)
             {
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToChangeButtonStatus));

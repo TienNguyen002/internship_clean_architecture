@@ -1,8 +1,10 @@
-import { Quill } from "react-quill";
 import CottageIcon from "@mui/icons-material/Cottage";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import FeedIcon from "@mui/icons-material/Feed";
 import FeedbackIcon from "@mui/icons-material/Feedback";
+import ViewCarouselIcon from '@mui/icons-material/ViewCarousel';
+import CropSquareIcon from '@mui/icons-material/CropSquare';
+import TableRowsIcon from '@mui/icons-material/TableRows';
 
 export const queryDefault = {
   sectionSlug: "",
@@ -16,10 +18,12 @@ export const queryDefault = {
 export const slugName = {
   logo: "navbar",
   banner: "banner",
+  innovations: "innovations",
   footer: "footer",
   news: "news",
   blogs: "blogs",
   navbar: "navbar",
+  section: "section",
 };
 
 export const language = {
@@ -42,6 +46,7 @@ export const numberLength = {
 };
 
 export const sectionName = {
+  Service: "Services",
   Domain: "Domains",
   Client: "Clients",
   Customer: "Customers",
@@ -52,45 +57,52 @@ export const sectionName = {
   LastestJobs: "Careers",
 };
 
+export const allowedExtensions = ['.jpg', '.jpeg', '.png'];
+
+export const allowedSectionsName = ['Domains', "Clients"]
+
 export const sidebarLinks = [
   { path: "/admin", title: "Home Page", icon: <CottageIcon /> },
+  { path: "/admin/logo", title: "Logo", icon: <CropSquareIcon /> },
+  { path: "/admin/banner", title: "Banner", icon: <ViewCarouselIcon /> },
+  { path: "/admin/section", title: "Section", icon: <TableRowsIcon /> },
   { path: "/admin/news", title: "News", icon: <NewspaperIcon /> },
   { path: "/admin/blogs", title: "Blogs", icon: <FeedIcon /> },
   { path: "/admin/request", title: "Requests", icon: <FeedbackIcon /> },
 ];
 
 export const titleLinks = {
-  "Services": {
-    link: "/services",
+  Services: {
+    link: "/services/",
   },
-  "Domains": {
-    link: "/services/domains",
+  Domains: {
+    link: "/domains/",
   },
-  "Innovations": {
-    link: "/innovations",
+  Innovations: {
+    link: "/innovations/",
   },
-  "Models": {
-    link: "/services/models",
+  Models: {
+    link: "/services/models/",
   },
-  "Clients": {
-    link: "/customers",
+  Clients: {
+    link: "/customers/",
   },
   "As Recognized By": {
     link: "",
   },
-  "Careers": {
-    link: "/careers",
+  Careers: {
+    link: "/careers/",
   },
-  "Customers": {
+  Customers: {
     link: "/customers/#testimonials",
   },
-  "News": {
-    link: "/news",
+  News: {
+    link: "/news/",
   },
-  "Blogs": {
-    link: "/blogs",
+  Blogs: {
+    link: "/blogs/",
   },
-  contactUs: "/contact-us"
+  contactUs: "/contact-us/",
 };
 
 export const sliderNumber = {
@@ -162,15 +174,27 @@ export const sliderResponsive = {
       slidesPerView: 1,
     },
   },
+  ThreeItemBreakpoints: {
+    0: {
+      slidesPerView: 3,
+
+    },
+  },
 };
 
 export const boxSliderClassNameConfig = {
-  "Domains": {
+  Services: {
+    boxBody: "box-home-body-service",
+  },
+  Models: {
+    boxBody: "box-home-body-model",
+  },
+  Domains: {
     boxBody: "box-home-body-domain",
     boxdesc: "hidden",
     titleStyle: "domain-title",
   },
-  "Clients": {
+  Clients: {
     boxBody: "box-home-body-outclient",
     boxContainer: "container-outclient",
     boxdesc: "hidden",
@@ -182,15 +206,15 @@ export const boxSliderClassNameConfig = {
     titleStyle: "recognized-title",
     boxdesc: "hidden",
   },
-  "Customers": {
+  Customers: {
     boxBody: "box-body-customer",
   },
-  "News": {
+  News: {
     boxBody: "box-body-news-blog",
   },
-  "Blogs": {
+  Blogs: {
     boxBody: "box-body-news-blog",
-  }
+  },
 };
 
 export const error = {
@@ -211,46 +235,8 @@ export const btnValue = {
   colorErr: "error",
   colorSuccess: "success",
   typeSubmit: "submit",
-  colorAdd: "primary"
+  colorAdd: "primary",
 };
-export const editModules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image", "video"],
-    ["clean"],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-  imageResize: {
-    parchment: Quill.import("parchment"),
-    modules: ["Resize", "DisplaySize"],
-  },
-};
-export const editFormats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-]
 
 export const deleteForm = {
   title: "Do you want to delete?",
@@ -261,6 +247,27 @@ export const deleteForm = {
   confirmBtnDelete: "DELETE",
   resultTitle: "DELETED",
   resultIcon: "success",
+};
+
+export const changeForm = {
+  title: "Do you want to change?",
+  text: "This will be changed!",
+  icon: "success",
+  confirmBtnColor: "#3085d6",
+  cancelBtnColor: "#d33",
+  confirmBtnDelete: "Save",
+  resultTitle: "Success",
+  resultIcon: "success",
+};
+
+export const saveSuccess = {
+  title: "Save Success",
+  icon: "success",
+};
+
+export const errorEdit = {
+  title: "Error Edit",
+  icon: "error",
 };
 
 export const styleDrawer = {
@@ -276,24 +283,34 @@ export const styleDrawer = {
     gap: 18,
   },
   styleListItem: {
-    display: "block"
+    display: "block",
   },
   dNone: "none",
   dBlock: "block",
   styleListItemButton: {
     minHeight: 48,
     px: 2.5,
-  }
+  },
 };
 
 export const widthTable = {
   ss: 100,
+  xs: 150,
   s: 200,
-  md: 300,
+  m: 300,
   l: 400,
   xl: 500,
+  xxl: 800
+};
+
+export const linkSocial = {
+  twitter: "https://twitter.com/titancorpvn"
 }
 
-export const timeout = {
-  quick: 50,
+export const SwalEnum = {
+  titleSuccess: "Save Success",
+  iconSuccess: "success",
+  titleError: "Error",
+  iconError: "error",
+  alertErrorImg: "Can't post the image of desciption:"
 }

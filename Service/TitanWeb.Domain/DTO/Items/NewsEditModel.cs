@@ -29,6 +29,6 @@ namespace TitanWeb.Domain.DTO.Items
         public string Description { get; set; }
 
         [DisplayName(ValidateManagements.NewsImage)]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }

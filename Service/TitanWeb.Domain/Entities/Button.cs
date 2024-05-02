@@ -1,4 +1,5 @@
-﻿using TitanWeb.Domain.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+using TitanWeb.Domain.Contracts;
 
 namespace TitanWeb.Domain.Entities;
 
@@ -13,4 +14,7 @@ public partial class Button : IEntity
     public bool Status { get; set; }
 
     public virtual ICollection<Item> Items { get; set; } = new List<Item>();
+
+    [Timestamp]
+    public byte[] RowVersion { get; set; } = null!;
 }

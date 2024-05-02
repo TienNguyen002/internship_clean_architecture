@@ -17,17 +17,20 @@ namespace TitanWeb.Application.Services
         /// <summary>
         /// Change status button
         /// </summary>
-        /// <param name="slug"> Slug of Button want to find to change status </param>
+        /// <param name="itemSlug"> Slug of Item want to find to change button status </param>
         /// <returns> Change Status Button </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> ChangeButtonStatus(string slug)
+        public async Task<bool> ChangeButtonStatus(string itemSlug)
         {
-            var buttons = await _repository.GetAllButtonsAsync(slug);
-            foreach(var button in buttons)
+            var buttons = await _repository.GetAllButtonsByItemSlugAsync(itemSlug);
+            if (buttons != null)
             {
-                button.Status = !button.Status;
-                await _repository.ChangeButtonStatus(button);
+                foreach (var button in buttons)
+                {
+                    button.Status = !button.Status;
+                }
             }
+            await _repository.ChangeButtonStatus(buttons);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }

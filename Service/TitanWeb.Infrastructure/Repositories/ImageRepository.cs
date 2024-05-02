@@ -20,7 +20,6 @@ namespace TitanWeb.Infrastructure.Repositories
             var imageToDelete = await _context.Set<Image>()
                 .Include(i => i.Items)
                 .Include(i => i.Sections)
-                .Include(i => i.SubItems)
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try

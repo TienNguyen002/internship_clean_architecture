@@ -16,14 +16,19 @@ namespace TitanWeb.Application.Services
             _cloudinary = new Cloudinary(new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret));
         }
 
-        public async Task<string> UploadImageAsync(Stream imageStream, string fileName)
+        /// <summary>
+        /// Upload Image To Clound
+        /// </summary>
+        /// <param name="imageStream">The image stream to be uploaded</param>
+        /// <param name="fileName">The name of the image file</param>
+        /// <returns>The URL of the uploaded image</returns>
+        public async Task<string> UploadImageAsync(Stream imageStream, string fileName, string folder)
         {
             var uploadParams = new ImageUploadParams
             {
                 File = new FileDescription(fileName, imageStream),
-                Transformation = new Transformation().Width(200).Height(200).Crop("fill")
             };
-            uploadParams.Folder = QueryManagements.ImageFolder;
+            uploadParams.Folder = folder;
             var uploadResult = await _cloudinary.UploadAsync(uploadParams);
             return uploadResult.Url.ToString();
         }

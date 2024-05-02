@@ -1,4 +1,5 @@
-﻿using TitanWeb.Domain.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using TitanWeb.Domain.Contracts;
 using TitanWeb.Domain.DTO.RequestForm;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Repositories;
@@ -43,6 +44,28 @@ namespace TitanWeb.Infrastructure.Repositories
                 || r.Subject.Contains(query.Keyword));
             }
             return requestQuery;
+        }
+
+        /// <summary>
+        /// Delete Request Form By Id
+        /// </summary>
+        /// <param name="id"> Id Of Request Form want to delete </param>
+        /// <returns> Deleted Request Form </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> DeleteRequestFormAsync(int id)
+        {
+            var requestFormToDelete = await _context.Set<RequestForm>()
+                .Where(i => i.Id == id)
+                .FirstOrDefaultAsync();
+            try
+            {
+                _context.Remove(requestFormToDelete);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

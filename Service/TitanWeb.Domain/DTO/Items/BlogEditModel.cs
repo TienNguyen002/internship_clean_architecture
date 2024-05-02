@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using TitanWeb.Domain.Constants;
 
 namespace TitanWeb.Domain.DTO.Items
@@ -39,6 +34,6 @@ namespace TitanWeb.Domain.DTO.Items
         public string Description { get; set; }
 
         [DisplayName(ValidateManagements.BlogImage)]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
     }
 }

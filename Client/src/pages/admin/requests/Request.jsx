@@ -96,31 +96,42 @@ export default function AdRequest() {
     {
       field: "name",
       headerName: "Name",
-      width: widthTable.s,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.m,
+      flex: 1,
     },
     {
       field: "email",
       headerName: "Email",
       type: "text",
-      width: widthTable.s,
+      minWidth: widthTable.m,
+      maxWidth: widthTable.xl,
+      flex: 1,
     },
     {
       field: "phone",
       headerName: "Phone",
       type: "text",
-      width: widthTable.s,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.m,
+      flex: 1,
     },
     {
       field: "subject",
       headerName: "Subject",
       type: "text",
-      width: widthTable.md,
+      minWidth: widthTable.m,
+      maxWidth: widthTable.l,
+      flex: 1,
     },
     {
       field: "message",
       headerName: "Message",
       type: "text",
       width: widthTable.xl,
+      minWidth: widthTable.m,
+      maxWidth: widthTable.xxl,
+      flex: 1,
     },
     {
       field: "actions",
@@ -129,13 +140,16 @@ export default function AdRequest() {
       width: widthTable.ss,
       cellClassName: "actions",
       getActions,
+      minWidth: widthTable.ss,
+      maxWidth: widthTable.s,
+      flex: 1,
     },
   ];
 
   return (
     <div style={{ display: "flex" }}>
     <Box>
-      <SideBar />
+      <SideBar name="Request" />
     </Box>
       <Box
         component="main"

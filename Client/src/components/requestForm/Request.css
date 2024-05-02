@@ -117,7 +117,8 @@ input::-webkit-inner-spin-button {
 }
 
 .recaptcha {
-    max-width: 300px;
+    height: 100px;
+    overflow-x: hidden;
 }
 
 @media only screen and (max-width: 1280px) {
@@ -126,7 +127,7 @@ input::-webkit-inner-spin-button {
     padding: 20px 40px; 
   }
   .request-title {
-    font-size: 40px; 
+    font-size: 38px;
     text-align: center; 
   }
 
@@ -138,8 +139,8 @@ input::-webkit-inner-spin-button {
   }
   .request-input,
   .request-textarea {
-    font-size: 16px; 
-    padding: 8px 12px; 
+    font-size: 16px;
+    padding: 8px 12px;
   }
   .btn-request {
     font-size: 16px; 
@@ -151,108 +152,110 @@ input::-webkit-inner-spin-button {
   }
 
   .request-description {
-    padding: 0 0 50px; 
-    font-size: 24px; 
+    padding: 0 0 50px;
+    font-size: 24px;
   }
   .form-group {
-    padding: 0 10px; 
+    padding: 0 10px;
   }
   .request-item {
-    margin: 0 0 10px; 
+    margin: 0 0 10px;
   }
   .request-icon {
-    width: 10px; 
+    width: 10px;
     padding: 0 30px;
   }
   .request-input,
   .request-textarea {
-    font-size: 18px; 
-    padding: 10px 50px; 
+    font-size: 18px;
+    padding: 10px 50px;
   }
   .btn-request {
-    font-size: 18px; 
-    padding: 12px 20px; 
+    font-size: 18px;
+    padding: 12px 20px;
   }
 }
 
 @media only screen and (max-width: 768px) {
     .request-container {
-      margin: 0 60px; 
-      padding: 20px 40px; 
+      margin: 0 60px;
+      padding: 20px 40px;
     }
     .request-title {
-      font-size: 32px; 
-      text-align: center; 
+      font-size: 30px;
     }
 
     .request-description {
-      font-size: 16px; 
+      font-size: 16px;
     }
     .request-input,
     .request-textarea {
-      font-size: 16px; 
-      padding: 8px 12px; 
+      font-size: 16px;
+      padding: 8px 12px;
     }
     .btn-request {
-      font-size: 16px; 
-      padding: 10px 15px; 
+      font-size: 16px;
+      padding: 10px 15px;
     }
     .error-message {
-      font-size: 14px; 
+      font-size: 14px;
       padding: 10px;
     }
 
     .request-description {
-      padding: 0 0 50px; 
-      font-size: 22px; 
+      padding: 0 0 50px;
+      font-size: 22px;
     }
     .request-grid {
-      grid-template-columns: 100%; 
+      grid-template-columns: 100%;
     }
     .form-group {
-      padding: 0 20px; 
+      padding: 0px;
     }
     .request-item {
-      margin: 0 0 24px; 
+      margin: 0 0 24px;
     }
     .request-icon {
-      width: 5px; 
+      width: 5px;
       padding: 0 30px;
     }
     .request-input,
     .request-textarea {
-      font-size: 18px; 
-      padding: 10px 50px; 
+      font-size: 18px;
+      padding: 10px 50px;
     }
     .btn-request {
-      font-size: 18px; 
-      padding: 12px 20px; 
+      font-size: 18px;
+      padding: 12px 20px;
     }
   }
-  
+
   @media only screen and (max-width: 480px) {
     .request-container {
-      margin: 0 40px; 
-      padding: 10px 20px; 
+      margin: 0 40px;
+      padding: 0;
+    }
+    .request-title {
+      font-size: 26px;
     }
     .request-description {
       font-size: 16px; 
     }
     .request-input,
     .request-textarea {
-      font-size: 16px; 
-      padding: 8px 40px; 
+      font-size: 16px;
+      padding: 8px 40px;
     }
     .btn-request {
       font-size: 16px; 
-      padding: 10px 15px; 
+      padding: 10px 15px;
     }
     .error-message {
-      font-size: 14px; 
+      font-size: 14px;
       padding: 10px;
     }
     .request-icon {
-      width: 5px; 
+      width: 5px;
       padding: 0 20px;
     }
   }

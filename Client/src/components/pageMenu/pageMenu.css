@@ -18,6 +18,9 @@
     margin-bottom: 40px;
 }
 
+.current {
+    text-decoration: underline;
+}
 .sub-menu {
     list-style-type: none;
     font-weight: 10;

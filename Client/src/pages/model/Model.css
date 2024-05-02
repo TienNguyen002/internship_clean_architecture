@@ -5,7 +5,7 @@
     min-height: 160px;
     line-height: 1;
   }
-  
+
   .model-page-title {
     position: absolute;
     top: 50%;
@@ -24,4 +24,8 @@
   .model-page-image {
     width: 100vw;
     height: 100vh;
+  }
+
+  .box-body-model-page{
+    margin: 100px 0 0;
   }

@@ -23,6 +23,7 @@ import {
 } from "../../../enum/EnumApi";
 import { getItemByCategory } from "../../../api/ItemApi";
 import logo1 from "../../../assets/logo.png";
+import { Typography } from "@mui/material";
 
 const openedMixin = (theme) => ({
   width: styleDrawer.drawerWidth,
@@ -88,7 +89,7 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export default function SideBar() {
+export default function SideBar({name}) {
   const [open, setOpen] = useState(true);
   const navigate = useNavigate();
 
@@ -121,16 +122,21 @@ export default function SideBar() {
           >
             <MenuIcon />
           </IconButton>
-          {logo.length > 0
-            ? logo.map((item, index) => (
-                <img
-                  key={index}
-                  className="logo"
-                  src={item.imageUrl}
-                  alt="logo"
-                />
-              ))
-            : null}
+          <Box sx={{display: "flex",width: "100%",justifyContent: "space-between", alignItems:"center"}}>
+            <Typography variant="h5" component="h2">
+                {name}
+            </Typography>
+            {logo.length > 0
+              ? logo.map((item, index) => (
+                  <img
+                    key={index}
+                    className="logo"
+                    src={item.imageUrl}
+                    alt="logo"
+                  />
+                ))
+              : null}
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>

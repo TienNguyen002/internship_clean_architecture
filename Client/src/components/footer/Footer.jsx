@@ -52,7 +52,7 @@ const Footer = (props) => {
 
   return (
     <div className="site-footer">
-      <div className="box-footer-google">
+      {/* <div className="box-footer-google">
         <div className="footer-container">
           <div className="box-footer-google-title">
             <Link to="contact-us"><a>{translate("footer.Contact")}</a></Link>
@@ -163,7 +163,7 @@ const Footer = (props) => {
               ))
             : null}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

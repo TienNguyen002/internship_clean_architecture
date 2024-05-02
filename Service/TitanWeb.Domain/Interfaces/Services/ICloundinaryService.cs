@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace TitanWeb.Domain.Interfaces.Services
+﻿namespace TitanWeb.Domain.Interfaces.Services
 {
     public interface ICloundinaryService
     {
-        Task<string> UploadImageAsync(Stream imageStream, string fileName);
+        Task<string> UploadImageAsync(Stream imageStream, string fileName, string folder);
     }
 }

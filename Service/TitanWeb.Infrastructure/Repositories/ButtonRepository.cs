@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Infrastructure.Contexts;
@@ -15,28 +16,57 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <param name="button"> Button want to change status </param>
         /// <returns> Change Status Button </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> ChangeButtonStatus(Button button)
+        public async Task<bool> ChangeButtonStatus(IList<Button> buttons)
         {
             try
             {
-                _context.Update(button);
+                _context.Update(buttons);
                 return true;
             }
-            catch (Exception){
+            catch (DbUpdateConcurrencyException ex)
+            {
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is Button)
+                    {
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        foreach (var property in proposedValues.Properties)
+                        {
+                            var proposedValue = proposedValues[property];
+                            var databaseValue = databaseValues[property];
+
+                            proposedValues[property] = proposedValue ?? databaseValue;
+                        }
+
+                        entry.OriginalValues.SetValues(databaseValues);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(
+                            ResponseManagements.ConcurrencyConflicts
+                            + entry.Metadata.Name);
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }
 
         /// <summary>
-        /// Get All Sections By Slug
+        /// Get All Button By Item Slug
         /// </summary>
-        /// <param name="slug"> UrlSlug want to get All Sections </param>
-        /// <returns> List Of Sections With UrlSlug want to get </returns>
+        /// <param name="itemSlug"> Slug of Item want to find to change button status </param>
+        /// <returns> List Of Button </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<Button>> GetAllButtonsAsync(string slug)
+        public async Task<IList<Button>> GetAllButtonsByItemSlugAsync(string itemSlug)
         {
             return await _context.Set<Button>()
-                .Where(s => s.UrlSlug.Contains(slug))
+                .Where(b => b.Items.Any(i => i.UrlSlug.Contains(itemSlug)))
                 .ToListAsync();
         }
     }

@@ -1,13 +1,11 @@
 ﻿using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
-using TitanWeb.Api.Media;
 using TitanWeb.Application.DTO.Section;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Domain.Interfaces.Services;
-using TitanWeb.Infrastructure.Contexts;
 
 namespace TitanWeb.Application.Services
 {
@@ -73,7 +71,15 @@ namespace TitanWeb.Application.Services
             var section = model.Id > 0 ? await _repository.GetById(model.Id) : null;
             if (section == null)
             {
-                section = new Section {  };
+                section = new Section { };
+            }
+            if (model.Id == 0)
+            {
+                var sectionCount = await _repository.CountSectionByLanguage(model.Locale);
+                if (sectionCount > 0)
+                {
+                    section.SectionOrder = sectionCount + 1;
+                }
             }
 
             section.Name = model.Name;
@@ -89,15 +95,10 @@ namespace TitanWeb.Application.Services
             {
                 section.Image = new Image
                 {
-                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName),
+                    ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName, QueryManagements.ImageFolder),
                 };
             }
             section.Locale = model.Locale;
-            var sectionCount = await _repository.CountSectionByLanguage(model.Locale);
-            if (sectionCount > 0)
-            {
-                section.SectionOrder = sectionCount + 1;
-            }
             await _repository.EditSectionAsync(section);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -117,32 +118,15 @@ namespace TitanWeb.Application.Services
         }
 
         /// <summary>
-        /// Move Section 
+        /// Get Section By Id
         /// </summary>
-        /// <param name="sourceSection">Current Section</param>
-        /// <param name="destinationSection">Destination Section want to move to </param>
-        /// <example>
-        ///     A has order 1, B has order 2, C has order 3
-        ///     This will have 2 case:
-        ///     Case 1: A move to B => B will has order 1, A will has order 2, C no change
-        ///     Case 2: C move to A => C will has order 1, A will has order 2 andconf remo B will increase 1 so that has order 3
-        /// </example>
-        /// <returns>Section Order changed</returns>
-        /// <exception cref="Exception"></exception>
-        public async Task<bool> MoveSection(string sourceSection, string destinationSection)
+        /// <param name="id"> Id Of Section want to get </param>
+        /// <returns> Get Section By Id </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public async Task<SectionDTO> GetSectionByIdAsync(int id)
         {
-            var sourceSections = await _repository.GetAllSectionBySlugAsync(sourceSection);
-            var destinationSections = await _repository.GetAllSectionBySlugAsync(destinationSection);
-
-            var currentOrder = sourceSections.Min(s => s.SectionOrder);
-            var destinationOrder = destinationSections.Min(s => s.SectionOrder);
-            foreach (var section in sourceSections)
-            {
-                section.SectionOrder = destinationOrder;
-            }
-            await _repository.MoveSection(currentOrder, destinationOrder);
-            int saved = await _unitOfWork.Commit();
-            return saved > 0;
+            var section = await _repository.GetByIdWithInclude(id, i => i.Image);
+            return _mapper.Map<SectionDTO>(section);
         }
     }
 }

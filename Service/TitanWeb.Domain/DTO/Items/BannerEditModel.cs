@@ -29,11 +29,7 @@ namespace TitanWeb.Domain.DTO.Items
         public string Description { get; set; }
 
         [DisplayName(ValidateManagements.BannerBackgroundImage)]
-        public IFormFile BackgroundImage { get; set; }
-
-        [DisplayName(ValidateManagements.CategorySlug)]
-        [Required(ErrorMessage = ValidateManagements.CategorySlugRequiredMsg)]
-        public string CategorySlug { get; set; }
+        public IFormFile? BackgroundImage { get; set; }
 
         [DisplayName(ValidateManagements.Locale)]
         [Required(ErrorMessage = ValidateManagements.LocaleRequiredMsg)]

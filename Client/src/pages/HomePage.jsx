@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import MainSlider from "../components/mainSlider/MainSlider"
 import Box from "../components/box/Box";
-import Request from "../components/request/Request";
-
 import { getAllSection, getRequestForm } from "../api/ItemApi";
 import { useSelector } from "react-redux";
+import Request from "../components/requestForm/Request";
 
 function HomePage() {
   const [box, setBox] = useState([]);
@@ -45,6 +44,7 @@ function HomePage() {
             />
           ))
         : null}
+        <div className="request-container">
       {request.items.length > 0
         ? request.items.map((item, index) => (
             <Request
@@ -56,6 +56,7 @@ function HomePage() {
             />
           ))
         : null}
+        </div>
     </div>
   );
 }

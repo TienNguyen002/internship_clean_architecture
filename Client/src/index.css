@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 :root {
   --light-color: #ffffff;
   --text-color: #757575;
@@ -15,6 +19,7 @@
   --primary-color: #186ab4;
   --secondary-color: #12203a;
   --max-width: 1100px;
+  --max-width-cms: 1300px;
   --gray-color:#757575;
   --medium-gray: #262626;
   --border-customer: #ccc;
@@ -31,4 +36,11 @@
   --medium-orange: #ff3c00;
   --banner-title: #186ab4cc;
   --border: #ccc;
+  --link: #007bff;
+  --success: #198754;
+  --pastel-grey: #dddddd;
+  --card-section: #f1f1f3;
+  --background-input: #f5f5f5;
+  --light-gray: #F2F2F2;
+  --preloader-url: url(../src/assets/preloader.gif);
 }

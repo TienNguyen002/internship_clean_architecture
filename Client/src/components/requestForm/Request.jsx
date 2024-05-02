@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import "./Request.css";
 import { formData, error, numberLength, titleLinks } from "../../enum/EnumApi";
@@ -50,11 +50,10 @@ const Request = (props) => {
       });
     }
   };
-  
+
   return (
     <>
       <div className="box-body-request">
-        <div className="request-container">
           <div className="request-venture">
             <h1 className="request-title">{title}</h1>
             <p className="request-description">{description}</p>
@@ -127,7 +126,6 @@ const Request = (props) => {
               </div>
             </div>
           </form>
-        </div>
       </div>
     </>
   );

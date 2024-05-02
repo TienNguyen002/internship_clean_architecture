@@ -33,15 +33,17 @@ function Model() {
       <h1 className="model-page-title">{translate('titleName.EngagementModel')}</h1>
       <img className="model-page-image" src={servicesBanner} alt="Model AltImage"></img>
     </div>
-      {modelContent.length > 0 ? modelContent.map((item, index) => (
-        <Box
-          key={index}
-          description={item.description}
-          name={item.name}
-          title={item.title}
-          items={item.items}
-        />
-        )): null}
+    <div className="box-body-model-page">
+        {modelContent.length > 0 ? modelContent.map((item, index) => (
+          <Box
+            key={index}
+            description={item.description}
+            name={item.name}
+            title={item.title}
+            items={item.items}
+          />
+          )): null}
+      </div>
     </div>
   );
 }

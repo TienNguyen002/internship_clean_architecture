@@ -10,6 +10,9 @@ using TitanWeb.Domain.Interfaces.Services;
 namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [Produces("application/json")]
+    [ApiController]
     public class ItemController : ControllerBase
     {
         private readonly IItemService _service;
@@ -23,15 +26,20 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Getting List Of Item With Pagination
+        /// Get Items by query with Pagination
         /// </summary>
-        /// <param name="query"> Query By User Input To Get Item </param>
-        /// <param name="pagingModel"> Model Pagination Filter </param>
-        /// <returns> List Of Item Filter By Query With Pagination </returns>
+        /// <param name="query"> Query used to filter the items(section slug) </param>
+        /// <param name="model"> Pagination Model </param>
+        /// <returns> A paged list of Items filtered by Query </returns>
         [HttpGet("paged")]
-        public async Task<ActionResult<ItemDTO>> GetPagedItem([AsParameters] ItemQuery query,
-            PagingModel model)
+        public async Task<ActionResult<ItemDTO>> GetPagedItem([FromQuery] ItemQuery query,
+             [FromQuery] PagingModel model)
         {
+            _logger.LogInformation(LogManagements.ValidateInput);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             _logger.LogInformation(LogManagements.LogGetItemByQuery);
             var result = await _service.GetPagedItemAsync(query, model);
             _logger.LogInformation(LogManagements.LogReturnItemByQuery);
@@ -39,47 +47,47 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Get Item By Id
+        /// Get Item by Id
         /// </summary>
-        /// <param name="id"> Id Of Item want to get </param>
-        /// <returns> Get Item By Id </returns>
+        /// <param name="id"> Id of the Item to get </param>
+        /// <returns> Item with the specified Id </returns>
         [HttpGet("byid/{id}")]
         public async Task<ActionResult<ItemDTO>> GetItemById(int id)
         {
             _logger.LogInformation(LogManagements.LogGetItemById + id);
             var item = await _service.GetItemByIdAsync(id);
-            if(item == null)
+            if (item == null)
             {
-                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemIdMsg + id));
+                return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemIdMsg + id));
             }
             _logger.LogInformation(LogManagements.LogReturnItemById + id);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemById + id));
         }
 
         /// <summary>
-        /// Get Item By Slug
+        /// Get Item by Item Slug
         /// </summary>
-        /// <param name="slug"> UrlSlug want to get Item </param>
-        /// <returns> Item With UrlSlug want to get </returns>
+        /// <param name="slug"> UrlSlug of the Item to get </param>
+        /// <returns> Item with the specified UrlSlug </returns>
         [HttpGet("byslug/{slug}")]
         public async Task<ActionResult<ItemDTO>> GetItemBySlug(string slug)
         {
             _logger.LogInformation(LogManagements.LogGetItemBySlug + slug);
             var item = await _service.GetItemBySlugAsync(slug);
-            if(item == null)
+            if (item == null)
             {
-                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemSlugMsg + slug));
+                return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemSlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnItemBySlug + slug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemBySlug + slug));
         }
 
         /// <summary>
-        /// Get Item By Category Slug
+        /// Get all Items By Category Slug
         /// </summary>
-        /// <param name="categorySlug"> Slug of Category want to get Items </param>
-        /// <param name="language"> Language of category want to get (en, ja) </param>
-        /// <returns> A List Of Item By Category Slug filter language </returns>
+        /// <param name="categorySlug"> UrlSlug of the Category </param>
+        /// <param name="language"> Language of the category (en, ja) </param>
+        /// <returns> A List Of Items that belongs to the specified Category </returns>
         [HttpGet("{categorySlug}/{language}")]
         public async Task<ActionResult<ItemDTO>> GetItemByCategorySlug(string categorySlug, string language)
         {
@@ -87,17 +95,49 @@ namespace TitanWeb.Api.Controllers
             var item = await _service.GetItemsByCategorySlugAsync(categorySlug, language);
             if (item == null)
             {
-                return Ok(ApiResponse.Success(HttpStatusCode.OK, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));
+                return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));
             }
             _logger.LogInformation(LogManagements.LogReturnItemByCategorySlug + categorySlug);
             return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemByCategorySlug + categorySlug));
         }
 
         /// <summary>
+        /// Get all Items By Section Slug, excluding one Item
+        /// </summary>
+        /// <param name="sectionSlug"> UrlSlug of Section </param>
+        /// <param name="urlSlug"> UrlSlug of the Item to exclude </param>
+        /// <returns> A List Of Items by Section Slug, excluding the Item with the UrlSlug</returns>
+        [HttpGet("all/{sectionSlug}/{urlSlug}")]
+        public async Task<ActionResult<ItemDTO>> GetItemBySectionSlug(string sectionSlug, string urlSlug)
+        {
+            _logger.LogInformation(LogManagements.LogGetItemBySectionSlug + sectionSlug);
+            var item = await _service.GetAllItemsBySectionSlugAsync(sectionSlug, urlSlug);
+            if (item == null)
+            {
+                return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemSectionSlugMsg + sectionSlug));
+            }
+            _logger.LogInformation(LogManagements.LogReturnItemBySectionSlug + sectionSlug);
+            return Ok(ApiResponse.Success(item, ResponseManagements.SuccessGetItemBySectionSlug + sectionSlug));
+        }
+
+        /// <summary>
         /// Add/Update News
         /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated News </returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Item/editNews
+        ///     {
+        ///         "Id"= "126", (Id = 0 to Create, Id != to Update)
+        ///         "Title"= "Titan Tet Celebration 2025",
+        ///         "UrlSlug"= "titan-tet-celebration-2025",
+        ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "ImageFile"="@myImage.png;type=image/png"
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model to add/update News </param>
+        /// <returns> The added/updated News </returns>
         /// <exception cref="Exception"></exception>
         [HttpPost("editNews")]
         public async Task<ActionResult> EditNews([FromForm] NewsEditModel model)
@@ -115,8 +155,22 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Add/Update Blog
         /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Blog </returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Item/editBlogs
+        ///     {
+        ///         "Id"= "216", (Id = 0 to Create, Id != to Update)
+        ///         "Title"= "Titan Tet Celebration 2025",
+        ///         "UrlSlug"= "titan-tet-celebration-2025",
+        ///         "SubTitle"= "By Admin",
+        ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "ImageFile"="@myImage.png;type=image/png"
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model to add/update Blog </param>
+        /// <returns> The Added/Updated Blog </returns>
         /// <exception cref="Exception"></exception>
         [HttpPost("editBlog")]
         public async Task<ActionResult> EditBlog([FromForm] BlogEditModel model)
@@ -134,25 +188,25 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Delete Item By Id
         /// </summary>
-        /// <param name="id"> Id Of Item want to delete </param>
-        /// <returns> Delete Item By Id </returns>
+        /// <param name="id"> Id of the Item to delete </param>
+        /// <returns> Result of the Delete operation (True/False) </returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteItem(int id)
         {
             _logger.LogInformation(LogManagements.LogDeleteItem + id);
-            var result = await _service.DeleteItemAsync(id);
+            var result = await _service.DeleteNewsAsync(id);
             if (!result)
             {
                 return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToDeleteItem + id));
             }
-            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteItem + id));;
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessDeleteItem + id)); ;
         }
 
         /// <summary>
-        /// Change Image For Item
+        /// Change the Logo of an Item
         /// </summary>
-        /// <param name="imageId"> Id Of Image want to change for Item </param>
-        /// <returns> Image Item Changed </returns>
+        /// <param name="imageId"> Id of the new Logo to replace the old Logo </param>
+        /// <returns> Result of the Update operation (True/False)  </returns>
         [HttpPut("changeLogo/{imageId}")]
         public async Task<ActionResult> ChangeLogo(int imageId)
         {
@@ -169,8 +223,22 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Add/Update Banner
         /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Banner </returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Item/editBanner
+        ///     {
+        ///         "Id"= "12", (Id = 0 to Create, Id !=0 to Update)
+        ///         "BoldTitle" = "INSPIRE"
+        ///         "Title"= "YOUR WORK",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "BackgroundImage"="@myImage.png;type=image/png"
+        ///         "CategorySlug" = "banner"
+        ///         "Locale"="en" (`en` or `ja`)
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model to add/update Banner </param>
+        /// <returns> The Added/Updated Banner </returns>
         /// <exception cref="Exception"></exception>
         [HttpPost("editBanner")]
         public async Task<ActionResult> EditBanner([FromForm] BannerEditModel model)
@@ -186,22 +254,74 @@ namespace TitanWeb.Api.Controllers
         }
 
         /// <summary>
-        /// Add/Update Section Item
+        /// Add/Update Footer Item
         /// </summary>
-        /// <param name="model"> Model to add/update </param>
-        /// <returns> Added/Updated Section Item </returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Item/editFooterItem
+        ///     {
+        ///         "Id"= "12", (Id = 0 to Create, Id !=0 to Update)
+        ///         "Title"= "Branch office",
+        ///         "UrlSlug"= "branch-office"
+        ///         "Address"= "9/1/2 Tran Dai Nghia Street, Ward 8, Da Lat City, Vietnam.",
+        ///         "TelNumber"="Tel: +84-26-3382-8379"
+        ///         "Description" = null
+        ///         "InfoGmail1" = null
+        ///         "InfoGmail2" = null
+        ///         "Skype" = null
+        ///         "Facebook" = null
+        ///         "Twitter" = null
+        ///         "Linkedin" = null
+        ///         "Youtube" = null
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model to add/update Footer Item </param>
+        /// <returns> The Added/Updated Footer Item </returns>
         /// <exception cref="Exception"></exception>
-        [HttpPost("editSectionItem")]
-        public async Task<ActionResult> EditSectionItem([FromForm] SectionItemEditModel model)
+        [HttpPost("editFooterItem")]
+        public async Task<ActionResult> EditFooterItem([FromForm] FooterEditModel model)
         {
-            _logger.LogInformation(LogManagements.LogEditSectionItem);
-            var itemEdit = await _service.EditSectionItemAsync(model);
-            if (!itemEdit)
+            _logger.LogInformation(LogManagements.LogEditFooterItem);
+            var footerEdit = await _service.EditFooterItemAsync(model);
+            if (!footerEdit)
             {
-                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditSectionItem));
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditFooterItem));
             }
             var result = _mapper.Map<ItemDTO>(model);
-            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditSectionItem));
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditFooterItem));
+        }
+
+        /// <summary>
+        /// Add/Update Item
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     POST api/Item/edit
+        ///     {
+        ///         "Id"= "71", (Id = 0 to Create, Id !=0 to Update)
+        ///         "Title"= "VALERY KHVATOV",
+        ///         "UrlSlug"= "valery-khvatov",
+        ///         "SubTitle"="VP of Technology",
+        ///         "Description" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        ///         "Locale"="en"
+        ///     }
+        /// </remarks>
+        /// <param name="model"> Model to add/update Item </param>
+        /// <returns> The Added/Updated Item </returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("edit")]
+        public async Task<ActionResult> EditItem([FromForm] ItemEditModel model)
+        {
+            // _logger.LogInformation(LogManagements.LogEditBanner);
+            var updateSuccess = await _service.EditItemAsync(model);
+            if (!updateSuccess)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditItem));
+            }
+            var result = _mapper.Map<ItemDTO>(model);
+            return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditItem));
         }
     }
 }

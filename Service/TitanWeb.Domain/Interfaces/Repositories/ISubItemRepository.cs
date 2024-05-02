@@ -6,5 +6,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
     {
         Task<bool> EditSubItemAsync(SubItem subItem);
         Task<bool> DeleteSubItemAsync(int id);
+        Task<SubItem> GetByItemIdAsync(int itemId);
     }
 }
