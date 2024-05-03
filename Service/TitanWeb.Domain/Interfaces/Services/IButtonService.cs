@@ -2,6 +2,6 @@
 {
     public interface IButtonService
     {
-        Task<bool> ChangeButtonStatus(string slug);
+        Task<bool> ChangeButtonStatus(string itemSlug);
     }
 }

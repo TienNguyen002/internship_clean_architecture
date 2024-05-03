@@ -1,9 +1,11 @@
-﻿using MapsterMapper;
+﻿using Asp.Versioning;
+using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
+using TitanWeb.Domain.DTO;
 using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.Interfaces.Services;
 
@@ -11,6 +13,7 @@ namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     public class SectionController : ControllerBase
     {
@@ -27,13 +30,13 @@ namespace TitanWeb.Api.Controllers
         /// <summary>
         /// Get all Sections by Language
         /// </summary>
-        /// <param name="language"> Language of the Section (en, ja) </param>
+        /// <param name="localeQuery"> Locale of Section (en, ja) </param>
         /// <returns> List of Sections by Language </returns>
-        [HttpGet("{language}")]
-        public async Task<ActionResult<IList<SectionDTO>>> GetAllSections(string language)
+        [HttpGet()]
+        public async Task<ActionResult<IList<SectionDTO>>> GetAllSections([FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetAllSections);
-            var sections = await _service.GetAllSectionAsync(language);
+            var sections = await _service.GetAllSectionAsync(localeQuery);
             _logger.LogInformation(LogManagements.LogReturnSection);
             return Ok(ApiResponse.Success(sections, ResponseManagements.SuccessGetAllSections));
         }
@@ -44,7 +47,7 @@ namespace TitanWeb.Api.Controllers
         /// <param name="id"> Id of the Section to get </param>
         /// <returns> Section with the specified Id </returns>
         [HttpGet("byid/{id}")]
-        public async Task<ActionResult<SectionDTO>> GetSectionById(int id)
+        public async Task<ActionResult<SectionDetailDTO>> GetSectionById(int id)
         {
             _logger.LogInformation(LogManagements.LogGetSectionById + id);
             var section = await _service.GetSectionByIdAsync(id);
@@ -60,32 +63,19 @@ namespace TitanWeb.Api.Controllers
         /// Get Section By Slug
         /// </summary>
         /// <param name="slug"> UrlSlug of the Section to get </param>
+        /// <param name="localeQuery"> Locale of Section (en, ja) </param>
         /// <returns> Section with specified UrlSlug </returns>
         [HttpGet("byslug/{slug}")]
-        public async Task<ActionResult<SectionDTO>> GetSectionBySlug(string slug)
+        public async Task<ActionResult<SectionDTO>> GetSectionBySlug(string slug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetSectionBySlug + slug);
-            var section = await _service.GetSectionBySlugAsync(slug);
+            var section = await _service.GetSectionBySlugAsync(slug, localeQuery);
             if (section == null)
             {
                 return Ok(ApiResponse.Success(section, ResponseManagements.NotFoundSectionSlugMsg + slug));
             }
             _logger.LogInformation(LogManagements.LogReturnSectionBySlug + slug);
             return Ok(ApiResponse.Success(section, ResponseManagements.SuccessGetSectionBySlug + slug));
-        }
-
-        /// <summary>
-        /// Find Sections by Slug
-        /// </summary>
-        /// <param name="slug"> Section UrlSlug to search for </param>
-        /// <returns> List of Sections that mathces the UrlSlug </returns>
-        [HttpGet("list/{slug}")]
-        public async Task<ActionResult<IList<SectionDTO>>> GetAllSectionBySlug(string slug)
-        {
-            _logger.LogInformation(LogManagements.LogGetAllSections + slug);
-            var sections = await _service.GetAllSectionBySlugAsync(slug);
-            _logger.LogInformation(LogManagements.LogReturnAllSectionsBySlug + slug);
-            return Ok(ApiResponse.Success(sections, ResponseManagements.SuccessGetAllSectionsBySlug + slug));
         }
 
         /// <summary>

@@ -10,12 +10,11 @@ namespace TitanWeb.Infrastructure.Repositories
         public SectionRepository(TitanWebContext context) : base(context) { }
 
         /// <summary>
-        /// Get Section By Language
+        /// Get All Sections
         /// </summary>
-        /// <param name="language"> Language want to get Section (en, ja) </param>
-        /// <returns> List Of Sections With Language </returns>
+        /// <returns> List Of Sections </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<Section>> GetSectionsAsync(string language)
+        public async Task<IList<Section>> GetSectionsAsync()
         {
             IQueryable<Section> sections = _context.Set<Section>()
                 .Include(s => s.Items)
@@ -24,8 +23,7 @@ namespace TitanWeb.Infrastructure.Repositories
                     .ThenInclude(i => i.Button)
                 .Include(s => s.Items)
                     .ThenInclude(i => i.SubItems)
-                .Include(s => s.Image)
-                .Where(s => s.Locale == language);
+                .Include(s => s.Image);
             return await sections
                 .OrderBy(s => s.SectionOrder)
                 .ToListAsync();
@@ -129,14 +127,13 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Count all Section in DB with language (en, ja)
+        /// Count all Section in DB
         /// </summary>
-        /// <param name="language">Language Section want to count</param>
-        /// <returns>Number of section with language in DB</returns>
+        /// <returns>Number of section in DB</returns>
         /// <exception cref="Exception"></exception>
-        public Task<int> CountSectionByLanguage(string language)
+        public Task<int> CountSection()
         {
-            return _context.Set<Section>().Where(c => c.Locale == language).CountAsync();
+            return _context.Set<Section>().CountAsync();
         }
     }
 }

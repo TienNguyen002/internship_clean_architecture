@@ -1,4 +1,5 @@
-﻿using MapsterMapper;
+﻿using Asp.Versioning;
+using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
@@ -8,8 +9,9 @@ using TitanWeb.Domain.Interfaces.Services;
 
 namespace TitanWeb.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     public class ImageController : ControllerBase
     {

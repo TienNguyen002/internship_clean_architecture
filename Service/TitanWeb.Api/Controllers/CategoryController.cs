@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Net;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using TitanWeb.Api.Response;
 using TitanWeb.Domain.Constants;
+using TitanWeb.Domain.DTO;
 using TitanWeb.Domain.DTO.Category;
 using TitanWeb.Domain.Interfaces.Services;
 
@@ -9,6 +10,7 @@ namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     public class CategoryController : ControllerBase
     {
@@ -24,13 +26,13 @@ namespace TitanWeb.Api.Controllers
         /// Get a Category by UrlSlug and language
         /// </summary>
         /// <param name="slug"> UrlSlug of the Category to retrieve </param>
-        /// <param name="language"> Language of Category to retrieve (en, ja) </param>
+        /// <param name="localeQuery"> Locale of Category (en, ja) </param>
         /// <returns>Custom response containing the Category with the specified slug and language and other infos. </returns>
-        [HttpGet("{slug}/{language}")]
-        public async Task<ActionResult<CategoryDTO>> GetCategoryBySlug(string slug, string language)
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<CategoryDTO>> GetCategoryBySlug(string slug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetCategoryBySlug + slug);
-            var category = await _service.GetCategoryBySlugAsync(slug, language);
+            var category = await _service.GetCategoryBySlugAsync(slug, localeQuery);
             if (category == null)
             {
                 return Ok(ApiResponse.Success(category, ResponseManagements.NotFoundCategoryBySlugMsg + slug));

@@ -34,6 +34,8 @@ namespace TitanWeb.Api.Mapsters
             config.NewConfig<Section, SectionDTO>()
                 .Map(desc => desc.Id, src => src.Id)
                 .Map(desc => desc.BackgroundUrl, src => src.Image.ImageUrl);
+            config.NewConfig<Section, SectionDetailDTO>()
+                .Map(desc => desc.BackgroundUrl, src => src.Image.ImageUrl);
             config.NewConfig<Section, SectionForItemDTO>()
                 .Map(desc => desc.Id, src => src.Id);
 

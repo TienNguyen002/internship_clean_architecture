@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces.Repositories;
 using TitanWeb.Infrastructure.Contexts;
@@ -25,6 +26,34 @@ namespace TitanWeb.Infrastructure.Repositories
             try
             {
                 _context.Remove(imageToDelete);
+                return true;
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                foreach (var entry in ex.Entries)
+                {
+                    if (entry.Entity is Button)
+                    {
+                        var proposedValues = entry.CurrentValues;
+                        var databaseValues = entry.GetDatabaseValues();
+
+                        foreach (var property in proposedValues.Properties)
+                        {
+                            var proposedValue = proposedValues[property];
+                            var databaseValue = databaseValues[property];
+
+                            proposedValues[property] = proposedValue ?? databaseValue;
+                        }
+
+                        entry.OriginalValues.SetValues(databaseValues);
+                    }
+                    else
+                    {
+                        throw new NotSupportedException(
+                            ResponseManagements.ConcurrencyConflicts
+                            + entry.Metadata.Name);
+                    }
+                }
                 return true;
             }
             catch (Exception)

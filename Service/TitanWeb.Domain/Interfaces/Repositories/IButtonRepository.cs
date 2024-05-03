@@ -4,7 +4,7 @@ namespace TitanWeb.Domain.Interfaces.Repositories
 {
     public interface IButtonRepository : IGenericRepository<Button>
     {
-        Task<IList<Button>> GetAllButtonsByItemSlugAsync(string itemSlug);
-        Task<bool> ChangeButtonStatus(IList<Button> button);
+        Task<Button> GetButtonByItemSlugAsync(string itemSlug);
+        Task<bool> ChangeButtonStatus(Button button);
     }
 }

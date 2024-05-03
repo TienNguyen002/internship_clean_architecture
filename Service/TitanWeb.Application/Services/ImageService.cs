@@ -1,5 +1,4 @@
 ﻿using MapsterMapper;
-using TitanWeb.Api.Media;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO.Image;
 using TitanWeb.Domain.Entities;

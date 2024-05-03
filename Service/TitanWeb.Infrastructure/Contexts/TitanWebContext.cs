@@ -47,18 +47,6 @@ public partial class TitanWebContext : DbContext
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-
-            entity.HasMany(d => d.Items).WithMany(p => p.Categories)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CategoryItem",
-                    r => r.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
-                    l => l.HasOne<Category>().WithMany().HasForeignKey("CategoriesId"),
-                    j =>
-                    {
-                        j.HasKey("CategoriesId", "ItemsId");
-                        j.ToTable("CategoryItem");
-                        j.HasIndex(new[] { "ItemsId" }, "IX_CategoryItem_ItemsId");
-                    });
         });
 
         modelBuilder.Entity<Image>(entity =>
@@ -72,7 +60,11 @@ public partial class TitanWebContext : DbContext
         {
             entity.HasIndex(e => e.ButtonId, "IX_Items_ButtonId");
 
+            entity.HasIndex(e => e.CategoryId, "IX_Items_CategoryId");
+
             entity.HasIndex(e => e.ImageId, "IX_Items_ImageId");
+
+            entity.HasIndex(e => e.SectionId, "IX_Items_SectionId");
 
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
@@ -80,31 +72,11 @@ public partial class TitanWebContext : DbContext
 
             entity.HasOne(d => d.Button).WithMany(p => p.Items).HasForeignKey(d => d.ButtonId);
 
+            entity.HasOne(d => d.Category).WithMany(p => p.Items).HasForeignKey(d => d.CategoryId);
+
             entity.HasOne(d => d.Image).WithMany(p => p.Items).HasForeignKey(d => d.ImageId);
 
-            entity.HasMany(d => d.Sections).WithMany(p => p.Items)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ItemSection",
-                    r => r.HasOne<Section>().WithMany().HasForeignKey("SectionsId"),
-                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
-                    j =>
-                    {
-                        j.HasKey("ItemsId", "SectionsId");
-                        j.ToTable("ItemSection");
-                        j.HasIndex(new[] { "SectionsId" }, "IX_ItemSection_SectionsId");
-                    });
-
-            entity.HasMany(d => d.SubItems).WithMany(p => p.Items)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ItemSubItem",
-                    r => r.HasOne<SubItem>().WithMany().HasForeignKey("SubItemsId"),
-                    l => l.HasOne<Item>().WithMany().HasForeignKey("ItemsId"),
-                    j =>
-                    {
-                        j.HasKey("ItemsId", "SubItemsId");
-                        j.ToTable("ItemSubItem");
-                        j.HasIndex(new[] { "SubItemsId" }, "IX_ItemSubItem_SubItemsId");
-                    });
+            entity.HasOne(d => d.Section).WithMany(p => p.Items).HasForeignKey(d => d.SectionId);
         });
 
         modelBuilder.Entity<RequestForm>(entity =>
@@ -131,9 +103,13 @@ public partial class TitanWebContext : DbContext
 
         modelBuilder.Entity<SubItem>(entity =>
         {
+            entity.HasIndex(e => e.ItemId, "IX_SubItems_ItemId");
+
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+
+            entity.HasOne(d => d.Item).WithMany(p => p.SubItems).HasForeignKey(d => d.ItemId);
         });
 
         OnModelCreatingPartial(modelBuilder);

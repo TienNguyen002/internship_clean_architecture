@@ -16,11 +16,11 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <param name="button"> Button want to change status </param>
         /// <returns> Change Status Button </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> ChangeButtonStatus(IList<Button> buttons)
+        public async Task<bool> ChangeButtonStatus(Button button)
         {
             try
             {
-                _context.Update(buttons);
+                _context.Update(button);
                 return true;
             }
             catch (DbUpdateConcurrencyException ex)
@@ -58,16 +58,16 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Get All Button By Item Slug
+        /// Get Button By Item Slug
         /// </summary>
         /// <param name="itemSlug"> Slug of Item want to find to change button status </param>
         /// <returns> List Of Button </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<Button>> GetAllButtonsByItemSlugAsync(string itemSlug)
+        public async Task<Button> GetButtonByItemSlugAsync(string itemSlug)
         {
             return await _context.Set<Button>()
-                .Where(b => b.Items.Any(i => i.UrlSlug.Contains(itemSlug)))
-                .ToListAsync();
+                .Where(b => b.Items.Any(i => i.UrlSlug == itemSlug))
+                .FirstOrDefaultAsync();
         }
     }
 }

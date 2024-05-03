@@ -19,7 +19,7 @@ namespace TitanWeb.Infrastructure.Repositories
         public async Task<bool> DeleteSubItemAsync(int id)
         {
             var subItemToDelete = await _context.Set<SubItem>()
-                .Include(i => i.Items)
+                .Include(i => i.Item)
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try
@@ -96,8 +96,8 @@ namespace TitanWeb.Infrastructure.Repositories
         public async Task<SubItem> GetByItemIdAsync(int itemId)
         {
             return await _context.Set<SubItem>()
-                .Include(s => s.Items)
-                .Where(s => s.Items.Any(i => i.Id == itemId))
+                .Include(s => s.Item)
+                .Where(s => s.Item.Id == itemId)
                 .FirstOrDefaultAsync();
         }
     }

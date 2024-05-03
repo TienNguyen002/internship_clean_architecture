@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.ConfigureCors()
         .ConfigureServices()
         .ConfigureSwaggerOpenApi()
+        .ConfigureVersioning()
         .ConfigureMapster()
         .ConfigureLogging();
 }

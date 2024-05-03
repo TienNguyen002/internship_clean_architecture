@@ -20,13 +20,15 @@ namespace TitanWeb.Application.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloundinaryService _cloundinaryService;
+        private readonly IMapperService _mapperService;
         public ItemService(IItemRepository repository,
             IMapper mapper,
             IUnitOfWork unitOfWork,
             ISectionRepository sectionRepository,
             ICategoryRepository categoryRepository,
             ISubItemRepository subItemRepository,
-            ICloundinaryService cloundinaryService)
+            ICloundinaryService cloundinaryService,
+            IMapperService mapperService)
         {
             _repository = repository;
             _mapper = mapper;
@@ -35,20 +37,22 @@ namespace TitanWeb.Application.Services
             _categoryRepository = categoryRepository;
             _subItemRepository = subItemRepository;
             _cloundinaryService = cloundinaryService;
+            _mapperService = mapperService;
         }
 
         /// <summary>
         /// Getting List Of Item With Pagination
         /// </summary>
         /// <param name="query"> Query By User Input To Get Item </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <param name="pagingModel"> Model Pagination Filter </param>
         /// <returns> List Of Item Filter By Query With Pagination </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<PaginationResult<ItemDTO>> GetPagedItemAsync(ItemQuery query,
+        public async Task<PaginationResult<ItemDTO>> GetPagedItemAsync(ItemQuery query, LocaleQuery localeQuery,
             PagingModel pagingModel)
         {
             var result = await _repository.GetPagedItemAsync(query, pagingModel);
-            var items = _mapper.Map<List<Item>, List<ItemDTO>>(result.ToList());
+            var items = await _mapperService.MapPagedItemsAsync(result, localeQuery);
             var paginationResult = new PaginationResult<ItemDTO>(new PagedList<ItemDTO>(items, result.PageNumber, result.PageSize, result.TotalItemCount));
             return paginationResult;
         }
@@ -57,25 +61,28 @@ namespace TitanWeb.Application.Services
         /// Get Item By Slug
         /// </summary>
         /// <param name="slug"> UrlSlug want to get Item </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> Item With UrlSlug want to get </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<ItemDTO> GetItemBySlugAsync(string slug)
+        public async Task<ItemDTO> GetItemBySlugAsync(string slug, LocaleQuery localeQuery)
         {
             var item = await _repository.GetItemBySlugAsync(slug);
-            return _mapper.Map<ItemDTO>(item);
+            var itemDTO = await _mapperService.MapItemAsync(item, localeQuery);
+            return itemDTO;
         }
 
         /// <summary>
         /// Get Item By Category Slug
         /// </summary>
         /// <param name="categorySlug"> Slug of Category want to get Items </param>
-        /// <param name="language"> Language of category want to get (en, ja) </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> A List Of Item By Category Slug filter language </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<ItemForCategoryDTO>> GetItemsByCategorySlugAsync(string categorySlug, string language)
+        public async Task<IList<ItemForCategoryDTO>> GetItemsByCategorySlugAsync(string categorySlug, LocaleQuery localeQuery)
         {
-            var item = await _repository.GetItemByCategorySlugAsync(categorySlug, language);
-            return _mapper.Map<IList<ItemForCategoryDTO>>(item);
+            var item = await _repository.GetItemByCategorySlugAsync(categorySlug);
+            var itemDTO = await _mapperService.MapItemsAsync(item, localeQuery);
+            return itemDTO;
         }
 
         /// <summary>
@@ -123,13 +130,13 @@ namespace TitanWeb.Application.Services
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
-            if (news.Sections.Count() == 0)
-            {
-                foreach (var section in sections)
-                {
-                    news.Sections.Add(section);
-                }
-            }
+            //if (news.Section.Count() == 0)
+            //{
+            //    foreach (var section in sections)
+            //    {
+            //        news.Section.Add(section);
+            //    }
+            //}
             await _repository.EditItemAsync(news);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -141,10 +148,10 @@ namespace TitanWeb.Application.Services
         /// <param name="id"> Id Of Item want to get </param>
         /// <returns> Get Item By Id </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<ItemDTO> GetItemByIdAsync(int id)
+        public async Task<ItemDetailDTO> GetItemByIdAsync(int id)
         {
             var item = await _repository.GetByIdWithInclude(id, i => i.Image, i => i.SubItems);
-            return _mapper.Map<ItemDTO>(item);
+            return _mapper.Map<ItemDetailDTO>(item);
         }
 
         /// <summary>
@@ -206,13 +213,13 @@ namespace TitanWeb.Application.Services
                 };
             }
             var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
-            if (blog.Sections.Count() == 0)
-            {
-                foreach (var section in sections)
-                {
-                    blog.Sections.Add(section);
-                }
-            }
+            //if (blog.Sections.Count() == 0)
+            //{
+            //    foreach (var section in sections)
+            //    {
+            //        blog.Sections.Add(section);
+            //    }
+            //}
             await _repository.EditItemAsync(blog);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -250,11 +257,11 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName, QueryManagements.BannerFolder),
                 };
             }
-            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.BannerSlug, model.Locale);
-            if (banner.Categories.Count() == 0 && category != null)
-            {
-                banner.Categories.Add(category);
-            }
+            //var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.BannerSlug);
+            //if (banner.Categories.Count() == 0 && category != null)
+            //{
+            //    banner.Categories.Add(category);
+            //}
             await _repository.EditItemAsync(banner);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -287,18 +294,17 @@ namespace TitanWeb.Application.Services
             if (subItem == null)
             {
                 subItem = new SubItem();
-                footerItem.SubItems.Add(subItem);
             }
             subItem.Facebook = model.Facebook;
             subItem.Twitter = model.Twitter;
             subItem.Linkedin = model.Linkedin;
             subItem.Youtube = model.Youtube;
 
-            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.FooterSlug, QueryManagements.English);
-            if (footerItem.Categories.Count() == 0 && category != null)
-            {
-                footerItem.Categories.Add(category);
-            }
+            //var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.FooterSlug);
+            //if (footerItem.Categories.Count() == 0 && category != null)
+            //{
+            //    footerItem.Categories.Add(category);
+            //}
             await _subItemRepository.EditSubItemAsync(subItem);
             await _repository.EditItemAsync(footerItem);
 
@@ -309,7 +315,7 @@ namespace TitanWeb.Application.Services
         public async Task<bool> EditItemAsync(ItemEditModel model)
         {
             var updatedItem = model.Id > 0 ? await _repository
-                .GetByIdWithInclude(model.Id, i => i.Sections) : null;
+                .GetByIdWithInclude(model.Id, i => i.Section) : null;
             if (updatedItem == null)
             {
                 updatedItem = new Item { CreatedDate = DateTime.Now, };
@@ -334,11 +340,11 @@ namespace TitanWeb.Application.Services
             }
 
             var newSection = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
-            if (newSection != null)
-            {
-                updatedItem.Sections.Clear();
-                updatedItem.Sections.Add(newSection);
-            }
+            //if (newSection != null)
+            //{
+            //    updatedItem.Section.Clear();
+            //    updatedItem.Section.Add(newSection);
+            //}
 
             await _repository.EditItemAsync(updatedItem);
             int saved = await _unitOfWork.Commit();

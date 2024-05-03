@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TitanWeb.Domain.Contracts;
+﻿using TitanWeb.Domain.Contracts;
 
 namespace TitanWeb.Domain.Entities;
 
@@ -21,7 +20,7 @@ public partial class RequestForm : IEntity
 
     public int? CategoryId { get; set; }
 
+    public byte[]? RowVersion { get; set; }
+
     public virtual Category? Category { get; set; }
-    [Timestamp]
-    public byte[] RowVersion { get; set; } = null!;
 }

@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
+using TitanWeb.Domain.DTO;
 using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.Entities;
 using TitanWeb.Domain.Interfaces;
@@ -16,48 +17,41 @@ namespace TitanWeb.Application.Services
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloundinaryService _cloundinaryService;
-        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, ICloundinaryService cloundinaryService)
+        private readonly IMapperService _mapperService;
+        public SectionService(ISectionRepository repository, IMapper mapper, IUnitOfWork unitOfWork, ICloundinaryService cloundinaryService, IMapperService mapperService)
         {
             _repository = repository;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _cloundinaryService = cloundinaryService;
+            _mapperService = mapperService;
         }
 
         /// <summary>
-        /// Get Section By Language
+        /// Get All Sections
         /// </summary>
-        /// <param name="language"> Language want to get Section (en, ja) </param>
+        /// <param name="localeQuery"> Locale of Section (en, ja) </param>
         /// <returns> List Of Sections With Language </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<SectionDTO>> GetAllSectionAsync(string language)
+        public async Task<IList<SectionDTO>> GetAllSectionAsync(LocaleQuery localeQuery)
         {
-            var sections = await _repository.GetSectionsAsync(language);
-            return _mapper.Map<IList<SectionDTO>>(sections);
+            var sections = await _repository.GetSectionsAsync();
+            var sectionDTO = await _mapperService.MapSectionsAsync(sections, localeQuery);
+            return sectionDTO;
         }
 
         /// <summary>
         /// Get Section By Slug
         /// </summary>
         /// <param name="slug"> UrlSlug want to get Section </param>
+        /// <param name="localeQuery"> Locale of Section (en, ja) </param>
         /// <returns> Section With UrlSlug want to get </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<SectionDTO> GetSectionBySlugAsync(string slug)
+        public async Task<SectionDTO> GetSectionBySlugAsync(string slug, LocaleQuery localeQuery)
         {
             var section = await _repository.GetSectionBySlugAsync(slug);
-            return _mapper.Map<SectionDTO>(section);
-        }
-
-        /// <summary>
-        /// Get All Sections By Slug
-        /// </summary>
-        /// <param name="slug"> UrlSlug want to get all Sections </param>
-        /// <returns> A List Of Sections With UrlSlug want to get </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<SectionDTO>> GetAllSectionBySlugAsync(string slug)
-        {
-            var section = await _repository.GetAllSectionBySlugAsync(slug);
-            return _mapper.Map<IList<SectionDTO>>(section);
+            var sectionDTO = await _mapperService.MapSectionAsync(section, localeQuery);
+            return sectionDTO;
         }
 
         /// <summary>
@@ -75,7 +69,7 @@ namespace TitanWeb.Application.Services
             }
             if (model.Id == 0)
             {
-                var sectionCount = await _repository.CountSectionByLanguage(model.Locale);
+                var sectionCount = await _repository.CountSection();
                 if (sectionCount > 0)
                 {
                     section.SectionOrder = sectionCount + 1;
@@ -98,7 +92,6 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName, QueryManagements.ImageFolder),
                 };
             }
-            section.Locale = model.Locale;
             await _repository.EditSectionAsync(section);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -123,10 +116,10 @@ namespace TitanWeb.Application.Services
         /// <param name="id"> Id Of Section want to get </param>
         /// <returns> Get Section By Id </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<SectionDTO> GetSectionByIdAsync(int id)
+        public async Task<SectionDetailDTO> GetSectionByIdAsync(int id)
         {
             var section = await _repository.GetByIdWithInclude(id, i => i.Image);
-            return _mapper.Map<SectionDTO>(section);
+            return _mapper.Map<SectionDetailDTO>(section);
         }
     }
 }

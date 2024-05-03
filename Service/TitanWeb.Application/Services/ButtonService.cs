@@ -22,15 +22,12 @@ namespace TitanWeb.Application.Services
         /// <exception cref="Exception"></exception>
         public async Task<bool> ChangeButtonStatus(string itemSlug)
         {
-            var buttons = await _repository.GetAllButtonsByItemSlugAsync(itemSlug);
-            if (buttons != null)
+            var button = await _repository.GetButtonByItemSlugAsync(itemSlug);
+            if (button != null)
             {
-                foreach (var button in buttons)
-                {
-                    button.Status = !button.Status;
-                }
+                button.Status = !button.Status;
             }
-            await _repository.ChangeButtonStatus(buttons);
+            await _repository.ChangeButtonStatus(button);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
         }

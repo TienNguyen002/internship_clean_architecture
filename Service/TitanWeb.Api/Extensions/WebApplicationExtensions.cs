@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using CloudinaryDotNet;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -52,6 +53,7 @@ namespace TitanWeb.Api.Extensions
             builder.Services.AddScoped<ICloundinaryService, CloudinaryService>();
             builder.Services.AddScoped<IButtonRepository, ButtonRepository>();
             builder.Services.AddScoped<IButtonService, ButtonService>();
+            builder.Services.AddScoped<IMapperService, MapperService>();
 
             return builder;
         }
@@ -98,6 +100,20 @@ namespace TitanWeb.Api.Extensions
                             Email = ValidateManagements.SwaggerDocContactEmail
                         },
                     });
+                options.SwaggerDoc(
+                    "v2",
+                    new OpenApiInfo
+                    {
+                        Title = "TitanWeb API v2",
+                        Version = "v2.0",
+                        Description = ValidateManagements.SwaggerDocDesc,
+                        TermsOfService = new Uri(ValidateManagements.SwaggerDocTOS),
+                        Contact = new OpenApiContact
+                        {
+                            Name = ValidateManagements.SwaggerDocContactName,
+                            Email = ValidateManagements.SwaggerDocContactEmail
+                        },
+                    });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -106,10 +122,37 @@ namespace TitanWeb.Api.Extensions
             return builder;
         }
 
+        public static WebApplicationBuilder ConfigureVersioning(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.ApiVersionReader = ApiVersionReader.Combine(
+                    new UrlSegmentApiVersionReader(),
+                    new HeaderApiVersionReader("Api-Version"));
+            }).AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'V";
+                options.SubstituteApiVersionInUrl = true;
+            });
+
+            return builder;
+        }
+
         public static WebApplication SetupRequestPipeline(this WebApplication app)
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint(
+                    $"/swagger/v1/swagger.json",
+                    $"TitanWeb v1");
+                options.SwaggerEndpoint(
+                    $"/swagger/v2/swagger.json",
+                    $"TitanWeb v2");
+            });
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseCors("TitanWeb");

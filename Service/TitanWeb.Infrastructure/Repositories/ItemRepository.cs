@@ -22,14 +22,14 @@ namespace TitanWeb.Infrastructure.Repositories
         private IQueryable<Item> GetItemByQueryable(ItemQuery query)
         {
             IQueryable<Item> itemQuery = _context.Set<Item>()
-                .Include(i => i.Sections)
-                .Include(i => i.Categories)
+                .Include(i => i.Section)
+                .Include(i => i.Category)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
                 .Include(i => i.Button);
             if (!string.IsNullOrWhiteSpace(query.SectionSlug))
             {
-                itemQuery = itemQuery.Where(i => i.Sections.Any(s => s.UrlSlug.Contains(query.SectionSlug)));
+                itemQuery = itemQuery.Where(i => i.Section.UrlSlug.Contains(query.SectionSlug));
             }
             return itemQuery;
         }
@@ -58,8 +58,8 @@ namespace TitanWeb.Infrastructure.Repositories
         public async Task<Item> GetItemBySlugAsync(string slug)
         {
             return await _context.Set<Item>()
-                .Include(i => i.Sections)
-                .Include(i => i.Categories)
+                .Include(i => i.Section)
+                .Include(i => i.Category)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
                 .Include(i => i.Button)
@@ -87,14 +87,14 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <param name="language"> Language of the category (en, ja) </param>
         /// <returns> A list of items filtered by category slug and language. </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<IList<Item>> GetItemByCategorySlugAsync(string categorySlug, string language)
+        public async Task<IList<Item>> GetItemByCategorySlugAsync(string categorySlug)
         {
             return await _context.Set<Item>()
-                .Include(i => i.Categories)
+                .Include(i => i.Category)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
                 .Include(i => i.Button)
-                .Where(s => s.Categories.Any(c => c.UrlSlug.Contains(categorySlug) && c.Locale == language))
+                .Where(s => s.Category.UrlSlug.Contains(categorySlug))
                 .ToListAsync();
         }
 
@@ -108,9 +108,9 @@ namespace TitanWeb.Infrastructure.Repositories
         public async Task<IList<Item>> GetAllItemsBySectionSlugAsync(string sectionSlug, string urlSlug)
         {
             return await _context.Set<Item>()
-                .Include(i => i.Sections)
+                .Include(i => i.Section)
                 .Include(i => i.Image)
-                .Where(i => i.Sections.Any(c => c.UrlSlug.Contains(sectionSlug) && i.UrlSlug != urlSlug))
+                .Where(i => i.Section.UrlSlug.Contains(sectionSlug) && i.UrlSlug != urlSlug)
                 .ToListAsync();
         }
 
@@ -152,8 +152,8 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Include(i => i.Button)
                 .Include(i => i.Image)
                 .Include(i => i.SubItems)
-                .Include(i => i.Categories)
-                .Include(i => i.Sections)
+                .Include(i => i.Category)
+                .Include(i => i.Section)
                 .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
             try

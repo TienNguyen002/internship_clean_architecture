@@ -1,4 +1,5 @@
-﻿using MapsterMapper;
+﻿using Asp.Versioning;
+using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
@@ -11,6 +12,7 @@ namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Produces("application/json")]
     public class RequestFormController : ControllerBase
     {
@@ -28,7 +30,7 @@ namespace TitanWeb.Api.Controllers
         /// Get all "Request for Info" Form Responses
         /// </summary>
         /// <param name="query"> Query to filter the Form Reponses</param>
-        /// <param name="pagingModel"> Pagination Model </param>
+        /// <param name="model"> Pagination Model </param>
         /// <returns> Paged list of "Request for Info" Form Response filtered by Query </returns>
         [HttpGet]
         public async Task<ActionResult<RequestFormDTO>> GetPagedRequestForms([FromQuery] RequestFormQuery query,

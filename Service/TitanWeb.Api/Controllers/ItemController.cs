@@ -1,4 +1,5 @@
-﻿using MapsterMapper;
+﻿using Asp.Versioning;
+using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using TitanWeb.Api.Response;
@@ -11,8 +12,8 @@ namespace TitanWeb.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     [Produces("application/json")]
-    [ApiController]
     public class ItemController : ControllerBase
     {
         private readonly IItemService _service;
@@ -29,10 +30,11 @@ namespace TitanWeb.Api.Controllers
         /// Get Items by query with Pagination
         /// </summary>
         /// <param name="query"> Query used to filter the items(section slug) </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <param name="model"> Pagination Model </param>
         /// <returns> A paged list of Items filtered by Query </returns>
         [HttpGet("paged")]
-        public async Task<ActionResult<ItemDTO>> GetPagedItem([FromQuery] ItemQuery query,
+        public async Task<ActionResult<ItemDTO>> GetPagedItem([FromQuery] ItemQuery query, [FromQuery] LocaleQuery localeQuery,
              [FromQuery] PagingModel model)
         {
             _logger.LogInformation(LogManagements.ValidateInput);
@@ -41,7 +43,7 @@ namespace TitanWeb.Api.Controllers
                 return BadRequest(ModelState);
             }
             _logger.LogInformation(LogManagements.LogGetItemByQuery);
-            var result = await _service.GetPagedItemAsync(query, model);
+            var result = await _service.GetPagedItemAsync(query, localeQuery, model);
             _logger.LogInformation(LogManagements.LogReturnItemByQuery);
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessGetItemByQuery));
         }
@@ -68,12 +70,13 @@ namespace TitanWeb.Api.Controllers
         /// Get Item by Item Slug
         /// </summary>
         /// <param name="slug"> UrlSlug of the Item to get </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> Item with the specified UrlSlug </returns>
         [HttpGet("byslug/{slug}")]
-        public async Task<ActionResult<ItemDTO>> GetItemBySlug(string slug)
+        public async Task<ActionResult<ItemDTO>> GetItemBySlug(string slug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetItemBySlug + slug);
-            var item = await _service.GetItemBySlugAsync(slug);
+            var item = await _service.GetItemBySlugAsync(slug, localeQuery);
             if (item == null)
             {
                 return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemSlugMsg + slug));
@@ -86,13 +89,13 @@ namespace TitanWeb.Api.Controllers
         /// Get all Items By Category Slug
         /// </summary>
         /// <param name="categorySlug"> UrlSlug of the Category </param>
-        /// <param name="language"> Language of the category (en, ja) </param>
+        /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> A List Of Items that belongs to the specified Category </returns>
-        [HttpGet("{categorySlug}/{language}")]
-        public async Task<ActionResult<ItemDTO>> GetItemByCategorySlug(string categorySlug, string language)
+        [HttpGet("{categorySlug}")]
+        public async Task<ActionResult<ItemDTO>> GetItemByCategorySlug(string categorySlug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetItemByCategorySlug + categorySlug);
-            var item = await _service.GetItemsByCategorySlugAsync(categorySlug, language);
+            var item = await _service.GetItemsByCategorySlugAsync(categorySlug, localeQuery);
             if (item == null)
             {
                 return Ok(ApiResponse.Success(item, ResponseManagements.NotFoundItemCategorySlugMsg + categorySlug));

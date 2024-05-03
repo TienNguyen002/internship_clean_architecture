@@ -16,17 +16,17 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <param name="language"> Language of Category want to get (like: en, ja) </param>
         /// <returns> Category Has Slug want to get with language </returns>
         /// <exception cref="ArgumentNullException"></exception>
-        public async Task<Category> GetCategoryBySlugAsync(string slug, string language)
+        public async Task<Category> GetCategoryBySlugAsync(string slug)
         {
             return await _context.Set<Category>()
-                .Include(c => c.Items)
-                    .ThenInclude(i => i.Button)
-                .Include(c => c.Items)
-                    .ThenInclude(i => i.Image)
-                .Include(c => c.Items)
-                    .ThenInclude(i => i.SubItems)
-                .Where(c => c.UrlSlug.Contains(slug) && c.Locale == language)
-                .FirstOrDefaultAsync();
+               .Include(c => c.Items)
+                   .ThenInclude(i => i.Button)
+               .Include(c => c.Items)
+                   .ThenInclude(i => i.Image)
+               .Include(c => c.Items)
+                   .ThenInclude(i => i.SubItems)
+               .Where(c => c.UrlSlug == slug)
+               .FirstOrDefaultAsync();
         }
     }
 }

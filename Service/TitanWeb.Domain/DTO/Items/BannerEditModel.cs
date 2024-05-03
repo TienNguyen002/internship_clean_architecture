@@ -30,9 +30,5 @@ namespace TitanWeb.Domain.DTO.Items
 
         [DisplayName(ValidateManagements.BannerBackgroundImage)]
         public IFormFile? BackgroundImage { get; set; }
-
-        [DisplayName(ValidateManagements.Locale)]
-        [Required(ErrorMessage = ValidateManagements.LocaleRequiredMsg)]
-        public string Locale { get; set; }
     }
 }
