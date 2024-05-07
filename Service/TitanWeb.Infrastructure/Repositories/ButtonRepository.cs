@@ -69,5 +69,19 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Where(b => b.Items.Any(i => i.UrlSlug == itemSlug))
                 .FirstOrDefaultAsync();
         }
+
+        /// <summary>
+        /// Find Button By Item Id
+        /// </summary>
+        /// <param name="itemId"> Id Of Item want to find </param>
+        /// <returns> Button By Item Id </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Button> GetByItemIdAsync(int itemId)
+        {
+            return await _context.Set<Button>()
+                .Include(s => s.Items)
+                .Where(s => s.Items.Any(i => i.Id == itemId))
+                .FirstOrDefaultAsync();
+        }
     }
 }

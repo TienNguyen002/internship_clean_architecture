@@ -17,6 +17,7 @@ namespace TitanWeb.Application.Services
         private readonly ISectionRepository _sectionRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly ISubItemRepository _subItemRepository;
+        private readonly IButtonRepository _buttonRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloundinaryService _cloundinaryService;
@@ -27,6 +28,7 @@ namespace TitanWeb.Application.Services
             ISectionRepository sectionRepository,
             ICategoryRepository categoryRepository,
             ISubItemRepository subItemRepository,
+            IButtonRepository buttonRepository,
             ICloundinaryService cloundinaryService,
             IMapperService mapperService)
         {
@@ -36,6 +38,7 @@ namespace TitanWeb.Application.Services
             _sectionRepository = sectionRepository;
             _categoryRepository = categoryRepository;
             _subItemRepository = subItemRepository;
+            _buttonRepository = buttonRepository;
             _cloundinaryService = cloundinaryService;
             _mapperService = mapperService;
         }
@@ -114,14 +117,17 @@ namespace TitanWeb.Application.Services
             else news.UpdatedDate = DateTime.Now;
 
             news.Title = model.Title;
-            news.UrlSlug = model.UrlSlug;
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
+            news.JapaneseTitle = model.JapaneseTitle;
+            news.UrlSlug = model.Title.GenerateSlug();
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
             news.ShortDescription = model.ShortDescription;
+            news.JapaneseShortDescription = model.JapaneseShortDescription;
             news.Description = model.Description;
+            news.JapaneseDescription = model.JapaneseDescription;
             if (model.ImageFile != null)
             {
                 news.Image = new Image
@@ -129,14 +135,11 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
-            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.NewsSlug);
-            //if (news.Section.Count() == 0)
-            //{
-            //    foreach (var section in sections)
-            //    {
-            //        news.Section.Add(section);
-            //    }
-            //}
+            var section = await _sectionRepository.GetSectionBySlugAsync(QueryManagements.NewsSlug);
+            if (section != null)
+            {
+                news.Section = section;
+            }
             await _repository.EditItemAsync(news);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -150,7 +153,7 @@ namespace TitanWeb.Application.Services
         /// <exception cref="ArgumentNullException"></exception>
         public async Task<ItemDetailDTO> GetItemByIdAsync(int id)
         {
-            var item = await _repository.GetByIdWithInclude(id, i => i.Image, i => i.SubItems);
+            var item = await _repository.GetByIdWithInclude(id, i => i.Image, i => i.Button, i => i.SubItems);
             return _mapper.Map<ItemDetailDTO>(item);
         }
 
@@ -196,15 +199,18 @@ namespace TitanWeb.Application.Services
             else blog.UpdatedDate = DateTime.Now;
 
             blog.Title = model.Title;
+            blog.JapaneseTitle = model.JapaneseTitle;
             blog.SubTitle = model.SubTitle;
-            blog.UrlSlug = model.UrlSlug;
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
+            blog.UrlSlug = model.Title.GenerateSlug();
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
             blog.ShortDescription = model.ShortDescription;
+            blog.JapaneseShortDescription = model.JapaneseShortDescription;
             blog.Description = model.Description;
+            blog.JapaneseDescription = model.JapaneseDescription;
             if (model.ImageFile != null)
             {
                 blog.Image = new Image
@@ -212,14 +218,11 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
-            var sections = await _sectionRepository.GetAllSectionBySlugAsync(QueryManagements.BlogSlug);
-            //if (blog.Sections.Count() == 0)
-            //{
-            //    foreach (var section in sections)
-            //    {
-            //        blog.Sections.Add(section);
-            //    }
-            //}
+            var section = await _sectionRepository.GetSectionBySlugAsync(QueryManagements.BlogSlug);
+            if (section != null)
+            {
+                blog.Section = section;
+            }
             await _repository.EditItemAsync(blog);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -241,10 +244,13 @@ namespace TitanWeb.Application.Services
             else banner.UpdatedDate = DateTime.Now;
 
             banner.BoldTitle = model.BoldTitle;
+            banner.JapaneseBoldTitle = model.JapaneseBoldTitle;
             banner.Title = model.Title;
-            banner.UrlSlug = model.UrlSlug;
+            banner.JapaneseTitle = model.JapaneseTitle;
+            banner.UrlSlug = model.Title.GenerateSlug();
             banner.Description = model.Description;
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
+            banner.JapaneseDescription = model.JapaneseDescription;
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
@@ -257,11 +263,11 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.BackgroundImage.OpenReadStream(), model.BackgroundImage.FileName, QueryManagements.BannerFolder),
                 };
             }
-            //var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.BannerSlug);
-            //if (banner.Categories.Count() == 0 && category != null)
-            //{
-            //    banner.Categories.Add(category);
-            //}
+            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.BannerSlug);
+            if (category != null)
+            {
+                banner.Category = category;
+            }
             await _repository.EditItemAsync(banner);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
@@ -283,28 +289,29 @@ namespace TitanWeb.Application.Services
             else footerItem.UpdatedDate = DateTime.Now;
 
             footerItem.Title = model.Title;
+            footerItem.JapaneseTitle = model.JapaneseTitle;
             footerItem.UrlSlug = model.Title.GenerateSlug();
             footerItem.Address = model.Address;
             footerItem.TelNumber = model.TelNumber;
             footerItem.Description = model.Description;
+            footerItem.JapaneseDescription = model.JapaneseDescription;
             footerItem.InfoGmail = model.InfoGmail;
             footerItem.InfoGmail2 = model.InfoGmail2;
 
             var subItem = await _subItemRepository.GetByItemIdAsync(model.Id);
-            if (subItem == null)
+            if (subItem != null)
             {
-                subItem = new SubItem();
+                subItem.Facebook = model.Facebook;
+                subItem.Twitter = model.Twitter;
+                subItem.Linkedin = model.Linkedin;
+                subItem.Youtube = model.Youtube;
             }
-            subItem.Facebook = model.Facebook;
-            subItem.Twitter = model.Twitter;
-            subItem.Linkedin = model.Linkedin;
-            subItem.Youtube = model.Youtube;
 
-            //var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.FooterSlug);
-            //if (footerItem.Categories.Count() == 0 && category != null)
-            //{
-            //    footerItem.Categories.Add(category);
-            //}
+            var category = await _categoryRepository.GetCategoryBySlugAsync(QueryManagements.FooterSlug);
+            if (category != null)
+            {
+                footerItem.Category = category;
+            }
             await _subItemRepository.EditSubItemAsync(subItem);
             await _repository.EditItemAsync(footerItem);
 
@@ -323,14 +330,31 @@ namespace TitanWeb.Application.Services
             else updatedItem.UpdatedDate = DateTime.Now;
 
             updatedItem.Title = model.Title;
-            updatedItem.UrlSlug = model.UrlSlug;
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.UrlSlug))
+            updatedItem.JapaneseTitle = model.JapaneseTitle;
+            updatedItem.UrlSlug = model.Title.GenerateSlug();
+            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
             updatedItem.SubTitle = model.SubTitle;
+            updatedItem.JapaneseSubTitle = model.JapaneseSubTitle;
             updatedItem.Description = model.Description;
+            updatedItem.JapaneseDescription = model.JapaneseDescription;
+            var button = await _buttonRepository.GetByItemIdAsync(model.Id);
+            if (button != null)
+            {
+                button.Label = model.ButtonLabel;
+                button.JapaneseLabel = model.JapaneseButtonLabel;
+            }
+            else
+            {
+                updatedItem.Button = new Button
+                {
+                    Label = model.ButtonLabel,
+                    JapaneseLabel = model.JapaneseButtonLabel,
+                };
+            }
             if (model.ImageFile != null)
             {
                 updatedItem.Image = new Image
@@ -338,14 +362,16 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
-
-            var newSection = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
-            //if (newSection != null)
-            //{
-            //    updatedItem.Section.Clear();
-            //    updatedItem.Section.Add(newSection);
-            //}
-
+            var section = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
+            var category = await _categoryRepository.GetCategoryBySlugAsync(model.SectionSlug);
+            if (section != null)
+            {
+                updatedItem.Section = section;
+            }
+            if (category != null)
+            {
+                updatedItem.Category = category;
+            }
             await _repository.EditItemAsync(updatedItem);
             int saved = await _unitOfWork.Commit();
             return saved > 0;

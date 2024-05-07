@@ -89,6 +89,7 @@ namespace TitanWeb.Application.Services
                         itemDTO.SubTitle = item.JapaneseSubTitle;
                         itemDTO.ShortDescription = item.JapaneseShortDescription;
                         itemDTO.Description = item.JapaneseDescription;
+                        itemDTO.ButtonLabel = item.Button?.JapaneseLabel;
                     }
                     sectionDTO.Items.Add(itemDTO);
                 }

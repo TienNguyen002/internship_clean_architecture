@@ -72,7 +72,7 @@ namespace TitanWeb.Api.Controllers
         /// <param name="slug"> UrlSlug of the Item to get </param>
         /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> Item with the specified UrlSlug </returns>
-        [HttpGet("byslug/{slug}")]
+        [HttpGet("byslug")]
         public async Task<ActionResult<ItemDTO>> GetItemBySlug(string slug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetItemBySlug + slug);
@@ -91,7 +91,7 @@ namespace TitanWeb.Api.Controllers
         /// <param name="categorySlug"> UrlSlug of the Category </param>
         /// <param name="localeQuery"> Locale of Item (en, ja) </param>
         /// <returns> A List Of Items that belongs to the specified Category </returns>
-        [HttpGet("{categorySlug}")]
+        [HttpGet("byCategory")]
         public async Task<ActionResult<ItemDTO>> GetItemByCategorySlug(string categorySlug, [FromQuery] LocaleQuery localeQuery)
         {
             _logger.LogInformation(LogManagements.LogGetItemByCategorySlug + categorySlug);
@@ -133,9 +133,11 @@ namespace TitanWeb.Api.Controllers
         ///     {
         ///         "Id"= "126", (Id = 0 to Create, Id != to Update)
         ///         "Title"= "Titan Tet Celebration 2025",
-        ///         "UrlSlug"= "titan-tet-celebration-2025",
+        ///         "JapaneseTitle"= "Titan Tet Celebration 2025",
         ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        ///         "JapaneseShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         ///         "ImageFile"="@myImage.png;type=image/png"
         ///     }
         /// </remarks>
@@ -165,10 +167,12 @@ namespace TitanWeb.Api.Controllers
         ///     {
         ///         "Id"= "216", (Id = 0 to Create, Id != to Update)
         ///         "Title"= "Titan Tet Celebration 2025",
-        ///         "UrlSlug"= "titan-tet-celebration-2025",
-        ///         "SubTitle"= "By Admin",
+        ///         "JapaneseTitle"= "Titan Tet Celebration 2025",
+        ///         "SubTitle (Author)"= "Admin",
         ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        ///         "JapaneseShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "Japanese"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         ///         "ImageFile"="@myImage.png;type=image/png"
         ///     }
         /// </remarks>
@@ -233,11 +237,12 @@ namespace TitanWeb.Api.Controllers
         ///     {
         ///         "Id"= "12", (Id = 0 to Create, Id !=0 to Update)
         ///         "BoldTitle" = "INSPIRE"
+        ///         "JapaneseBoldTitle" = "INSPIRE"
         ///         "Title"= "YOUR WORK",
+        ///         "JapaneseTitle"= "YOUR WORK",
         ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         ///         "BackgroundImage"="@myImage.png;type=image/png"
-        ///         "CategorySlug" = "banner"
-        ///         "Locale"="en" (`en` or `ja`)
         ///     }
         /// </remarks>
         /// <param name="model"> Model to add/update Banner </param>
@@ -304,11 +309,12 @@ namespace TitanWeb.Api.Controllers
         ///     POST api/Item/edit
         ///     {
         ///         "Id"= "71", (Id = 0 to Create, Id !=0 to Update)
+        ///         "JapaneseTitle"= "VALERY KHVATOV",
         ///         "Title"= "VALERY KHVATOV",
-        ///         "UrlSlug"= "valery-khvatov",
         ///         "SubTitle"="VP of Technology",
+        ///         "JapaneseSubTitle"="VP of Technology",
         ///         "Description" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
-        ///         "Locale"="en"
+        ///         "JapaneseDescription" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
         ///     }
         /// </remarks>
         /// <param name="model"> Model to add/update Item </param>

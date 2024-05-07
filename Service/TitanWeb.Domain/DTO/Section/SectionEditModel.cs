@@ -20,20 +20,20 @@ namespace TitanWeb.Domain.DTO.Section
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.SectionTitleMaxLength)]
         public string Title { get; set; }
 
-        [DisplayName(ValidateManagements.SectionSlug)]
-        [Required(ErrorMessage = ValidateManagements.SectionSlugRequiredMsg)]
-        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.SectionSlugMaxLength)]
-        public string UrlSlug { get; set; }
+        [DisplayName(ValidateManagements.SectionJapaneseTitle)]
+        [Required(ErrorMessage = ValidateManagements.SectionJapaneseTitleRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.SectionJapaneseTitleMaxLength)]
+        public string JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.SectionDescription)]
         [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.SectionDescriptionMaxLength)]
         public string? Description { get; set; }
 
+        [DisplayName(ValidateManagements.SectionJapaneseDescription)]
+        [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.SectionJapaneseDescriptionMaxLength)]
+        public string? JapaneseDescription { get; set; }
+
         [DisplayName(ValidateManagements.SectionBackgroundImage)]
         public IFormFile? BackgroundImage { get; set; }
-
-        [DisplayName(ValidateManagements.Locale)]
-        [Required(ErrorMessage = ValidateManagements.LocaleRequiredMsg)]
-        public string Locale { get; set; }
     }
 }

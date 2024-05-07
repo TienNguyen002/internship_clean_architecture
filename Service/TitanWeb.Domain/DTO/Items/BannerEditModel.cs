@@ -11,22 +11,30 @@ namespace TitanWeb.Domain.DTO.Items
         public int Id { get; set; }
 
         [DisplayName(ValidateManagements.BannerBoldTitle)]
-        public string BoldTitle { get; set; }
+        public string? BoldTitle { get; set; }
+
+        [DisplayName(ValidateManagements.BannerJapaneseBoldTitle)]
+        public string? JapaneseBoldTitle { get; set; }
 
         [DisplayName(ValidateManagements.BannerTitle)]
         [Required(ErrorMessage = ValidateManagements.BannerTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BannerTitleMaxLength)]
         public string Title { get; set; }
 
-        [DisplayName(ValidateManagements.BannerSlug)]
-        [Required(ErrorMessage = ValidateManagements.BannerSlugRequiredMsg)]
-        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BannerSlugMaxLength)]
-        public string UrlSlug { get; set; }
+        [DisplayName(ValidateManagements.BannerJapaneseTitle)]
+        [Required(ErrorMessage = ValidateManagements.BannerJapaneseTitleRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BannerJapaneseTitleMaxLength)]
+        public string JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.BannerDescription)]
         [Required(ErrorMessage = ValidateManagements.BannerDescriptionRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.BannerDescriptionMaxLength)]
         public string Description { get; set; }
+
+        [DisplayName(ValidateManagements.BannerJapaneseDescription)]
+        [Required(ErrorMessage = ValidateManagements.BannerJapaneseDescriptionRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.BannerJapaneseDescriptionMaxLength)]
+        public string JapaneseDescription { get; set; }
 
         [DisplayName(ValidateManagements.BannerBackgroundImage)]
         public IFormFile? BackgroundImage { get; set; }

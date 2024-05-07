@@ -1,5 +1,4 @@
-﻿using TitanWeb.Domain.DTO.Button;
-using TitanWeb.Domain.DTO.Section;
+﻿using TitanWeb.Domain.DTO.Section;
 using TitanWeb.Domain.DTO.SubItem;
 
 namespace TitanWeb.Domain.DTO.Items
@@ -27,6 +26,7 @@ namespace TitanWeb.Domain.DTO.Items
         public SectionForItemDTO Section { get; set; }
         public IList<SubItemDTO> SubItems { get; set; }
         public string ImageUrl { get; set; }
-        public ButtonDTO Button { get; set; }
+        public string ButtonLabel { get; set; }
+        public string JapaneseButtonLabel { get; set; }
     }
 }

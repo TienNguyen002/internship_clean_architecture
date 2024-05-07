@@ -89,8 +89,9 @@ namespace TitanWeb.Api.Controllers
         ///         "Id"= "216", (Id = 0 to Create, Id != to Update)
         ///         "Name"= "Services"
         ///         "Title"= "WE PROVIDE",
-        ///         "UrlSlug"= "services",
+        ///         "JapaneseTitle"= "WE PROVIDE",
         ///         "Description"= "Professional and trusted services with cost-effective and exceptional expertise to deal with any complexities in scalable projects",
+        ///         "JapaneseDescription"= "Professional and trusted services with cost-effective and exceptional expertise to deal with any complexities in scalable projects",
         ///         "BackgroundImage"="@myImage.png;type=image/png"
         ///         "Locale"="en" (`en` or `ja`)
         ///     }

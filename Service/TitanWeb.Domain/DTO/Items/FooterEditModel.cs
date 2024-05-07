@@ -14,23 +14,32 @@ namespace TitanWeb.Domain.DTO.Items
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.FooterItemTitleMaxLength)]
         public string Title { get; set; }
 
+        [DisplayName(ValidateManagements.FooterItemJapaneseTitle)]
+        [Required(ErrorMessage = ValidateManagements.FooterItemJapaneseTitleRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.FooterItemJapaneseTitleMaxLength)]
+        public string JapaneseTitle { get; set; }
+
         [DisplayName(ValidateManagements.FooterItemAddress)]
+        [MaxLength(ValidateManagements.MaxLength200, ErrorMessage = ValidateManagements.FooterItemJapaneseTitleMaxLength)]
         public string? Address { get; set; }
 
         [DisplayName(ValidateManagements.FooterItemTelNumber)]
+        [MaxLength(ValidateManagements.MaxLength20, ErrorMessage = ValidateManagements.FooterItemJapaneseTitleMaxLength)]
         public string? TelNumber { get; set; }
 
         [DisplayName(ValidateManagements.FooterItemDescription)]
         public string? Description { get; set; }
 
+        [DisplayName(ValidateManagements.FooterItemJapaneseDescription)]
+        public string? JapaneseDescription { get; set; }
+
         [DisplayName(ValidateManagements.FooterItem1stGmail)]
+        [MaxLength(ValidateManagements.MaxLength50, ErrorMessage = ValidateManagements.FooterItemJapaneseTitleMaxLength)]
         public string? InfoGmail { get; set; }
 
         [DisplayName(ValidateManagements.FooterItem2ndGmail)]
+        [MaxLength(ValidateManagements.MaxLength50, ErrorMessage = ValidateManagements.FooterItemJapaneseTitleMaxLength)]
         public string? InfoGmail2 { get; set; }
-
-        [DisplayName(ValidateManagements.FooterItemSkype)]
-        public string? Skype { get; set; }
 
         [DisplayName(ValidateManagements.FooterItemFacebook)]
         public string? Facebook { get; set; }

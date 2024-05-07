@@ -27,6 +27,10 @@ namespace TitanWeb.Api.Mapsters
             config.NewConfig<Item, ItemForCategoryDTO>()
                 .Map(desc => desc.Id, src => src.Id)
                 .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl);
+            config.NewConfig<Item, ItemDetailDTO>()
+                .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl)
+                .Map(desc => desc.ButtonLabel, src => src.Button.Label)
+                .Map(desc => desc.JapaneseButtonLabel, src => src.Button.JapaneseLabel);
 
             config.NewConfig<Category, CategoryDTO>()
                 .Map(desc => desc.Id, src => src.Id);

@@ -15,10 +15,10 @@ namespace TitanWeb.Domain.DTO.Items
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogTitleMaxLength)]
         public string Title { get; set; }
 
-        [DisplayName(ValidateManagements.BlogSlug)]
-        [Required(ErrorMessage = ValidateManagements.BlogSlugRequiredMsg)]
-        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogSlugMaxLength)]
-        public string UrlSlug { get; set; }
+        [DisplayName(ValidateManagements.BlogJapaneseTitle)]
+        [Required(ErrorMessage = ValidateManagements.BlogJapaneseTitleRequiredMsg)]
+        [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BlogJapaneseTitleMaxLength)]
+        public string JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.BlogSubTitle)]
         [Required(ErrorMessage = ValidateManagements.BlogSubTitleRequiredMsg)]
@@ -29,9 +29,17 @@ namespace TitanWeb.Domain.DTO.Items
         [Required(ErrorMessage = ValidateManagements.BlogShortDescriptionRequiredMsg)]
         public string ShortDescription { get; set; }
 
+        [DisplayName(ValidateManagements.BlogJapaneseShortDescriptionRequiredMsg)]
+        [Required(ErrorMessage = ValidateManagements.BlogJapaneseShortDescriptionMaxLength)]
+        public string JapaneseShortDescription { get; set; }
+
         [DisplayName(ValidateManagements.BlogDescription)]
         [Required(ErrorMessage = ValidateManagements.BlogDescriptionRequiredMsg)]
         public string Description { get; set; }
+
+        [DisplayName(ValidateManagements.BlogJapaneseDescriptionRequiredMsg)]
+        [Required(ErrorMessage = ValidateManagements.BlogJapaneseDescriptionMaxLength)]
+        public string JapaneseDescription { get; set; }
 
         [DisplayName(ValidateManagements.BlogImage)]
         public IFormFile? ImageFile { get; set; }

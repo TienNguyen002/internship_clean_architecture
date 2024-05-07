@@ -1,4 +1,5 @@
 ﻿using MapsterMapper;
+using SlugGenerator;
 using TitanWeb.Application.DTO.Section;
 using TitanWeb.Domain.Constants;
 using TitanWeb.Domain.DTO;
@@ -78,13 +79,15 @@ namespace TitanWeb.Application.Services
 
             section.Name = model.Name;
             section.Title = model.Title;
-            section.UrlSlug = model.UrlSlug;
-            if (await _repository.IsSectionSlugExitedAsync(model.Id, model.UrlSlug))
+            section.JapaneseTitle = model.JapaneseTitle;
+            section.UrlSlug = model.Name.GenerateSlug();
+            if (await _repository.IsSectionSlugExitedAsync(model.Id, model.Name.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
             section.Description = model.Description;
+            section.JapaneseDescription = model.JapaneseDescription;
             if (model.BackgroundImage != null)
             {
                 section.Image = new Image
