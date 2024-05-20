@@ -6,21 +6,24 @@ import {
   getItemById,
   editBanner,
   uploadToCloudinary,
-  uploadImageEditor,
 } from "../../../api/ItemApi";
 import Swal from "sweetalert2";
-import { btnValue, numberLength, allowedExtensions, saveSuccess, errorEdit } from "../../../enum/EnumApi";
+import { btnValue, numberLength, saveSuccess, errorEdit, inputLength } from "../../../enum/EnumApi";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import JoditReact from "jodit-react";
+import { toast } from "react-hot-toast";
 
-const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
+const EditBanner = ({ id, setRows, setIsPopupVisible }) => {
   const initialState = {
       id: numberLength.zero,
+      isDisplayed: "",
       boldTitle: "",
+      japaneseBoldTitle: "",
       title: "",
+      japaneseTitle: "",
       urlSlug: "",
       description: "",
+      japaneseDescription: "",
       imageUrl: "",
       Locale: "",
     },
@@ -31,13 +34,10 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
   const editImageFrame = data.editImageFrame;
   const { t: translate } = useTranslation();
 
-  const editor = useRef("");
-
   useEffect(() => {
     if (id === 0) {
       resetState();
-    }
-    if (id > 0) {
+    } else if (id > 0) {
       getItem();
       async function getItem() {
         const data = await getItemById(id);
@@ -46,7 +46,7 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
         } else setBanner(data);
       }
     }
-  }, [id]);
+  }, [id, setIsPopupVisible]);
 
   const resetState = () => {
     setBanner(initialState);
@@ -57,11 +57,35 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
     setIsPopupVisible(false);
   };
 
+  const validateInputs = () => {
+    const validations = [
+      { field: banner.boldTitle || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.boldTitle },
+      { field: banner.japaneseBoldTitle || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.boldTitle },
+      { field: banner.title || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: banner.japaneseTitle || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: banner.description || '', maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.description },
+      { field: banner.japaneseDescription || '', maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.description },
+    ];
+
+    for (let i = 0; i < validations.length; i++) {
+      const { field, maxLength, errorMessage } = validations[i];
+      if (field && field.length > maxLength) {
+        toast.error(errorMessage);
+        return false;
+      }
+    }
+    return true;
+  };
+
   //Onclick submit button
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) {
+      return;
+    }
+
     let formData = new FormData(e.target);
-    formData.set("Description", editor.current.value || banner.description);
     editBanner(formData).then((data) => {
       if (data) {
         Swal.fire({
@@ -70,6 +94,7 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
         });
         setRows(banner);
         setIsPopupVisible(false);
+        resetState();
       } else {
         Swal.fire({
           title: errorEdit.title,
@@ -85,6 +110,7 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
       const reader = new FileReader();
       reader.onloadend = async () => {
         if (reader.result) {
+          setPreviewUrl(reader.result);
           const filename = reader.result;
           const formData = new FormData();
           formData.append("file", filename);
@@ -94,68 +120,12 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
           );
           const url = await uploadToCloudinary(formData);
           setBanner({ ...banner, imageUrl: url });
-          setPreviewUrl(reader.result);
         }
       };
       reader.readAsDataURL(file);
     },
     [initialState]
   );
-
-  const editorConfig = {
-    readonly: false,
-    toolbar: true,
-    spellcheck: false,
-    language: "en",
-    toolbarButtonSize: "medium",
-    toolbarAdaptive: false,
-    showCharsCounter: false,
-    showWordsCounter: false,
-    showXPathInStatusbar: false,
-    askBeforePasteHTML: true,
-    askBeforePasteFromWord: true,
-    width: 800,
-    height: 500,
-    defaultActionOnPaste: "insert_clear_html",
-    placeholder: "Write something awesome...",
-    beautyHTML: true,
-    controls: {
-      image: {
-        exec: async (editor) => {
-          await imageUpload(editor);
-        },
-      },
-    },
-  };
-  const imageUpload = async (editor) => {
-    const input = document.createElement("input");
-    input.setAttribute("type", "file");
-    input.setAttribute("accept", "image/*");
-    input.click();
-
-    input.onchange = async function () {
-      const imageFile = input.files[0];
-
-      if (!imageFile) {
-        return;
-      }
-      console.log(allowedExtensions);
-      if (!imageFile.name.match(new RegExp(`\.(${allowedExtensions.join('|')})$$`))) {
-        return;
-      }
-
-      const imageInfo = await uploadImageEditor(imageFile);
-
-      insertImage(editor, imageInfo);
-    };
-  };
-
-  const insertImage = (editor, image) => {
-    const imgNode = editor.create.fromHTML(
-      `<img src="${image.secure_url}" alt="${image.original_filename}" />`
-    );
-    editor.selection.insertNode(imgNode);
-  };
 
   return (
     <>
@@ -178,10 +148,10 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
             ></input>
             <input
               hidden
-              name="Locale"
-              title="Locale"
-              value={currentLanguage}
-              onChange={(e) => setBanner({ ...banner, Locale: e.target.value })}
+              name="isDisplayed"
+              title="isDisplayed"
+              value={banner.isDisplayed}
+              onChange={(e) => setBanner({ ...banner, isDisplayed: e.target.value })}
             ></input>
             <div className="gallery">
               <label htmlFor="uploadGallery">
@@ -203,7 +173,7 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
               </label>
             </div>
             <div className="bold-title">
-              <p className="text-title">Bold Title</p>
+              <p className="text-desc">Bold Title</p>
               <input
                 placeholder={translate("editAdmin.BoldTitle")}
                 className="input-title"
@@ -213,9 +183,18 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
                 value={banner.boldTitle || ""}
                 onChange={(e) => setBanner({ ...banner, boldTitle: e.target.value })}
               />
+              <input
+                placeholder={translate("editAdminJa.BoldTitle")}
+                className="input-title"
+                type="text"
+                name="JapaneseBoldTitle"
+                title="JapaneseBoldTitle"
+                value={banner.japaneseBoldTitle || ""}
+                onChange={(e) => setBanner({ ...banner, japaneseBoldTitle: e.target.value })}
+              />
             </div>
             <div className="title">
-              <p className="text-title">Title</p>
+              <p className="text-desc">Title</p>
               <input
                 placeholder={translate("editAdmin.Title")}
                 className="input-title"
@@ -225,27 +204,35 @@ const EditBanner = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
                 value={banner.title || ""}
                 onChange={(e) => setBanner({ ...banner, title: e.target.value })}
               />
-            </div>
-            <div className="title">
-              <p className="text-title">Slug</p>
               <input
-                placeholder={translate("editAdmin.Slug")}
+                placeholder={translate("editAdminJa.Title")}
                 className="input-title"
                 type="text"
-                name="UrlSlug"
-                title="UrlSlug"
-                value={banner.urlSlug || ""}
-                onChange={(e) => setBanner({ ...banner, urlSlug: e.target.value })}
+                name="JapaneseTitle"
+                title="JapaneseTitle "
+                value={banner.japaneseTitle || ""}
+                onChange={(e) => setBanner({ ...banner, japaneseTitle: e.target.value })}
               />
             </div>
             <div className="desc-edit">
               <p className="text-desc">Description</p>
-              <JoditReact
-                ref={editor}
-                name="Description"
+              <textarea
+                placeholder={translate("editAdmin.Description")}
+                className="input-shdes"
                 type="text"
-                value={banner.description}
-                config={editorConfig}
+                name="Description"
+                title="Description"
+                value={banner.description || ""}
+                onChange={(e) => setBanner({ ...banner, description: e.target.value })}
+              />
+              <textarea
+                placeholder={translate("editAdminJa.Description")}
+                className="input-shdes"
+                type="text"
+                name="JapaneseDescription"
+                title="JapaneseDescription"
+                value={banner.japaneseDescription || ""}
+                onChange={(e) => setBanner({ ...banner, japaneseDescription: e.target.value })}
               />
             </div>
           </div>

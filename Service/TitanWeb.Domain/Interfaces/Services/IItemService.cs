@@ -18,6 +18,6 @@ namespace TitanWeb.Domain.Interfaces.Services
         Task<bool> EditBannerAsync(BannerEditModel model);
         Task<bool> EditFooterItemAsync(FooterEditModel model);
         Task<bool> EditItemAsync(ItemEditModel model);
-
+        Task<bool> ToggleDisplayAsync(int itemId);
     }
 }

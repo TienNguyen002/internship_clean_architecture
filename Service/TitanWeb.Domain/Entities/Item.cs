@@ -28,6 +28,8 @@ public partial class Item : IEntity
 
     public string? JapaneseDescription { get; set; }
 
+    public bool IsDisplayed { get; set; }
+
     public string? Address { get; set; }
 
     public string? TelNumber { get; set; }

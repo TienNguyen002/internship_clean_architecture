@@ -203,7 +203,7 @@ namespace TitanWeb.Infrastructure.Repositories
         /// <param name="slug"> Slug Of Item want to check </param>
         /// <returns> Image Item Changed </returns>
         /// <exception cref="Exception"></exception>
-        public async Task<bool> IsItemSlugExitedAsync(int id, string slug)
+        public async Task<bool> ItemSlugExistsAsync(int id, string slug)
         {
             return await _context.Set<Item>()
                 .AnyAsync(t => t.Id != id && t.UrlSlug == slug);

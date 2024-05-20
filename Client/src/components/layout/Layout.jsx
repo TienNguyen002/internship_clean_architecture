@@ -16,7 +16,7 @@ const Layout = () => {
       <div>
         <Outlet/>
       </div>
-      <Footer locale={currentLanguage} />
+      <Footer />
     </>
   );
 };

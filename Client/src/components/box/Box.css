@@ -564,8 +564,6 @@
   display: none;
 }
 
-
-
 .box-home-body-domain .swiper-button-prev {
   top: 30%;
   color: var(--light-color);
@@ -829,6 +827,10 @@
   align-items: center;
   padding: 30px 100px;
   background: var(--background-innovations);
+}
+
+.home-recognized-box .swiper-wrapper{
+  align-items: center;
 }
 
 .home-recognized-box .box-column{

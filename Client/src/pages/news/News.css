@@ -5,7 +5,7 @@
     min-height: 160px;
     line-height: 1;
   }
-  
+
   .news-page-title {
     position: absolute;
     top: 50%;
@@ -41,7 +41,7 @@
   }
 
   @media (max-width: 1660px) {
-    .grid-container-news-page { 
+    .grid-container-news-page {
       margin-left: 100px;
       margin-right: 100px;
       grid-template-columns: 1fr 1fr;
@@ -53,7 +53,7 @@
   }
 
   @media (max-width: 1280px) {
-    .grid-container-news-page { 
+    .grid-container-news-page {
       margin-left: 25px;
       margin-right: 25px;
      }
@@ -64,8 +64,8 @@
   }
 
   @media (max-width: 768px) {
-    .grid-container-news-page { 
-      grid-template-columns: auto; 
+    .grid-container-news-page {
+      grid-template-columns: auto;
     }
     .news-page-title {
       font-size: 28px;
@@ -110,7 +110,7 @@
     font-size: 22px;
     font-weight: 300;
   }
-  
+
   .news-page-item-description{
     display: -webkit-box;
     overflow: hidden;
@@ -121,18 +121,18 @@
     color: var(--text-color);
     text-align: left;
   }
-  
+
   @media only screen and (max-width: 1280px) {
     .title-news-page-item{
-      font-size: 22px; 
+      font-size: 22px;
       margin: 10px 0;
-      text-align: center; 
+      text-align: center;
     }
     .news-page-item-date {
       text-align: center;
     }
     .news-page-item-description {
-      font-size: 20px; 
+      font-size: 20px;
       text-align: center;
     }
     .grid-item-news-page {
@@ -145,35 +145,35 @@
       padding: 0px 25px;
     }
   }
-  
+
   @media only screen and (max-width: 768px) {
     .news-page-item-img {
       height: 180px;
       width: 350px;
     }
     .title-news-page-item {
-      font-size: 18px; 
-      margin: 10px 0; 
+      font-size: 18px;
+      margin: 10px 0;
     }
     .news-page-item-description {
-      font-size: 18px; 
+      font-size: 18px;
     }
     .grid-item-news-page {
       padding: 0px 15px;
     }
   }
-  
+
   @media only screen and (max-width: 480px) {
     .news-img {
-      height: 100%; 
-      width: auto; 
+      height: 100%;
+      width: auto;
     }
     .title-news-page-item {
-      font-size: 18px; 
-      margin: 10px 0 15px; 
+      font-size: 18px;
+      margin: 10px 0 15px;
     }
     .news-page-item-description {
-      font-size: 16px; 
+      font-size: 16px;
     }
     .grid-item-news-page {
       padding: 0;

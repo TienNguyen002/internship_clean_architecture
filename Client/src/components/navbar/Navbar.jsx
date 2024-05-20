@@ -5,18 +5,14 @@ import PageMenu from "../pageMenu/PageMenu";
 import { getItemByCategory } from "../../api/ItemApi";
 import { language, slugName } from "../../enum/EnumApi";
 import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage } from "../../redux/actions";
 import { useTranslation } from 'react-i18next';
+import { changeLanguage } from "../../redux/reducers";
 
 const Navbar = () => {
   const { t: translate, i18n } = useTranslation();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [logo, setLogo] = useState([]);
 
-  const payload = {
-    categorySlug: slugName.navbar,
-    language: language.english,
-  };
   const currentLanguage = useSelector(
     (state) => state.language.currentLanguage
   );
@@ -30,13 +26,17 @@ const Navbar = () => {
       dispatch(changeLanguage(language.english));
     }
   };
+  const payload = {
+    categorySlug: slugName.navbar,
+    locale: currentLanguage,
+  };
   useEffect(() => {
     getItemByCategory(payload).then((data) => {
       if (data) {
         setLogo(data);
       } else setLogo([]);
     });
-  }, []);
+  }, [payload.locale]);
   const togglePopup = () => {
     setIsPopupVisible(!isPopupVisible);
     document.body.classList.toggle("popup-open");
@@ -55,12 +55,12 @@ const Navbar = () => {
                 </Link>
                 <span onClick={handleLanguageSwitch} className="grid-item">
                   {
-                      item.buttonStatus === true ?
+                      item.buttonStatus ?
                     <>
                       <i className="fa-solid fa-flag"></i>
-                      {item.buttonLabel}
+                      {translate('navbar.Lang')}
                     </>
-                      :null
+                      : null
                   }
                 </span>
                 <a onClick={togglePopup} className="grid-item">

@@ -12,6 +12,7 @@
 
 .logo-admin .data-grid-container .MuiDataGrid-root {
     border-radius: 10px;
+    height: 83vh;
 }
 
 .logo-admin .edit-show {
@@ -28,7 +29,7 @@
     z-index: 1500;
     width: 100vw;
     height: 100vh;
-    background-color: var(--medium-gray);
+    background-color: var(--background-gray);
 }
 
 .logo-admin .popup-container {

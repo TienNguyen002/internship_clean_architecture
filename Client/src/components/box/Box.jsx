@@ -31,6 +31,10 @@ const Box = (props) => {
     document.body.classList.remove("popup-open");
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const renderBoxSlider = (name) => {
     switch (name) {
       case sectionName.Service:
@@ -76,6 +80,7 @@ const Box = (props) => {
       case sectionName.Client:
         return (
           <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -175,6 +180,7 @@ const Box = (props) => {
       case sectionName.Recognized:
         return (
           <BoxSlider
+            name={name}
             items={items}
             title={title}
             description={description}
@@ -212,7 +218,9 @@ const Box = (props) => {
             textBoxStyle="news-blog-text"
             titleItem="blog-new-title"
             logoBoxStyle="news-blog-logo"
-            slidedelay="false"
+            autoslide="false"
+            allowTouch={false}
+            switchNavigation={false}
             hasShort={true}
             />
         );
@@ -226,6 +234,8 @@ const Box = (props) => {
             textBoxStyle="news-blog-text"
             titleItem="blog-new-title"
             logoBoxStyle="news-blog-logo"
+            autoslide="false"
+            allowTouch={false}
             switchNavigation={false}
             hasSubTitle={true}
             hasShort={true}
@@ -285,7 +295,7 @@ const Box = (props) => {
               boxSliderClassNameConfig[name]?.titleStyle || "box-title"
             }
           >
-            <Link to={titleLinks[name]?.link || ""}><a>{title}</a></Link>
+            <Link to={titleLinks[name]?.link || ""} onClick={scrollToTop}>{title}</Link>
           </h1>
         </div>
         <div className={boxSliderClassNameConfig[name]?.boxdesc || "desc"}>

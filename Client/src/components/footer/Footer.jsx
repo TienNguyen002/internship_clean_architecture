@@ -3,20 +3,23 @@ import { getFooter } from "../../api/ItemApi";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import "./Footer.css";
+import { linkSocial, slugName, language } from "../../enum/EnumApi";
+import { useSelector } from "react-redux";
 
-const Footer = (props) => {
+const Footer = () => {
   const [footer, setFooter] = useState([]);
   const [isActive, setIsActive] = useState(false);
   const data = require("../../imgURL.json");
   const upTop = data.upTop;
   const googleMap = data.googleMap;
-  const { locale } = props;
-  const { t: translate }  = useTranslation();
-  
+  const { t: translate } = useTranslation();
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -25,43 +28,32 @@ const Footer = (props) => {
     setIsActive(!isActive);
   };
 
+  const payload = {
+    locale: currentLanguage,
+  };
+
   useEffect(() => {
-    getFooter(locale).then((data) => {
+    getFooter(payload).then((data) => {
       if (data) {
         setFooter(data.items);
       } else setFooter([]);
     });
-  }, [locale]);
-  const footerOffice = footer.filter(
-    (item) =>
-      item.title === translate('footer.Headquarters') ||
-      item.title === translate('footer.Branchoffice')
-  );
-  const footerContent = footer.filter(
-    (item) =>
-      item.title === translate('footer.GeneralInquiries') ||
-      item.title === translate('footer.SaleSupport')
-  );
-  const footerCopyright = footer.filter(
-    (item) => item.title === translate('footer.Copyright')
-  );
-  const footerSocial = footer.filter(
-    (item) =>
-      item.title ===  translate('footer.ConnectWithUs')
-  );
+  }, [currentLanguage]);
 
   return (
     <div className="site-footer">
-      {/* <div className="box-footer-google">
+      <div className="box-footer-google">
         <div className="footer-container">
           <div className="box-footer-google-title">
-            <Link to="contact-us"><a>{translate("footer.Contact")}</a></Link>
+            <Link to="contact-us" onClick={scrollToTop}>
+              {translate("footer.Contact")}
+            </Link>
           </div>
           <div className="box-footer-google-description">
-            <a onClick={toggleMap}>
-              {translate('footer.Map')}
+            <div onClick={toggleMap}>
+              {translate("footer.Map")}
               <FontAwesomeIcon className="location-icon" icon={faLocationDot} />
-            </a>
+            </div>
           </div>
         </div>
       </div>
@@ -82,88 +74,88 @@ const Footer = (props) => {
 
       <div className="box-footer-location">
         <div className="footer-container">
-          {footerOffice.length > 0
-            ? footerOffice.map((item, index) => (
-                <div className="footer-item" key={index}>
-                  <h3>{item.title}:</h3>
-                  <p>{item.address}</p>
-                  <a>{item.telNumber}</a>
+          {footer.length > 0 ? footer.map((items, i) => (
+              items.address ? (
+                <div className="footer-item" key={i}>
+                  <h3>{items.title}:</h3>
+                  <p>{items.address}</p>
+                  <a href={`tel:${items.telNumber}`}>
+                    Tel: {items.telNumber}
+                  </a>
                 </div>
-              ))
-            : null}
+              ) : null
+            )) : null}
         </div>
       </div>
 
       <div className="box-footer-support">
         <div className="footer-container">
-          {footerContent.length > 0
-            ? footerContent.map((item, index) => (
-                <div className="footer-item" key={index}>
-                  <h3>{item.title}:</h3>
-                  {item.subItems.length > 0
-                    ? item.subItems.map((subitem, index) => (
-                        <div className="space-item" key={index}>
-                          <a href="">
-                            <img
-                              src={subitem.image.imageUrl}
-                              className="mail-icon"
-                              alt="Mail Icon"
-                            />
-                            <span className="space-item-text">
-                              {" "}
-                              {subitem.text}
-                            </span>
-                          </a>
-                        </div>
-                      ))
-                    : null}
+          {footer.length > 0 ? footer.map((items, i) => (
+              items.infoGmail ? (
+                <div className="footer-item" key={i}>
+                  <h3>{items.title}:</h3>
+                  <div className="space-item">
+                    <a href={`mailto:${items.infoGmail}`}>
+                      <p>
+                        <i className="fa-solid fa-envelope mail-icon"></i>{" "}
+                        {items.infoGmail}
+                      </p>
+                    </a>
+                    <a href={linkSocial.skype === items.infoGmail2 ? "skype:" + items.infoGmail2 + "?chat" : "mailto:" + items.infoGmail2}>
+                      <p>
+                        <i className={linkSocial.skype === items.infoGmail2 ? "fa-brands fa-skype mail-icon" : "fa-solid fa-envelope mail-icon"}></i>{" "}
+                        {items.infoGmail2}
+                      </p>
+                    </a>
+                  </div>
                 </div>
-              ))
-            : null}
+              ) : null
+         )) : null}
         </div>
       </div>
 
       <div className="box-footer-bottom">
         <div className="footer-container">
-          {footerCopyright.length > 0
-            ? footerCopyright.map((item, index) => (
-                <div className="box-footer-bottom-copyright" key={index}>
-                  {item.description}
+          {footer.length > 0 ? footer.map((items, i) => (
+            items.description ? (
+              <div className="box-footer-bottom-copyright" key={i}>
+                {items.description} <Link to ="/privacy" onClick={scrollToTop}>{translate("footer.Copyright")}</Link>
+              </div>
+            ) : null
+          )) : null}
+          {footer.length > 0 ? footer.map((items) =>
+            items.subItems != null ? items.subItems.map((subItem,  i) => (
+              <div className="box-footer-bottom-socials" key={i}>
+                <p>{items.title}</p>
+                <div className="socials-icon">
+                  <a href={`${subItem.facebook}`}>
+                    <i className={`socials-icon fa-brands fa-facebook-f `}></i>
+                  </a>
+
+                  <a href={`${subItem.twitter}`}>
+                    <i className={`socials-icon fa-brands fa-twitter`}></i>
+                  </a>
+
+                  <a href={`${subItem.linkedin}`}>
+                    <i className={`socials-icon fa-brands fa-linkedin `}></i>
+                  </a>
+
+                  <a href={`${subItem.youtube}`}>
+                    <i className={`socials-icon fa-brands fa-youtube`}></i>
+                  </a>
                 </div>
-              ))
-            : null}
-          {footerSocial.length > 0
-            ? footerSocial.map((item, index) => (
-                <div className="box-footer-bottom-socials" key={index}>
-                  {item.title}
-                  {item.subItems.length > 0
-                    ? item.subItems.map((subitem, index) => (
-                        <a
-                          href={subitem.image.hyperlink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          key={index}
-                        >
-                          <img
-                            src={subitem.image.imageUrl}
-                            className="socials-icon"
-                            alt="Socials Icon"
-                          />
-                        </a>
-                      ))
-                    : null}
-                  <img
-                    className="scroll-to-top"
-                    onClick={scrollToTop}
-                    id="back-to-top"
-                    src={upTop}
-                    alt="ScrollTop Icon"
-                  ></img>
-                </div>
-              ))
-            : null}
+                <img
+                  className="scroll-to-top"
+                  onClick={scrollToTop}
+                  id="back-to-top"
+                  src={upTop}
+                  alt="ScrollTop Icon"
+                ></img>
+              </div>
+            )) : null)
+          : null}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

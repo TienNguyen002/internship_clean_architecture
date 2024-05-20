@@ -14,13 +14,17 @@ function HomePage() {
     (state) => state.language.currentLanguage
   );
 
+  const payload = {
+    locale: currentLanguage
+  }
+
   useEffect(() => {
-    getAllSection(currentLanguage).then((data) => {
+    getAllSection(payload).then((data) => {
       if (data && data.length > 0) {
         setBox(data);
       }
     });
-    getRequestForm(currentLanguage).then((data) => {
+    getRequestForm(payload).then((data) => {
       if (data) {
         setRequest({
           items: data.items,

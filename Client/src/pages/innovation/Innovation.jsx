@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import './Innovation.css'
 
-import { getItemBySlug } from '../../api/ItemApi';
 import { useTranslation } from 'react-i18next';
-import { slugName } from '../../enum/EnumApi';
 
 const Innovation = () => {
     const imageUrl = require("../../imgURL.json");
-    const [data, setData] = useState([]);
     const { t: translate }  = useTranslation();
     const innovationsBanner = imageUrl.innovationsBanner;
     const innovationImg = imageUrl.innovationImg;
     const innovationLink = imageUrl.innovationLink;
-
-    let slug = slugName.innovations;
-
-    useEffect(() => {
-      getItemBySlug(slug).then((data) => {
-        if (data) {
-          setData([data]);
-        } else setData([]);
-      });
-    }, [slug]);
 
   return (
     <>
@@ -31,7 +18,6 @@ const Innovation = () => {
   </div>
   <div className="box-body-innovation">
     <div className="innovation-page-container">
-      {data.length > 0 ? data.map((item) => (
       <div className="innovation-page-content">
         <div className='desc'>{translate('innovation.Description')}</div>
         <div className="innovation-page-context">
@@ -47,8 +33,6 @@ const Innovation = () => {
           </div>
         </div>
       </div>
-      ))
-      : null}
     </div>
   </div>
     </>

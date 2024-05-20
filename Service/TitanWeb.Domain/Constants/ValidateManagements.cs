@@ -330,6 +330,8 @@
         public const string InvalidUrlSlug = "Invalid URL Slug. Slug can only contain lowercase letters, numbers, and hyphens and must not begin with a number (e.g., 'my-post-123')";
         public const string SlugPattern = @"^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$";
 
-
+        //Banner validation
+        public const int MaxBannerCount = 10;
+        public const string IsDisplayed = "Show on HomePage";
     }
 }

@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { DataGrid, GridToolbarContainer, GridActionsCellItem, GridRowEditStopReasons, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridActionsCellItem, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import Swal from "sweetalert2";
 import { getLogo, deleteImage, changeLogo } from "../../../api/ItemApi";
 import { btnValue, deleteForm, changeForm, widthTable } from "../../../enum/EnumApi";
@@ -24,7 +24,7 @@ export default function Logo() {
       setRows(data || []);
     }
     fetchLogo();
-  }, []);
+  }, [isPopupVisible]);
 
   const handleEditClick = (id) => () => {
     Swal.fire({

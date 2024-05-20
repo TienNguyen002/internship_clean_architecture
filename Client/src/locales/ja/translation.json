@@ -1,7 +1,8 @@
 {
   "navbar": {
     "Home": "ホーム",
-    "Lang": "English"
+    "Lang": "English",
+    "AdminLang": "Change to English"
   },
   "menu": {
     "Home": "ホーム",
@@ -27,7 +28,8 @@
     "News": "ニュース ＆ イベント",
     "Contact": "お問い合わせ",
     "About": "我々について",
-    "Blog": "ブログ"
+    "Blog": "ブログ",
+    "Privacy": "ポリシーと規約"
   },
   "request": {
     "Name": "お名前 *",
@@ -35,17 +37,13 @@
     "Subject": "件名 *",
     "Message": "お問い合わせ内容 *",
     "Error": "必須項目を記入してください（*)",
-    "ErrCaptcha": "reCaptcha でご確認ください。"
+    "ErrCaptcha": "reCaptcha でご確認ください。",
+    "ErrRegex": "入力したメールアドレスは無効です。"
   },
   "footer": {
     "Contact": "お問い合わせ",
     "Map": "GOOGLE MAP で私たちを探す",
-    "Headquarters": "Headquarters",
-    "Branchoffice": "Branch office",
-    "GeneralInquiries": "総合窓口",
-    "SaleSupport": "セールス、サポート",
-    "Copyright": "Copyright",
-    "ConnectWithUs": "米国との接続"
+    "Copyright": "プライバシーポリシー・利用規約"
   },
   "domain": {
     "TitleItem1": "MOBILE アプリ開発",
@@ -145,6 +143,9 @@
     "ItemDescription": "企業にポイントーツーポイント通信サービスを提供する統合ソリューション。",
     "More": "もっと"
   },
+  "customer": {
+    "Description": "Titan Technologyは、日本、アメリカ、カナダ、ヨーロッパ、オーストラリアなどで紹介されています。最適な高品質のソフトウェアサービスを提供し、世界中のお客様に成果をもたらしています。"
+  },
   "career": {
     "Title": "就職の機会",
     "Intro1": "Titan Technologyは、弊社のモットーである",
@@ -220,14 +221,42 @@
     "Detail": "名前が変更されたか、一時的に利用できなくなりました",
     "BackHome": "ホームページへ"
   },
+  "privacy": {
+    "Term": "ポリシーと規約",
+    "TermDescription": "この利用規約とプライバシーポリシーは、当社webサイトwww.titancorpvn.com にのみ適用されます。 このサイトは、Titan Technology Corporationが所有し、運用しています。このサイト内でページ遷移する度に、第三者サイトに移動したかを判別するため、 ページを確認することをお勧めします。",
+    "Security": "サイトセキュリティ",
+    "SecurityDescription": "このサイトのセキュリティを、もしくは侵害することは禁じられています。そのような侵害は、刑事処罰及び民事処罰の両方、またはいずれか一方の対象となる恐れがあります。 当社は侵害の疑いがある場合は調査を行い、犯罪行為が疑われる場合は、法執行機関の調査に協力します。",
+    "SecurityLi1": "アクセス権限を持たないサーバもしくはアカウントに対し、ログインもしくはログインを試みる行為",
+    "SecurityLi2": "お客様の利用が意図されていないデータ、情報、サービスを取得もしくは評価する行為",
+    "SecurityLi3": "システムもしくはネットワークに対する、脆弱性の調査、スキャン、テストの実施",
+    "SecurityLi4": "改ざん、ハッキング、変更その他手段でセキュリティ・認証対策を破損もしくは侵害する行為",
+    "SecurityLi5": "ウィルス、トロイの木馬、ワーム、時限爆弾、破損ファイル等コンピュータ・プログラムルーチンやエンジン、 もしくは損害、障害、その他コンピュータの機能やサイトの実行を妨げる、害する可能性のある対象物を送信する行為",
+    "Policy": "プライバシーポリシー",
+    "PolicyDescription1": "当社は、当サイトへアクセスしたお客様と訪問者様のプライバシーを尊重し、プライバシー保護の取り組みを行っております。 また、サイトで利用するために収集したデータの保全と、訪問者様の安心と信頼を得られるよう取り組みを行っております。 お客様に関する情報を収集し、利用する場合、プライバシー保護とデータ保全への取り組みを行っております。 お客様のプライバシーは重要ですので、個人情報の販売または譲渡は",
+    "PolicyDescription2": "このプライバシーポリシーに記載された利用用途以外では使用致しません。",
+    "Change": "変更",
+    "ChangeDescription": "本規約は、本規約は個人情報の取扱いについて改善を図るため、今後プライバシーポリシーの全部、 または一部を予告なく改訂することがあります。プライバシーポリシーに関するお問い合わせは、下記メールアドレスまでお願い致します: ",
+    "Email":  "info@titancorpvn.com"
+  },
   "loading": {
     "LoadingDefault": "読み込み中..."
   },
   "editAdmin": {
-    "Title": "Typing your title here",
-    "BoldTitle": "Typing your bold title here",
-    "Author": "Typing author here",
-    "Slug": "Typing your slug here",
-    "ShortDescription": "Typing your short desciption here"
+    "Name": "Typing your section name here",
+    "Title": "Typing your english title here",
+    "BoldTitle": "Typing your english bold title here",
+    "SubTitle": "Typing your english sub title here",
+    "Author": "Typing english author here",
+    "Slug": "Typing slug here",
+    "Description": "Typing your english desciption here",
+    "ShortDescription": "Typing your english short desciption here"
+  },
+  "editAdminJa": {
+    "Title": "Typing your japanese title here",
+    "BoldTitle": "Typing your japanese bold title here",
+    "SubTitle": "Typing your japanese sub title here",
+    "Author": "Typing japanese author here",
+    "Description": "Typing your japanese desciption here",
+    "ShortDescription": "Typing your japanese short desciption here"
   }
 }

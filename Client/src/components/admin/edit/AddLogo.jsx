@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import data from "../../../imgURL.json";
-import { saveSuccess } from "../../../enum/EnumApi"
+import { saveSuccess, errorEdit } from "../../../enum/EnumApi"
 
 import "./AddLogo.css";
 
@@ -34,20 +34,17 @@ const AddLogo = ({ setIsPopupVisible }) => {
           title: saveSuccess.title,
           icon: saveSuccess.icon,
         });
-        setTimeout(() => {
-          window.location.reload(false);
-        }, 1000);
       } else {
+        setIsPopupVisible(false);
         await Swal.fire({
-          title: "Error Edit Logo",
-          icon: "error",
+          title: errorEdit.title,
+          icon: errorEdit.icon,
         });
       }
     } catch (error) {
       Swal.fire({
-        title: "Error",
-        text: "An error occurred while saving.",
-        icon: "error",
+        title: errorEdit.title,
+        icon: errorEdit.icon,
       });
     }
   };
@@ -62,10 +59,10 @@ const AddLogo = ({ setIsPopupVisible }) => {
     formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
 
     try {
-      const url = await uploadToCloudinary(formData);
       setPreviewUrl(URL.createObjectURL(file));
+      const url = await uploadToCloudinary(formData);
     } catch (error) {
-      alert("Error uploading image:", error);
+      alert(errorEdit.img, error);
     }
   }, []);
 

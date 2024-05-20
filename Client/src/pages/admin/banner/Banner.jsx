@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -12,48 +11,36 @@ import {
   GridRowEditStopReasons,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { getItemByCategory, deleteItemById } from "../../../api/ItemApi";
+import { getItemByCategory, deleteItemById, changeDisplay } from "../../../api/ItemApi";
 import {
+  SwalEnum,
   btnValue,
   deleteForm,
   slugName,
   widthTable,
-  language,
 } from "../../../enum/EnumApi";
 import Swal from "sweetalert2";
 import "../../../components/admin/table/Table.css";
 import EditBanner from "../../../components/admin/edit/EditBanner";
 import SideBar from "../../../components/admin/sideBar/SideBar";
 import "./Banner.css"
-import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage } from "../../../redux/actions";
-import { useTranslation } from 'react-i18next';
-import PublicIcon from '@mui/icons-material/Public';
+import { useSelector } from "react-redux";
+import Checkbox from '@mui/material/Checkbox';
+import { toast, Toaster } from "react-hot-toast";
 
 export default function Banner() {
   const [rows, setRows] = useState([]);
   const [idEdit, setIdEdit] = useState();
   const [rowModesModel, setRowModesModel] = useState({});
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const { t: translate, i18n } = useTranslation();
+  const [rowSelectionModel, setRowSelectionModel] = useState();
   const currentLanguage = useSelector(
     (state) => state.language.currentLanguage
-  );
-  const payload = {
-    categorySlug: slugName.banner,
-    language: currentLanguage,
-  };
-
-  const dispatch = useDispatch();
-  const handleLanguageSwitch = () => {
-    if (currentLanguage === language.english){
-      i18n.changeLanguage(language.japanese)
-      dispatch(changeLanguage(language.japanese));
-    }else{
-      i18n.changeLanguage(language.english)
-      dispatch(changeLanguage(language.english));
-    }
-  };
+    );
+    const payload = {
+      categorySlug: slugName.banner,
+      Locale: currentLanguage,
+    };
 
   //call api get data
   useEffect(() => {
@@ -64,11 +51,8 @@ export default function Banner() {
         setRows(data);
       } else setRows([rows.id]);
     }
-  }, [rows.id, currentLanguage]);
+  }, [rows.id, currentLanguage, rowSelectionModel]);
 
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-  });
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -113,6 +97,20 @@ export default function Banner() {
     }
   };
 
+  const handleDisplay = (id, value) => {
+    changeDisplay(id).then((data) => {
+      if (value === false) {
+        setRowSelectionModel(!rowSelectionModel);
+        return toast.success(SwalEnum.displayedSuccessOn);
+      } else if(value === true){
+        setRowSelectionModel(!rowSelectionModel);
+        return toast.success(SwalEnum.displayedSuccessOff);
+      }else{
+        return toast.error(SwalEnum.displayedError);
+      }
+    });
+  };
+
   const getActions = ({ id }) => {
     return [
       <GridActionsCellItem
@@ -143,6 +141,19 @@ export default function Banner() {
 
   const columns = [
     {
+      field: "isDisplayed",
+      headerName: "Display on Home Page",
+      minWidth: widthTable.ss,
+      maxWidth: widthTable.m,
+      flex: 1,
+      renderCell: ({id, value}) => (
+        <Checkbox
+          checked={value}
+          onChange={() => handleDisplay(id, value)}
+        />
+      ),
+    },
+    {
       field: "imageUrl",
       headerName: "Image",
       minWidth: widthTable.m,
@@ -163,7 +174,7 @@ export default function Banner() {
       headerName: "Title",
       type: "text",
       minWidth: widthTable.xs,
-      maxWidth: widthTable.m,
+      maxWidth: widthTable.s,
       flex: 1,
       align: "left",
       headerAlign: "left",
@@ -172,8 +183,8 @@ export default function Banner() {
       field: "description",
       headerName: "Description",
       type: "text",
-      minWidth: widthTable.xs,
-      maxWidth: widthTable.m,
+      minWidth: widthTable.m,
+      maxWidth: widthTable.xl,
       flex: 1,
       align: "left",
       headerAlign: "left",
@@ -192,7 +203,8 @@ export default function Banner() {
 
   return (
     <Box className="banner-admin" sx={{ display: "flex" }}>
-        <SideBar />
+        <SideBar name="Banner" />
+        <Toaster />
       <Box
         component="main"
         sx={{
@@ -222,14 +234,15 @@ export default function Banner() {
               toolbar: HandleToolbar,
             }}
             initialState={{
-              ...data.initialState,
+              ...rows.initialState,
               pagination: { paginationModel: { pageSize: 5 } },
+
               sorting: {
-                ...data.initialState?.sorting,
+                ...rows.initialState?.sorting,
                 sortModel: [
                   {
-                    field: "createdDate",
-                    sort: "desc",
+                    field: 'isDisplayed',
+                    sort: 'desc',
                   },
                 ],
               },
@@ -238,7 +251,8 @@ export default function Banner() {
             slotProps={{
               toolbar: { setRows, setRowModesModel },
             }}
-          />
+            {...rows}
+            />
         </div>
       </Box>
       <div className={`edit-show ${isPopupVisible ? "active" : ""}`}>
@@ -260,13 +274,6 @@ export default function Banner() {
           onClick={handleAddClick}
           >
           Add record
-        </Button>
-        <Button
-          color={btnValue.colorAdd}
-          startIcon={<PublicIcon />}
-          onClick={handleLanguageSwitch}
-        >
-          Change Language
         </Button>
         <GridToolbarQuickFilter />
       </GridToolbarContainer>

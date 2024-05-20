@@ -5,3 +5,8 @@
     display: block;
     background-color: var(--primary-color);
 }
+
+.data-grid-container .MuiDataGrid-root {
+    border-radius: 10px;
+    height: 80vh;
+}

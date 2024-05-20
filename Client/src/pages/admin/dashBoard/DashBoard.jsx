@@ -3,50 +3,67 @@ import Box from "@mui/material/Box";
 import "./DashBoard.css";
 import Sidebar from "../../../components/admin/sideBar/SideBar";
 import Switch from "@mui/material/Switch";
-import { slugName, language } from "../../../enum/EnumApi";
+import { slugName, linkSocial, TitlePage } from "../../../enum/EnumApi";
 import {
   getItemByCategory,
   getAllSection,
   getFooter,
   changeBtnStatus,
+  getRequestForm,
 } from "../../../api/ItemApi";
 import { Link } from "react-router-dom";
 import MainSlider from "../../../components/mainSlider/MainSlider";
-import InputBox from "../../../components/admin/input/Input";
+import { BoxHolder } from "../../../components/admin/input/Input";
 import { splitIcon } from "../../../common/functions";
+import { useSelector } from "react-redux";
 
 const DashBoard = () => {
   const [box, setBox] = useState([]);
   const [logo, setLogo] = useState([]);
   const [footer, setFooter] = useState([]);
+  const [request, setRequest] = useState([]);
   const [switchHandlerCalled, setSwitchHandlerCalled] = useState();
 
   const switchHandler = () => {
     changeBtnStatus();
     setSwitchHandlerCalled(!switchHandlerCalled);
   };
-  const payload = {
+
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
+  const navbarPayload = {
     categorySlug: slugName.logo,
-    language: language.english,
+    locale: currentLanguage,
+  };
+
+  const payload = {
+    locale: currentLanguage,
   };
   useEffect(() => {
-    getItemByCategory(payload).then((data) => {
+    document.title = TitlePage.Admin
+    getItemByCategory(navbarPayload).then((data) => {
       if (data) {
         setLogo(data);
       } else setLogo([]);
     });
-    getAllSection(language.english).then((data) => {
+    getAllSection(payload).then((data) => {
       if (data && data.length > 0) {
         setBox(data);
       }
     });
-    getFooter(language.english).then((data) => {
+    getRequestForm(payload).then((data) => {
+      if (data) {
+        setRequest(data.items);
+      } else setRequest([])
+    });
+    getFooter(payload).then((data) => {
       if (data) {
         setFooter(data.items);
-        console.log(data);
       } else setFooter([]);
     });
-  }, [switchHandlerCalled]);
+  }, [currentLanguage, switchHandlerCalled]);
 
   return (
     <>
@@ -102,12 +119,17 @@ const DashBoard = () => {
           </div>
 
           <div className="cms-box">
+          <div className="cms-title-link">
             <p className="cms-title">Section</p>
+            <Link to="/admin/section" className="see-more-cms">
+                See more <i className="fa-solid fa-arrow-right"></i>
+              </Link>
+            </div>
             <div className="cms-section-card">
               {box.map((item, i) => (
                 <Link
                   className="item-cms-section"
-                  to={`/admin/${item.name}`}
+                  to={`/admin/${item.urlSlug}`}
                   key={i}
                 >
                   <div className="cms-card-section">
@@ -122,6 +144,37 @@ const DashBoard = () => {
           </div>
 
           <div className="cms-box">
+            <div className="cms-title-link">
+              <p className="cms-title">Request For Information</p>
+            </div>
+
+            <div className="content-footer-cms">
+              {request.length > 0
+                ? request.map((items, index) => (
+                  <>
+                      <div className="cms-box-footer-infor" key={index}>
+                        <h3>Title</h3>
+                        <BoxHolder name="title" value={items.title} />
+                        <h3>Description</h3>
+                        <BoxHolder name="description" value={items.description} />
+                        <h3>Button Label</h3>
+                        <BoxHolder name="buttonLabel" value={items.buttonLabel} />
+                        <Link
+                          to={`/admin/request/${items.id}`}
+                          className="cms-overlay-footer"
+                        >
+                          <div className="logo-text">
+                            Change {items.title} on Home page
+                          </div>
+                        </Link>
+                      </div>
+                    </>
+                  ))
+                : null}
+            </div>
+          </div>
+
+          <div className="cms-box">
             <div className="cms-footernbtn">
               <p className="cms-title">Footer</p>
             </div>
@@ -130,29 +183,29 @@ const DashBoard = () => {
                 ? footer.map((items, index) => (
                     <>
                       <div className="cms-box-footer-infor" key={index}>
-                        <InputBox value={items.title} />
+                        <BoxHolder name="title" value={items.title} />
                         {items.address ? (
                           <div>
-                            <InputBox
+                            <BoxHolder
                               icon="solid fa-location-dot"
                               value={items.address}
                             />
-                            <InputBox
+                            <BoxHolder
                               icon="solid fa-phone"
                               value={items.telNumber}
                             />
                           </div>
                         ) : items.description ? (
-                          <InputBox value={items.description} />
+                          <BoxHolder value={items.description} />
                         ) : items.infoGmail ? (
                           <>
-                            <InputBox
+                            <BoxHolder
                               icon="solid fa-envelope"
                               value={items.infoGmail}
                             />
-                            <InputBox
+                            <BoxHolder
                               icon={
-                                items.infoGmail2 === "titancorpvn"
+                                items.infoGmail2 === linkSocial.skype
                                   ? "brands fa-skype"
                                   : "solid fa-envelope"
                               }
@@ -162,25 +215,25 @@ const DashBoard = () => {
                         ) : items.subItems ? (
                           items.subItems.map((subItem, index) => (
                             <div key={index}>
-                              <InputBox
+                              <BoxHolder
                                 icon={`brands fa-${splitIcon(
                                   subItem.facebook
                                 )} `}
                                 value={subItem.facebook}
                               />
-                              <InputBox
+                              <BoxHolder
                                 icon={`brands fa-${splitIcon(
                                   subItem.twitter
                                 )} `}
                                 value={subItem.twitter}
                               />
-                              <InputBox
+                              <BoxHolder
                                 icon={`brands fa-${splitIcon(
                                   subItem.linkedin
                                 )} `}
                                 value={subItem.linkedin}
                               />
-                              <InputBox
+                              <BoxHolder
                                 icon={`brands fa-${splitIcon(
                                   subItem.youtube
                                 )} `}
@@ -194,7 +247,7 @@ const DashBoard = () => {
                           className="cms-overlay-footer"
                         >
                           <div className="logo-text">
-                            Change footer for Website
+                            Change {items.title} on Home page
                           </div>
                         </Link>
                       </div>

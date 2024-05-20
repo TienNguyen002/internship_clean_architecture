@@ -23,39 +23,64 @@ const BoxSlider = (props) => {
     hasBorder,
     hasSubTitle,
     sectionSliderNumber,
-    hasShort
+    hasShort,
+    autoslide,
+    allowTouch
   } = props;
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <Swiper
       slidesPerView={slideNumber || sliderNumber.defaultSlideNumber}
-      breakpoints={ sectionSliderNumber || sliderResponsive.DefaultBreakpoints}
+      breakpoints={sectionSliderNumber || sliderResponsive.DefaultBreakpoints}
       rewind={true}
       navigation={switchNavigation}
-      autoplay={{
-        pauseOnMouseEnter: true,
-        delay: slideDelay || delaySlide.delay5s,
-      }}
+      allowTouchMove={allowTouch}
+      autoplay={
+        autoslide || {
+          pauseOnMouseEnter: true,
+          delay: slideDelay || delaySlide.delay5s,
+        }
+      }
       modules={[Pagination, Navigation, Autoplay]}
     >
       {items.length > 0
         ? items.map((item, index) => (
             <SwiperSlide className={itemStyle || "box-item"} key={index}>
-              <a className="link-to-index" href={`/${name}/${item.urlSlug}`}>
-                <div>
-                  <img
-                    className={logoBoxStyle || "item-logo"}
-                    src={item.imageUrl}
-                    alt="Item AltImage"
-                  />
-                </div>
-                <h1 className={titleItem || "title-item"}>{item.title}</h1>
-              </a>
+              {item.hyperlink ? (
+                <a href={`${item.hyperlink}`}>
+                  <div>
+                    <img
+                      className={logoBoxStyle || "item-logo"}
+                      src={item.imageUrl}
+                      alt="Item AltImage"
+                    />
+                  </div>
+                  <h1 className={titleItem || "title-item"}>{item.title}</h1>
+                </a>
+              ) : (
+                <Link
+                  to={`/${name}/${item.urlSlug}`}
+                  onClick={scrollToTop}
+                  className="link-to-index"
+                >
+                  <div>
+                    <img
+                      className={logoBoxStyle || "item-logo"}
+                      src={item.imageUrl}
+                      alt="Item AltImage"
+                    />
+                  </div>
+                  <h1 className={titleItem || "title-item"}>{item.title}</h1>
+                </Link>
+              )}
 
               <div className={textBoxStyle || "item-text"}>
                 {hasSubTitle ? (
                   <p>
-                    {item.subTitle} - {convertDate(item.createdDate)}
+                    By {item.subTitle} - {convertDate(item.createdDate)}
                   </p>
                 ) : null}
                 {hasBorder ? (
@@ -82,7 +107,7 @@ const BoxSlider = (props) => {
                       ></p>
                     )} <br />
                     {item.buttonStatus ? (
-                      <Link to="/careers/">
+                      <Link to="/careers/" onClick={scrollToTop}>
                         <button className="btn-lastestjobs">
                           {item.buttonLabel}
                         </button>

@@ -9,19 +9,21 @@ import {
   uploadImageEditor,
 } from "../../../api/ItemApi";
 import Swal from "sweetalert2";
-import { btnValue, numberLength, language } from "../../../enum/EnumApi";
+import { btnValue, numberLength, language, saveSuccess, errorEdit, inputLength } from "../../../enum/EnumApi";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import JoditReact from "jodit-react";
+import { toast, Toaster } from "react-hot-toast";
 
 const EditNews = ({ id, setRows, setIsPopupVisible }) => {
   const initialState = {
       id: numberLength.zero,
       title: "",
-      subTitle: "",
-      urlSlug: "",
+      japaneseTitle: "",
       shortDescription: "",
+      japaneseShortDescription: "",
       description: "",
+      japaneseDescription: "",
       imageUrl: "",
     },
     [news, setNews] = useState(initialState);
@@ -32,12 +34,14 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
   const { t: translate } = useTranslation();
 
   const editor = useRef("");
+  const editorja = useRef("");
 
   useEffect(() => {
     if (id === 0) {
       resetState();
     }
     if (id > 0) {
+      resetState();
       getItem();
       async function getItem() {
         const data = await getItemById(id);
@@ -46,9 +50,11 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
         } else setNews(data);
       }
     }
-  }, [id]);
+  }, [id, setIsPopupVisible]);
 
   const resetState = () => {
+    editorja.current.value="";
+    editor.current.value="";
     setNews(initialState);
     setPreviewUrl(null);
   };
@@ -57,23 +63,49 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
     setIsPopupVisible(false);
   };
 
+  const validateInputs = () => {
+    const validations = [
+      { field: news.title, maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: news.japaneseTitle, maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: news.shortDescription, maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.shortDescription },
+      { field: news.japaneseShortDescription, maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.shortDescription },
+    ];
+
+    for (let i = 0; i < validations.length; i++) {
+      const { field, maxLength, errorMessage } = validations[i];
+      if (field.length > maxLength) {
+        toast.error(errorMessage);
+        return false;
+      }
+    }
+    return true;
+  };
+
   //Onclick submit button
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) {
+      return;
+    }
+
     let formData = new FormData(e.target);
     formData.set("Description", editor.current.value || news.description);
+    formData.set("JapaneseDescription", editorja.current.value || news.japaneseDescription);
     editNews(formData).then((data) => {
+
       if (data) {
         Swal.fire({
-          title: "Save Success",
-          icon: "success",
+          title: saveSuccess.title,
+          icon: saveSuccess.icon,
         });
         setRows(news);
         setIsPopupVisible(false);
+        resetState();
       } else {
         Swal.fire({
-          title: "Error Edit News",
-          icon: "error",
+          title: errorEdit.title,
+          icon: errorEdit.icon,
         });
       }
     });
@@ -106,7 +138,6 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
     readonly: false,
     toolbar: true,
     spellcheck: false,
-    autofocus: true,
     language: language.english,
     toolbarButtonSize: btnValue.sizeM,
     toolbarAdaptive: false,
@@ -161,6 +192,13 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
   return (
     <>
       <Box sx={{ padding: 5 }}>
+        <div className="toaster-box">
+        <Toaster
+          containerStyle={{
+            top: 100,
+          }}
+        />
+        </div>
         <div className="btn-cancel">
           <i onClick={handleClose} className="fa-solid fa-xmark"></i>
         </div>
@@ -196,54 +234,73 @@ const EditNews = ({ id, setRows, setIsPopupVisible }) => {
                 />
               </label>
             </div>
-            <div className="title">
-              <p className="text-title">Title</p>
-              <input
-                placeholder={translate("editAdmin.Title")}
-                className="input-title"
-                type="text"
-                name="Title"
-                title="Title"
-                value={news.title || ""}
-                onChange={(e) => setNews({ ...news, title: e.target.value })}
-              />
-            </div>
-            <div className="title">
-              <p className="text-title">Slug</p>
-              <input
-                placeholder={translate("editAdmin.Slug")}
-                className="input-title"
-                type="text"
-                name="UrlSlug"
-                title="UrlSlug"
-                value={news.urlSlug || ""}
-                onChange={(e) => setNews({ ...news, urlSlug: e.target.value })}
-              />
-            </div>
-            <div className="desc-edit">
-              <p className="text-desc">Short Description</p>
-              <textarea
-                placeholder={translate("editAdmin.ShortDescription")}
-                className="input-shdes"
-                type="text"
-                name="ShortDescription"
-                title="ShortDescription"
-                value={news.shortDescription || ""}
-                onChange={(e) =>
-                  setNews({ ...news, shortDescription: e.target.value })
-                }
-              />
-            </div>
-            <div className="desc-edit">
-              <p className="text-desc">Description</p>
-              <JoditReact
-                ref={editor}
-                name="Description"
-                type="text"
-                value={news.description}
-                config={editorConfig}
-              />
-            </div>
+              <div className="title">
+                <p className="text-title">Title</p>
+                <input
+                  placeholder={translate("editAdmin.Title")}
+                  className="input-title"
+                  type="text"
+                  name="Title"
+                  title="Title"
+                  value={news.title || ""}
+                  onChange={(e) => setNews({ ...news, title: e.target.value })}
+                />
+              </div>
+              <div className="title">
+                <input
+                  placeholder={translate("editAdminJa.Title")}
+                  className="input-title"
+                  type="text"
+                  name="JapaneseTitle"
+                  title="JapaneseTitle"
+                  value={news.japaneseTitle || ""}
+                  onChange={(e) => setNews({ ...news, japaneseTitle: e.target.value })}
+                />
+              </div>
+              <div className="desc-edit">
+                <p className="text-desc">Short Description</p>
+                <textarea
+                  placeholder={translate("editAdmin.ShortDescription")}
+                  className="input-shdes"
+                  type="text"
+                  name="ShortDescription"
+                  title="ShortDescription"
+                  value={news.shortDescription || ""}
+                  onChange={(e) =>
+                    setNews({ ...news, shortDescription: e.target.value })
+                  }
+                />
+              </div>
+              <div className="desc-edit">
+                <textarea
+                  placeholder={translate("editAdminJa.ShortDescription")}
+                  className="input-shdes"
+                  type="text"
+                  name="JapaneseShortDescription"
+                  title="JapaneseShortDescription"
+                  value={news.japaneseShortDescription || ""}
+                  onChange={(e) =>
+                    setNews({ ...news, japaneseShortDescription: e.target.value })
+                  }
+                />
+              </div>
+                <div className="desc-edit">
+                  <p className="text-desc">Description</p>
+                  <JoditReact
+                    ref={editor}
+                    name="Description"
+                    type="text"
+                    value={news.description}
+                    config={editorConfig}
+                  />
+                </div>
+                  <JoditReact
+                    ref={editorja}
+                    name="JapaneseDescription"
+                    type="text"
+                    value={news.japaneseDescription}
+                    config={editorConfig}
+                  />
           </div>
 
           <div className="btn-apply">

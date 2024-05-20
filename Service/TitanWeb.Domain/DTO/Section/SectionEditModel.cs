@@ -21,9 +21,8 @@ namespace TitanWeb.Domain.DTO.Section
         public string Title { get; set; }
 
         [DisplayName(ValidateManagements.SectionJapaneseTitle)]
-        [Required(ErrorMessage = ValidateManagements.SectionJapaneseTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.SectionJapaneseTitleMaxLength)]
-        public string JapaneseTitle { get; set; }
+        public string? JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.SectionDescription)]
         [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.SectionDescriptionMaxLength)]

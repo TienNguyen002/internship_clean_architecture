@@ -8,6 +8,7 @@ import { slugName } from "../../enum/EnumApi";
 import { Link, useParams } from "react-router-dom";
 import DOMPurify from "dompurify";
 import BoxSlider from "../../components/boxSlider/BoxSlider";
+import { useSelector } from "react-redux";
 
 function BlogDetail() {
   const [blog, setBlog] = useState([]);
@@ -21,16 +22,24 @@ function BlogDetail() {
   const blogsTitleG = data.blogsTitleG;
   const blogsTitleS = data.blogsTitleS;
   const { slug } = useParams();
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
+  const detailPayload = {
+    slug: slug,
+    locale: currentLanguage
+  }
 
   useEffect(() => {
-    getItemBySlug(slug).then((data) => {
+    getItemBySlug(detailPayload).then((data) => {
       if (data) {
         setBlog(data);
       } else {
         setBlog([]);
       }
     });
-  }, [slug]);
+  }, [currentLanguage,slug]);
 
   let payload = {
     sectionSlug: slugName.blogs,

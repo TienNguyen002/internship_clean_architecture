@@ -18,6 +18,7 @@ namespace TitanWeb.Application.Services
         private readonly ICategoryRepository _categoryRepository;
         private readonly ISubItemRepository _subItemRepository;
         private readonly IButtonRepository _buttonRepository;
+        private readonly IImageRepository _imageRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICloundinaryService _cloundinaryService;
@@ -29,6 +30,7 @@ namespace TitanWeb.Application.Services
             ICategoryRepository categoryRepository,
             ISubItemRepository subItemRepository,
             IButtonRepository buttonRepository,
+            IImageRepository imageRepository,
             ICloundinaryService cloundinaryService,
             IMapperService mapperService)
         {
@@ -39,6 +41,7 @@ namespace TitanWeb.Application.Services
             _categoryRepository = categoryRepository;
             _subItemRepository = subItemRepository;
             _buttonRepository = buttonRepository;
+            _imageRepository = imageRepository;
             _cloundinaryService = cloundinaryService;
             _mapperService = mapperService;
         }
@@ -119,7 +122,7 @@ namespace TitanWeb.Application.Services
             news.Title = model.Title;
             news.JapaneseTitle = model.JapaneseTitle;
             news.UrlSlug = model.Title.GenerateSlug();
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
+            if (await _repository.ItemSlugExistsAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
@@ -201,8 +204,9 @@ namespace TitanWeb.Application.Services
             blog.Title = model.Title;
             blog.JapaneseTitle = model.JapaneseTitle;
             blog.SubTitle = model.SubTitle;
+            blog.JapaneseSubTitle = model.SubTitle;
             blog.UrlSlug = model.Title.GenerateSlug();
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
+            if (await _repository.ItemSlugExistsAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
@@ -250,12 +254,17 @@ namespace TitanWeb.Application.Services
             banner.UrlSlug = model.Title.GenerateSlug();
             banner.Description = model.Description;
             banner.JapaneseDescription = model.JapaneseDescription;
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
+            if (await _repository.ItemSlugExistsAsync(model.Id, model.Title.GenerateSlug()))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
             }
             banner.Description = model.Description;
+            banner.IsDisplayed = model.IsDisplayed;
+            if (!await ValidateBannerLimitAsync(banner))
+            {
+                return false;
+            }
             if (model.BackgroundImage != null)
             {
                 banner.Image = new Image
@@ -319,6 +328,12 @@ namespace TitanWeb.Application.Services
             return saved > 0;
         }
 
+        /// <summary>
+        /// Add/Update Item
+        /// </summary>
+        /// <param name="model"> Model to add/update Item </param>
+        /// <returns> True if the item was updated successfully, False otherwise.</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<bool> EditItemAsync(ItemEditModel model)
         {
             var updatedItem = model.Id > 0 ? await _repository
@@ -332,7 +347,7 @@ namespace TitanWeb.Application.Services
             updatedItem.Title = model.Title;
             updatedItem.JapaneseTitle = model.JapaneseTitle;
             updatedItem.UrlSlug = model.Title.GenerateSlug();
-            if (await _repository.IsItemSlugExitedAsync(model.Id, model.Title.GenerateSlug()))
+            if (await _repository.ItemSlugExistsAsync(model.Id, updatedItem.UrlSlug))
             {
                 int save = await _unitOfWork.Commit();
                 return save < 0;
@@ -355,6 +370,7 @@ namespace TitanWeb.Application.Services
                     JapaneseLabel = model.JapaneseButtonLabel,
                 };
             }
+            updatedItem.IsDisplayed = true;
             if (model.ImageFile != null)
             {
                 updatedItem.Image = new Image
@@ -362,19 +378,71 @@ namespace TitanWeb.Application.Services
                     ImageUrl = await _cloundinaryService.UploadImageAsync(model.ImageFile.OpenReadStream(), model.ImageFile.FileName, QueryManagements.ImageFolder),
                 };
             }
-            var section = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
-            var category = await _categoryRepository.GetCategoryBySlugAsync(model.SectionSlug);
-            if (section != null)
+            var image = await _imageRepository.GetByItemIdAsync(model.Id);
+            if (image != null)
             {
-                updatedItem.Section = section;
+                image.Hyperlink = model.Hyperlink;
             }
-            if (category != null)
+            if (model.SectionSlug != null)
             {
-                updatedItem.Category = category;
+                var section = await _sectionRepository.GetSectionBySlugAsync(model.SectionSlug);
+                if (section != null)
+                {
+                    updatedItem.Section = section;
+                }
             }
+            if (model.CategorySlug != null)
+            {
+                var category = await _categoryRepository.GetCategoryBySlugAsync(model.CategorySlug);
+                if (category != null)
+                {
+                    updatedItem.IsDisplayed = false;
+                    updatedItem.Category = category;
+                }
+            }
+
             await _repository.EditItemAsync(updatedItem);
             int saved = await _unitOfWork.Commit();
             return saved > 0;
+        }
+
+        /// <summary>
+        /// Toggles the display of a banner items
+        /// </summary>
+        /// <param name="itemId"> Id of the Item </param>
+        /// <returns>True if the display is toggled successfully, False otherwise.</returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<bool> ToggleDisplayAsync(int itemId)
+        {
+            var banner = await _repository.GetById(itemId);
+            banner.IsDisplayed = !banner.IsDisplayed;
+            if (!await ValidateBannerLimitAsync(banner))
+            {
+                return false;
+            }
+            banner.UpdatedDate = DateTime.Now;
+            await _repository.EditItemAsync(banner);
+            int saved = await _unitOfWork.Commit();
+            return saved > 0;
+        }
+
+        /// <summary>
+        /// Validate the banner limits
+        /// </summary>
+        /// <param name="item">Banner item to validate</param>
+        /// <returns>True if Display is toggle and the number of banners on displayed less than 11, false otherwise.</returns>
+        private async Task<bool> ValidateBannerLimitAsync(Item? item)
+        {
+            if (item.IsDisplayed)
+            {
+                var bannerList = await _repository.GetItemByCategorySlugAsync(QueryManagements.BannerSlug);
+                var selectedItemsCount = bannerList.Count(i => i.IsDisplayed);
+                if (selectedItemsCount > ValidateManagements.MaxBannerCount)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

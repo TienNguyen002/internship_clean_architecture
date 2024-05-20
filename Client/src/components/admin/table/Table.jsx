@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -25,6 +24,7 @@ import Swal from "sweetalert2";
 import { convertDate } from "../../../common/functions";
 import EditBlog from "../edit/EditBlog";
 import EditNew from "../edit/EditNew";
+import { useSelector } from "react-redux";
 import "./Table.css";
 
 export default function Table(props) {
@@ -33,10 +33,14 @@ export default function Table(props) {
   const [rowModesModel, setRowModesModel] = useState({});
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const { name } = props;
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
   const payload = {
-    sectionSlug: name,
-    pageSize: numberLength.max,
-    pageNumber: queryDefault.pageNumberDefault,
+    SectionSlug: name,
+    Locale: currentLanguage,
+    PageSize: numberLength.max,
+    PageNumber: queryDefault.pageNumberDefault,
   };
 
   //call api get data
@@ -48,10 +52,8 @@ export default function Table(props) {
         setRows(data.items);
       } else setRows([rows.id]);
     }
-  }, [rows.id]);
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-  });
+  }, [rows.id, currentLanguage] );
+
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -128,8 +130,8 @@ export default function Table(props) {
     {
       field: "imageUrl",
       headerName: "Image",
-      minWidth: widthTable.m,
-      maxWidth: widthTable.l,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.s,
       flex: 1,
       renderCell: (rows) => (<img className="imageUrl-table" src={rows.value}/>),
     },
@@ -137,7 +139,7 @@ export default function Table(props) {
       field: "title",
       headerName: "Title",
       type: "text",
-      minWidth: widthTable.l,
+      minWidth: widthTable.s,
       maxWidth: widthTable.m,
       flex: 1,
       align: "left",
@@ -156,7 +158,7 @@ export default function Table(props) {
       headerName: "Created Date",
       type: "Date",
       renderCell: (rows) => convertDate(rows.value),
-      minWidth: widthTable.s,
+      minWidth: widthTable.xs,
       maxWidth: widthTable.s,
       flex: 1
 
@@ -165,7 +167,7 @@ export default function Table(props) {
       field: "updatedDate",
       headerName: "Updated Date",
       type: "Date",
-      minWidth: widthTable.s,
+      minWidth: widthTable.xs,
       maxWidth: widthTable.s,
       flex: 1,
       renderCell: (rows) => convertDate(rows.value),
@@ -177,7 +179,7 @@ export default function Table(props) {
       align: "left",
       headerAlign: "left",
       hide: true,
-      minWidth: widthTable.s,
+      minWidth: widthTable.xs,
       maxWidth: widthTable.s,
       flex: 1
     },
@@ -200,7 +202,7 @@ export default function Table(props) {
         sx={{
           padding: 10,
           height: "fit-content",
-          width: "92%",
+          width: "100%",
           "& .actions": {
             color: "text.secondary",
           },
@@ -226,10 +228,10 @@ export default function Table(props) {
             subTitle: name === slugName.blogs ? true : false,
           }}
           initialState={{
-            ...data.initialState,
+            ...rows.initialState,
             pagination: { paginationModel: { pageSize: 5 } },
             sorting: {
-              ...data.initialState?.sorting,
+              ...rows.initialState?.sorting,
               sortModel: [
                 {
                   field: 'createdDate',

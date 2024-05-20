@@ -8,6 +8,7 @@ import BoxSlider from "../../components/boxSlider/BoxSlider";
 import { Link } from "react-router-dom";
 import "./NewsDetail.css";
 import DOMPurify from "dompurify";
+import { useSelector } from "react-redux";
 
 const NewsDetail = () => {
   const { slug } = useParams();
@@ -16,16 +17,24 @@ const NewsDetail = () => {
   const { t: translate } = useTranslation();
   const data = require("../../imgURL.json");
   const newsBanner = data.newsBanner;
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
+  const detailPayload = {
+    slug: slug,
+    locale: currentLanguage
+  }
 
   useEffect(() => {
-    getItemBySlug(slug).then((data) => {
+    getItemBySlug(detailPayload).then((data) => {
       if (data) {
         setNewsItem(data);
       } else {
         setNewsItem(null);
       }
     });
-  }, [slug]);
+  }, [currentLanguage, slug]);
 
   let payload = {
     sectionSlug: slugName.news,
@@ -95,7 +104,7 @@ const NewsDetail = () => {
             hasShort={true}
             />
         </div>
-        </div>    
+        </div>
     </>
   );
 };

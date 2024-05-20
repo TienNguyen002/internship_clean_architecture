@@ -5,10 +5,11 @@ import { queryDefault, slugName } from "../../enum/EnumApi";
 import { convertDate } from "../../common/functions";
 import Pager from "../../components/pager/Pager";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Blog = () => {
   const [blog, setBlog] = useState([]);
-  const [metadata, setMetadata] = useState(null); 
+  const [metadata, setMetadata] = useState(null);
   const data = require("../../imgURL.json");
   const blogsBanner = data.blogsBanner;
   const blogsTitleB = data.blogsTitleB;
@@ -18,10 +19,15 @@ const Blog = () => {
   const blogsTitleS = data.blogsTitleS;
   const { pageNumber } = useParams();
 
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
   let payload = {
     sectionSlug: slugName.blogs,
     pageSize:  queryDefault.pageSizeDefaultNewsBlogs,
     pageNumber: pageNumber || queryDefault.pageNumberDefault,
+    locale: currentLanguage
   }
 
   useEffect(() => {
@@ -34,7 +40,7 @@ const Blog = () => {
         setMetadata(null);
       }
     });
-  }, [pageNumber]);
+  }, [pageNumber, currentLanguage]);
 
   const handlePageChange = (pageNumber) => {
     const newPayload = {
@@ -61,7 +67,7 @@ const Blog = () => {
               <img src={blogsTitleL} alt="L"/>
               <img src={blogsTitleO} alt="O"/>
               <img src={blogsTitleG} alt="G"/>
-              <img src={blogsTitleS} alt="S"/> 
+              <img src={blogsTitleS} alt="S"/>
           </div>
         <img className="blog-page-image" src={blogsBanner} alt="Blogs Page Banner"></img>
       </div>
@@ -70,13 +76,13 @@ const Blog = () => {
           {blog.length > 0
             ? blog.map((item, index) => (
                 <div className="grid-item-blog-page" key={index}>
-                  <Link to={`/blogs/${item.urlSlug}`}> 
+                  <Link to={`/blogs/${item.urlSlug}`}>
                     <img
                       className="blog-page-item-img"
                       src={item.imageUrl}
                       alt="Blog AltImage"
                     />
-                      <h1 className="title-blog-page-item">{item.title}</h1>   
+                      <h1 className="title-blog-page-item">{item.title}</h1>
                   </Link>
                   <p className="blog-page-item-date">{item.subTitle} - {convertDate(item.createdDate)}</p>
                   <p className="blog-page-item-description">{item.shortDescription}</p>

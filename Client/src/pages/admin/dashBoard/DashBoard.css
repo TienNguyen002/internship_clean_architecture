@@ -5,6 +5,11 @@
     box-shadow: 5px 10px var(--pastel-grey);
     align-items: center;
     margin-bottom: 5vh;
+    background-color: var(--light-color);
+}
+
+.MuiBox-root.css-1mb7ed4 {
+    background-color: var(--light-color);
 }
 
 .cms-title {

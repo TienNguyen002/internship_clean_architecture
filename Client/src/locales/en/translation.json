@@ -1,7 +1,8 @@
 {
   "navbar": {
     "Home": "Home",
-    "Lang": "日本"
+    "Lang": "日本",
+    "AdminLang": "Change to Japanese"
   },
   "menu": {
     "Home": "HOME",
@@ -27,7 +28,8 @@
     "News": "NEWS & EVENTS",
     "Contact": "CONTACT US",
     "About": "ABOUT US",
-    "Blog": "BLOGS"
+    "Blog": "BLOGS",
+    "Privacy": "PRIVACY & TERMS OF USE"
   },
   "request": {
     "Name": "Name *",
@@ -35,17 +37,13 @@
     "Subject": "Subject *",
     "Message": "You're looking for *",
     "Error": "Please enter required fields marked (*)",
-    "ErrCaptcha": "Please confirm with the reCaptcha."
+    "ErrCaptcha": "Please confirm with the reCaptcha.",
+    "ErrRegex": "Email address entered is invalid."
   },
   "footer": {
     "Contact": "CONTACT US",
     "Map": "FIND OUT US ON GOOGLE MAP",
-    "Headquarters": "Headquarters",
-    "Branchoffice": "Branch office",
-    "GeneralInquiries": "General Inquiries",
-    "SaleSupport": "Sales & Support",
-    "Copyright": "Copyright",
-    "ConnectWithUs": "Connect with us"
+    "Copyright": "Privacy & Terms of Use"
   },
   "domain": {
     "TitleItem1": "MOBILE DEVELOPMENT",
@@ -145,6 +143,9 @@
     "ItemDescription": "Integrated solution that provide Point-to-Point communication service for businesses.",
     "More": "More"
   },
+  "customer": {
+    "Description": "Titan Technology had been presented in Japan, America, Canada, Europe, Australia,... by offers an optimal high-quality software service with successful result across global to our customer."
+  },
   "career": {
     "Title": "JOB OPPORTUNITIES",
     "Intro1": "Titan Technology is the place where we care about individuals. Our ultimate goal by offering a working environment to “",
@@ -220,12 +221,38 @@
     "Detail": "Had its name changed or is temporarily unavailable",
     "BackHome": "Go To Homepage"
   },
+  "privacy": {
+    "Term": "PRIVACY & TERMS OF USE",
+    "TermDescription": "This Privacy and Terms of Use apply only to our website at www.titancorpvn.com. This site is owned and operated by Titan Technology Corporation. You are advised to check each page you visit on or from this site to determine whether you have moved onto a third party site.",
+    "Security": "SITE SECURITY",
+    "SecurityDescription": "You are prohibited from violating, or attempting to violate, the security of this site. Any such violations may result in criminal and/or civil penalties against you. We will investigate any alleged or suspected violations and if a criminal violation is suspected, we will cooperate with law enforcement agencies in their investigations. Violations of the security of the site include without limitation: ",    "SecurityLi1": "To log into or attempt to log into a server or account that you are not authorized to access;",
+    "SecurityLi2": "To assess data or take any action to obtain data, information or services not intended for you or your use;",
+    "SecurityLi3": "To attempt to probe, scan or test the vulnerability of any system or network;",
+    "SecurityLi4": "To tamper, hack, modify or otherwise corrupt or breach security or authentication measures;",
+    "SecurityLi5": "To transmit material that contains viruses, Trojan horses, worms, time bombs, corrupted files or other computer programming routines or engines or engage in conduct that could damage, disrupt or otherwise impair or interfere with a computer’s functionality or the operation of the site.",
+    "Policy": "PRIVACY POLICY",
+    "PolicyDescription1": "We respect and are committed to protecting the privacy of the clients and visitors to our website. We are also committed to the security of the data we collect for site using, and the trust and confidence of visitors who frequent this site. That is why we want you to understand when we collect and use information about you, the actions we take to protect your privacy and our commitment to data security. Because your privacy is important, we will not sell, rent or trade your personal information except as outlined in this privacy statement.",
+    "PolicyDescription2": "This Privacy Policy lets you know how your personal information is processed and used.",
+    "Change": "CHANGES",
+    "ChangeDescription": "We may change our terms and privacy policy at any time. Please check Titan Technology web site periodically to see what changes might have been made. For any questions or comments you can contact us by email: info@titancorpvn.com"
+  },
   "editAdmin": {
-    "Title": "Typing your title here",
-    "BoldTitle": "Typing your bold title here",
-    "Author": "Typing author here",
-    "Slug": "Typing your slug here",
-    "ShortDescription": "Typing your short desciption here"
+    "Name": "Typing your section name here",
+    "Title": "Typing your english title here",
+    "BoldTitle": "Typing your english bold title here",
+    "SubTitle": "Typing your english sub title here",
+    "Author": "Typing english author here",
+    "Slug": "Typing slug here",
+    "Description": "Typing your english desciption here",
+    "ShortDescription": "Typing your english short desciption here"
+  },
+  "editAdminJa": {
+    "Title": "Typing your japanese title here",
+    "BoldTitle": "Typing your japanese bold title here",
+    "SubTitle": "Typing your japanese sub title here",
+    "Author": "Typing japanese author here",
+    "Description": "Typing your japanese desciption here",
+    "ShortDescription": "Typing your japanese short desciption here"
   },
 
   "loading": {

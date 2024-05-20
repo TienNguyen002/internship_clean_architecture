@@ -32,6 +32,9 @@ const Customer = () => {
       <div className="customer-page-banner">
           <img className="customer-page-image" src={customersBanner} alt="Customer AltImage"></img>
         </div>
+        <div className="box-body-customers">
+        <div className="customers-page-container">
+        <div className='desc'>{translate('customer.Description')}</div>
         {modelContent.length > 0 ? modelContent.map((item, index) => (
           <Box
           key={index}
@@ -42,6 +45,8 @@ const Customer = () => {
           />
           )): null}
     </div>
+        </div>
+  </div>
   )
 }
 

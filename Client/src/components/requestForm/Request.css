@@ -61,6 +61,7 @@
     font-size: 22px;
     padding: 12px 15px 12px 60px;
     outline: none;
+    font-weight: 300;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -77,6 +78,7 @@ input::-webkit-inner-spin-button {
     height: 156px;
     outline: none;
     resize: none;
+    font-weight: 300;
 }
 .request-input:focus{
     border: 1px solid var(--input-focus);
@@ -123,19 +125,19 @@ input::-webkit-inner-spin-button {
 
 @media only screen and (max-width: 1280px) {
   .request-container {
-    margin: 0 70px; 
-    padding: 20px 40px; 
+    margin: 0 70px;
+    padding: 20px 40px;
   }
   .request-title {
     font-size: 38px;
-    text-align: center; 
+    text-align: center;
   }
 
   .request-description {
-    font-size: 16px; 
+    font-size: 16px;
   }
   .request-grid {
-    grid-template-columns: 100%; 
+    grid-template-columns: 100%;
   }
   .request-input,
   .request-textarea {
@@ -143,11 +145,11 @@ input::-webkit-inner-spin-button {
     padding: 8px 12px;
   }
   .btn-request {
-    font-size: 16px; 
-    padding: 10px 15px; 
+    font-size: 16px;
+    padding: 10px 15px;
   }
   .error-message {
-    font-size: 14px; 
+    font-size: 14px;
     padding: 10px;
   }
 
@@ -239,7 +241,7 @@ input::-webkit-inner-spin-button {
       font-size: 26px;
     }
     .request-description {
-      font-size: 16px; 
+      font-size: 16px;
     }
     .request-input,
     .request-textarea {
@@ -247,7 +249,7 @@ input::-webkit-inner-spin-button {
       padding: 8px 40px;
     }
     .btn-request {
-      font-size: 16px; 
+      font-size: 16px;
       padding: 10px 15px;
     }
     .error-message {

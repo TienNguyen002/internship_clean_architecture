@@ -16,9 +16,8 @@ namespace TitanWeb.Domain.DTO.Items
         public string Title { get; set; }
 
         [DisplayName(ValidateManagements.NewsJapaneseTitle)]
-        [Required(ErrorMessage = ValidateManagements.NewsJapaneseTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.NewsJapaneseTitleMaxLength)]
-        public string JapaneseTitle { get; set; }
+        public string? JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.NewsShortDescription)]
         [Required(ErrorMessage = ValidateManagements.NewsShortDescriptionRequiredMsg)]

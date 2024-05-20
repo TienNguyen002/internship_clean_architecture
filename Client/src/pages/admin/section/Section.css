@@ -9,3 +9,7 @@
     display: block;
     background-color: var(--primary-color);
 }
+
+.seeItems{
+    color: black;
+}

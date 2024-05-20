@@ -2,8 +2,24 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { routes, adminRoutes } from "./router/Routes";
 import Layout from "./components/layout/Layout";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { getAllSection } from "./api/ItemApi";
+import SectionItem from "./pages/admin/sectionItem/SectionItem";
 
 function App() {
+  const [section, setSection] = useState([]);
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
+  useEffect(() => {
+    getAllSection(currentLanguage).then((data) => {
+      if (data && data.length > 0) {
+        setSection(data);
+      }
+    });
+  }, [currentLanguage]);
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -14,6 +30,21 @@ function App() {
       {adminRoutes.map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />
       ))}
+
+      {section.length > 0
+        ? section.map((item, index) => (
+            <Route
+              path={`/admin/${item.urlSlug}`}
+              key={index}
+              element={
+                <SectionItem
+                  name={item.name}
+                  slug={item.urlSlug}
+                  items={item.items}
+                />
+              }
+            />))
+      : null}
     </Routes>
   );
 }

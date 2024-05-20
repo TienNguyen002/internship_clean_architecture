@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from "react";
 import Box from "@mui/material/Box";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -39,9 +38,6 @@ export default function AdRequest() {
     }
   }, [rows.id]);
 
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-  });
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
@@ -176,7 +172,7 @@ export default function AdRequest() {
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
           initialState={{
-            ...data.initialState,
+            ...rows.initialState,
             pagination: { paginationModel: { pageSize: 5 } },
           }}
           pageSizeOptions={[5, 10, 25]}

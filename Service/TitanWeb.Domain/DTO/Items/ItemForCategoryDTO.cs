@@ -10,6 +10,7 @@ namespace TitanWeb.Domain.DTO.Items
         public string UrlSlug { get; set; }
         public string? Description { get; set; }
         public string? Address { get; set; }
+        public bool IsDisplayed { get; set; }
         public string? TelNumber { get; set; }
         public string? InfoGmail { get; set; }
         public string? InfoGmail2 { get; set; }

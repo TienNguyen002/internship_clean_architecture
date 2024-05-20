@@ -6,5 +6,6 @@ namespace TitanWeb.Domain.Interfaces.Repositories
     {
         Task<bool> DeleteImageByIdAsync(int id);
         Task<IList<Image>> GetAllLogos();
+        Task<Image> GetByItemIdAsync(int itemId);
     }
 }

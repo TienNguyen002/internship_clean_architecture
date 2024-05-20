@@ -18,10 +18,12 @@ namespace TitanWeb.Api.Mapsters
 
             config.NewConfig<Item, ItemDTO>()
                 .Map(desc => desc.Id, src => src.Id)
-                .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl);
+                .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl)
+                .Map(desc => desc.Hyperlink, src => src.Image.Hyperlink);
             config.NewConfig<Item, ItemForSectionDTO>()
                 .Map(desc => desc.Id, src => src.Id)
                 .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl)
+                .Map(desc => desc.Hyperlink, src => src.Image.Hyperlink)
                 .Map(desc => desc.ButtonLabel, src => src.Button.Label)
                 .Map(desc => desc.ButtonStatus, src => src.Button.Status);
             config.NewConfig<Item, ItemForCategoryDTO>()
@@ -29,6 +31,7 @@ namespace TitanWeb.Api.Mapsters
                 .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl);
             config.NewConfig<Item, ItemDetailDTO>()
                 .Map(desc => desc.ImageUrl, src => src.Image.ImageUrl)
+                .Map(desc => desc.Hyperlink, src => src.Image.Hyperlink)
                 .Map(desc => desc.ButtonLabel, src => src.Button.Label)
                 .Map(desc => desc.JapaneseButtonLabel, src => src.Button.JapaneseLabel);
 

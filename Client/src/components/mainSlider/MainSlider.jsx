@@ -17,14 +17,14 @@ import "./MainSlider.css";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { slugName, delaySlide } from "../../enum/EnumApi";
 
-export default function MainSlider(props) {
+export default function MainSlider() {
   const [banner, setBanner] = useState([]);
   const currentLanguage = useSelector(
     (state) => state.language.currentLanguage
   );
   const payload = {
     categorySlug: slugName.banner,
-    language: currentLanguage,
+    locale: currentLanguage,
   };
 
   useEffect(() => {
@@ -37,39 +37,40 @@ export default function MainSlider(props) {
   return (
     <>
       <div>
-        <Swiper
-          loop={true}
-          autoplay={{
-            delay: delaySlide ? delaySlide.delay3s : null,
-            disableOnInteraction: false,
-            pauseOnMouseEnter: true,
-          }}
-          pagination={{
-            type: "fraction",
-          }}
-          navigation={true}
-          modules={[Autoplay, Pagination, Navigation]}
-          className="main-slider-swiper"
-        >
-          {banner.length > 0
-            ? banner.map((item, index) => (
-                <SwiperSlide className="banner" key={index}>
-                  <img className="banner-img" src={item.imageUrl} alt="MainSlider AltImage" />
-                  <div className="text_main_slide">
-                    <a className="title_main_slide">
-                      <strong>{item.boldTitle}</strong>
-                      {item.title}
-                    </a>
-                    <p className="description_main_slide"
-                        dangerouslySetInnerHTML={{
-                          __html: DOMPurify.sanitize(item.description),
-                        }}
-                      ></p>
-                  </div>
-                </SwiperSlide>
-              ))
-            : null}
-        </Swiper>
+        {banner.length > 0 ? (
+          <Swiper
+            loop={true}
+            autoplay={{
+              delay: delaySlide ? delaySlide.delay3s : null,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            pagination={{
+              type: "fraction",
+            }}
+            navigation={true}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="main-slider-swiper"
+          >
+            {banner.map((item, index) => (
+              <SwiperSlide className="banner" key={index}>
+              <img className="banner-img" src={item.imageUrl} alt="MainSlider AltImage" />
+              <div className="text_main_slide">
+                <a className="title_main_slide">
+                  <strong>{item.boldTitle}</strong>
+                  {item.title}
+                </a>
+                <p className="description_main_slide"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(item.description),
+                    }}
+                  ></p>
+              </div>
+            </SwiperSlide>
+          ))}
+          </Swiper>
+        )
+        : null}
       </div>
     </>
   );

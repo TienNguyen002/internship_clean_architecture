@@ -16,9 +16,8 @@ namespace TitanWeb.Domain.DTO.Items
         public string Title { get; set; }
 
         [DisplayName(ValidateManagements.ItemJapaneseTitle)]
-        [Required(ErrorMessage = ValidateManagements.ItemJapaneseTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.ItemJapaneseTitleMaxLength)]
-        public string JapaneseTitle { get; set; }
+        public string? JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.ItemSubTitle)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.ItemSubTitleMaxLength)]
@@ -54,5 +53,8 @@ namespace TitanWeb.Domain.DTO.Items
 
         [DisplayName(ValidateManagements.ItemImage)]
         public IFormFile? ImageFile { get; set; }
+
+        [DisplayName(ValidateManagements.ItemImage)]
+        public string? Hyperlink { get; set; }
     }
 }

@@ -73,5 +73,19 @@ namespace TitanWeb.Infrastructure.Repositories
                 .Where(i => i.IsLogo)
                 .ToListAsync();
         }
+
+        /// <summary>
+        /// Get Image By Item Id
+        /// </summary>
+        /// <param name="itemId"> Id Of Item want to find </param>
+        /// <returns> Image By Item Id </returns>
+        /// <exception cref="Exception"></exception>
+        public async Task<Image> GetByItemIdAsync(int itemId)
+        {
+            return await _context.Set<Image>()
+                .Include(s => s.Items)
+                .Where(s => s.Items.Any(i => i.Id == itemId))
+                .FirstOrDefaultAsync();
+        }
     }
 }

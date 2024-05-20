@@ -1,6 +1,12 @@
 import axios from "axios";
 import { SwalEnum } from "../enum/EnumApi";
 
+/**
+ * Performs a GET request to the specified API.
+ *
+ * @param {string} your_api The URL of the API to send a GET request to.
+ * @returns {Promise<any|null>} The result from the API if successful, null if there's an error.
+ */
 export async function get_api(your_api) {
   try {
     const response = await axios.get(your_api);
@@ -8,10 +14,16 @@ export async function get_api(your_api) {
     if (data.isSuccess) return data.result;
     else return null;
   } catch (error) {
-    // alert("Error", error.message);
+    alert(SwalEnum.alertErrorGet, error.message);
   }
 }
 
+/**
+ * Performs a DELETE request to the specified API.
+ *
+ * @param {string} your_api The URL of the API to send a DELETE request to.
+ * @returns {Promise<any|null>} The result from the API if successful, null if there's an error.
+ */
 export async function delete_api(your_api) {
   try {
     const response = await axios.delete(your_api);
@@ -19,10 +31,17 @@ export async function delete_api(your_api) {
     if (data.isSuccess) return data.result;
     else return null;
   } catch (error) {
-    alert("Error", error.message);
+    alert(SwalEnum.alertErrorDelete, error.message);
   }
 }
 
+/**
+ * Performs a POST request to the specified API.
+ *
+ * @param {string} your_api The URL of the API to send a POST request to.
+ * @param {FormData} formData The form data to send in the request.
+ * @returns {Promise<any|null>} The result from the API if successful, null if there's an error.
+ */
 export async function post_api(your_api, formData){
   try {
     const response = await axios({
@@ -39,7 +58,7 @@ export async function post_api(your_api, formData){
       return data.result;
     } else return null;
   } catch (error) {
-    alert("Can't post the request", error.message);
+    alert(SwalEnum.alertErrorPost, error.message);
   }
 }
 
@@ -67,11 +86,18 @@ export async function put_api(your_api) {
       return null;
     }
   } catch (error) {
-    alert("Can't put the request", error.message);
+    alert(SwalEnum.alertErrorPut, error.message);
     return null;
   }
 }
 
+/**
+ * Uploads an image to the specified API.
+ *
+ * @param {string} your_api The URL of the API to send a POST request to.
+ * @param {File} file The file to upload.
+ * @returns {Promise<any|null>} The result from the API if successful, null if there's an error.
+ */
 export async function upload_image(your_api, file){
   let result = null;
 
@@ -88,7 +114,7 @@ await fetch(your_api, {
     result = data;
   })
   .catch((error) => {
-    alert.error(SwalEnum.alertErrorImg, error);
+    alert(SwalEnum.alertErrorImg, error);
   });
 
   return result;

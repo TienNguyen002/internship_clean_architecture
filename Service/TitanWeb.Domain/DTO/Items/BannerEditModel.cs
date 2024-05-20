@@ -22,9 +22,8 @@ namespace TitanWeb.Domain.DTO.Items
         public string Title { get; set; }
 
         [DisplayName(ValidateManagements.BannerJapaneseTitle)]
-        [Required(ErrorMessage = ValidateManagements.BannerJapaneseTitleRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength100, ErrorMessage = ValidateManagements.BannerJapaneseTitleMaxLength)]
-        public string JapaneseTitle { get; set; }
+        public string? JapaneseTitle { get; set; }
 
         [DisplayName(ValidateManagements.BannerDescription)]
         [Required(ErrorMessage = ValidateManagements.BannerDescriptionRequiredMsg)]
@@ -35,6 +34,10 @@ namespace TitanWeb.Domain.DTO.Items
         [Required(ErrorMessage = ValidateManagements.BannerJapaneseDescriptionRequiredMsg)]
         [MaxLength(ValidateManagements.MaxLength500, ErrorMessage = ValidateManagements.BannerJapaneseDescriptionMaxLength)]
         public string JapaneseDescription { get; set; }
+
+        [DisplayName(ValidateManagements.IsDisplayed)]
+        [DefaultValue(false)]
+        public bool IsDisplayed { get; set; }
 
         [DisplayName(ValidateManagements.BannerBackgroundImage)]
         public IFormFile? BackgroundImage { get; set; }

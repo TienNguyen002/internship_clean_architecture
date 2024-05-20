@@ -11,19 +11,19 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar from "@mui/material/AppBar";
-import {
-  styleDrawer,
-  sidebarLinks,
-  slugName,
-  language,
-} from "../../../enum/EnumApi";
+import Button from "@mui/material/Button";
+import { styleDrawer, sidebarLinks, slugName, language } from "../../../enum/EnumApi";
 import { getItemByCategory } from "../../../api/ItemApi";
 import logo1 from "../../../assets/logo.png";
 import { Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { changeLanguage } from "../../../redux/reducers";
+import { useTranslation } from 'react-i18next';
+import FlagIcon from '@mui/icons-material/Flag';
 
 const openedMixin = (theme) => ({
   width: styleDrawer.drawerWidth,
@@ -90,8 +90,14 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 export default function SideBar({name}) {
-  const [open, setOpen] = useState(true);
+  const drawerOpenKey = 'drawerOpen';
+const defaultOpen = localStorage.getItem(drawerOpenKey) === 'true';
+  const [open, setOpen] = useState(defaultOpen);
   const navigate = useNavigate();
+  const { t: translate, i18n } = useTranslation();
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  )
 
   const [logo, setLogo] = useState([]);
 
@@ -100,16 +106,28 @@ export default function SideBar({name}) {
     language: language.english,
   };
 
+  const dispatch = useDispatch();
+  const handleLanguageSwitch = () => {
+    if (currentLanguage === language.english){
+      i18n.changeLanguage(language.japanese)
+      dispatch(changeLanguage(language.japanese));
+    }else{
+      i18n.changeLanguage(language.english)
+      dispatch(changeLanguage(language.english));
+    }
+  };
+
   useEffect(() => {
+    localStorage.setItem(drawerOpenKey, open);
     getItemByCategory(payload).then((data) => {
       if (data) {
         setLogo(data);
       } else setLogo([]);
     });
-  }, []);
+  }, [open]);
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box className="sidebar-admin" sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -123,19 +141,28 @@ export default function SideBar({name}) {
             <MenuIcon />
           </IconButton>
           <Box sx={{display: "flex",width: "100%",justifyContent: "space-between", alignItems:"center"}}>
+            <Link to={"/admin"}>
+              {logo.length > 0
+                ? logo.map((item, index) => (
+                    <img
+                      key={index}
+                      className="logo"
+                      src={item.imageUrl}
+                      alt="logo"
+                    />
+                  ))
+                : null}
+            </Link>
             <Typography variant="h5" component="h2">
                 {name}
             </Typography>
-            {logo.length > 0
-              ? logo.map((item, index) => (
-                  <img
-                    key={index}
-                    className="logo"
-                    src={item.imageUrl}
-                    alt="logo"
-                  />
-                ))
-              : null}
+              <Button
+              color={styleDrawer.color}
+              startIcon={<FlagIcon />}
+              onClick={handleLanguageSwitch}
+            >
+              {translate('navbar.AdminLang')}
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>

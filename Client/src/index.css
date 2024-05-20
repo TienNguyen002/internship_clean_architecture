@@ -5,42 +5,56 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-color);
 }
 
 html {
-  overflow-x: hidden;
+  height: 100vh;
 }
 
 :root {
-  --light-color: #ffffff;
-  --text-color: #757575;
-  --background-innovations: #F2F2F2;
-  --black: #000000;
-  --primary-color: #186ab4;
-  --secondary-color: #12203a;
-  --max-width: 1100px;
-  --max-width-cms: 1300px;
-  --gray-color:#757575;
-  --medium-gray: #262626;
-  --border-customer: #ccc;
-  --border-popup-section: #e9ecef;
-  --gray-light: #f0f0f0;
-  --bullet-hover: #0d569b;
-  --border-top-dashed: #ced4da;
-  --input-focus: #80bdff;
-  --active-menu: #c3defa;
-  --error-bg: #f2dede;
-  --error-border: #ebccd1;
-  --error-text: #721c24;
-  --light-orange: #c48b18;
-  --medium-orange: #ff3c00;
-  --banner-title: #186ab4cc;
-  --border: #ccc;
-  --link: #007bff;
-  --success: #198754;
-  --pastel-grey: #dddddd;
-  --card-section: #f1f1f3;
-  --background-input: #f5f5f5;
-  --light-gray: #F2F2F2;
-  --preloader-url: url(../src/assets/preloader.gif);
+  /* Main Colors */
+  --primary-color: #186ab4;             /* Main primary color */
+  --light-primary-color: #1976d2;       /* Lighter shade of primary color */
+  --secondary-color: #12203a;           /* Secondary color */
+  --black: #000000;                     /* Black */
+  --light-color: #ffffff;               /* White */
+
+  /* Background Colors */
+  --background-gray: rgba(128, 128, 128, 0.5);  /* Background gray with 50% opacity */
+  --background-innovations: #f2f2f2;    /* Background for innovations */
+  --gray-light: #f0f0f0;                /* Lighter gray */
+  --light-gray: #f2f2f2;                /* Light gray */
+  --medium-gray: #262626;               /* Medium gray */
+  --pastel-grey: #dddddd;               /* Pastel gray */
+  --error-bg: #f2dede;                  /* Error background color */
+  --card-section: #f1f1f3;              /* Card section color */
+  --background-input: #f5f5f5;          /* Background color for input */
+
+  /* Border Colors */
+  --border-customer: #ccc;              /* Border color for customer */
+  --border-popup-section: #e9ecef;      /* Border color for popup section */
+  --border-top-dashed: #ced4da;         /* Border top dashed */
+  --border: #ccc;                       /* Border color */
+
+  /* Text Colors */
+  --gray-color: #757575;                /* Gray color */
+  --text-color: #757575;                /* Text color */
+  --error-text: #721c24;                /* Error text color */
+  --banner-title: #186ab4cc;            /* Banner title color with opacity */
+
+  /* Link and Highlight Colors */
+  --link: #007bff;                      /* Link color */
+  --bullet-hover: #0d569b;              /* Bullet hover color */
+  --active-menu: #c3defa;               /* Active menu color */
+  --input-focus: #80bdff;               /* Input focus color */
+  --success: #198754;                   /* Success color */
+
+  /* Accent Colors */
+  --light-orange: #c48b18;              /* Light orange */
+  --medium-orange: #ff3c00;             /* Medium orange */
+
+  /* Other */
+  --preloader-url: url(../src/assets/preloader.gif); /* Preloader URL */
 }

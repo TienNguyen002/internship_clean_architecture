@@ -6,32 +6,38 @@ import { queryDefault, slugName } from "../../enum/EnumApi";
 import { convertDate } from "../../common/functions";
 import Pager from "../../components/pager/Pager";
 import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const News = () => {
   const [news, setNews] = useState([]);
-  const [metadata, setMetadata] = useState(null); 
+  const [metadata, setMetadata] = useState(null);
   const { t: translate } = useTranslation();
   const data = require("../../imgURL.json");
   const newsBanner = data.newsBanner;
   const { pageNumber } = useParams();
 
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
   let payload = {
     sectionSlug: slugName.news,
     pageSize:  queryDefault.pageSizeDefaultNewsBlogs,
     pageNumber: pageNumber || queryDefault.pageNumberDefault,
+    locale: currentLanguage
   }
 
   useEffect(() => {
     getItemBySectionSlug(payload).then((data) => {
       if (data) {
         setNews(data.items);
-        setMetadata(data.metadata); 
+        setMetadata(data.metadata);
       } else {
         setNews([]);
         setMetadata(null);
       }
     });
-  }, [pageNumber]);
+  }, [pageNumber, currentLanguage]);
 
   const handlePageChange = (pageNumber) => {
     const newPayload = {
@@ -61,13 +67,13 @@ const News = () => {
           {news.length > 0
             ? news.map((item, index) => (
                 <div className="grid-item-news-page" key={index}>
-                  <Link to={`/news/${item.urlSlug}`}> 
+                  <Link to={`/news/${item.urlSlug}`}>
                     <img
                       className="news-page-item-img"
                       src={item.imageUrl}
                       alt="News AltImage"
                     />
-                      <h1 className="title-news-page-item">{item.title}</h1>   
+                      <h1 className="title-news-page-item">{item.title}</h1>
                   </Link>
                   <p className="news-page-item-date">{convertDate(item.createdDate)}</p>
                   <p className="news-page-item-description">{item.shortDescription}</p>

@@ -24,6 +24,7 @@ export const slugName = {
   blogs: "blogs",
   navbar: "navbar",
   section: "section",
+  request: "request",
 };
 
 export const language = {
@@ -86,15 +87,18 @@ export const titleLinks = {
   },
   Clients: {
     link: "/customers/",
+    adminLink: "/admin/clients"
   },
-  "As Recognized By": {
+  AsRecognizedBy: {
     link: "",
+    adminLink: "/admin/as-recognized"
   },
   Careers: {
     link: "/careers/",
   },
   Customers: {
     link: "/customers/#testimonials",
+    adminLink: "/admin/customers"
   },
   News: {
     link: "/news/",
@@ -219,6 +223,7 @@ export const boxSliderClassNameConfig = {
 
 export const error = {
   tooShort: "Too short",
+  invalidEmail: "Invalid Email"
 };
 
 export const formData = {
@@ -267,6 +272,7 @@ export const saveSuccess = {
 
 export const errorEdit = {
   title: "Error Edit",
+  img: "Error add image",
   icon: "error",
 };
 
@@ -304,7 +310,8 @@ export const widthTable = {
 };
 
 export const linkSocial = {
-  twitter: "https://twitter.com/titancorpvn"
+  twitter: "https://twitter.com/titancorpvn",
+  skype: "titancorpvn"
 }
 
 export const SwalEnum = {
@@ -312,5 +319,88 @@ export const SwalEnum = {
   iconSuccess: "success",
   titleError: "Error",
   iconError: "error",
-  alertErrorImg: "Can't post the image of desciption:"
+  alertErrorImg: "Can't post the image of desciption",
+  alertErrorGet: "Can't get the request",
+  alertErrorPost: "Can't post the request",
+  alertErrorDelete: "Can't delete",
+  alertErrorPut: "Can't put the request",
+  displayedSuccessOn: "Success in displaying banner on Home Page",
+  displayedSuccessOff: "Success in hiding banner on Home Page",
+  displayedError: "Had already 10 banner displayed on Home Page"
 }
+
+export const inputLength = {
+  maxLength20: {
+    limit: 20,
+    text: "Tel number has text limit 1 to 20 characters",
+    name: "Name has text limit 20 characters",
+    boldTitle: "Bold title has text limit 20 characters",
+    title: "Title has text limit 20 characters",
+    slug: "Slug has text limit 20 characters",
+    author: "Author has text limit 20 characters",
+    shortDescription: "Short description has text limit 20 characters",
+    description: "Description has text limit 20 characters",
+  },
+  maxLength50: {
+    limit: 50,
+    text: "Each item has text limit 1 to 50 characters",
+    name: "Name has text limit 50 characters",
+    boldTitle: "Bold title has text limit 50 characters",
+    title: "Title has text limit 50 characters",
+    slug: "Slug has text limit 50 characters",
+    author: "Author has text limit 50 characters",
+    shortDescription: "Short description has text limit 50 characters",
+    description: "Description has text limit 50 characters",
+  },
+  maxLength100: {
+    limit: 100,
+    text: "Title has text limit 1 to 100 characters",
+    textJa: "Title Japanese has text limit 1 to 100 characters",
+    name: "Name has text limit 100 characters",
+    boldTitle: "Bold title has text limit 100 characters",
+    title: "Title has text limit 100 characters",
+    slug: "Slug has text limit 100 characters",
+    author: "Author has text limit 100 characters",
+    shortDescription: "Short description has text limit 100 characters",
+    description: "Description has text limit 100 characters",
+  },
+  maxLength200: {
+    limit: 200,
+    text: "Address has text limit 1 to 200 characters",
+    name: "Name has text limit 200 characters",
+    boldTitle: "Bold title has text limit 200 characters",
+    title: "Title has text limit 200 characters",
+    slug: "Slug has text limit 200 characters",
+    author: "Author has text limit 200 characters",
+    shortDescription: "Short description has text limit 200 characters",
+    description: "Description has text limit 200 characters",
+   },
+   maxLength500: {
+    limit: 500,
+    text: "Description has text limit 1 to 500 characters",
+    textJa: "Description Japanese has text limit 1 to 500 characters",
+    name: "Name has text limit 500 characters",
+    boldTitle: "Bold title has text limit 500 characters",
+    title: "Title has text limit 500 characters",
+    slug: "Slug has text limit 500 characters",
+    author: "Author has text limit 500 characters",
+    shortDescription: "Short description has text limit 500 characters",
+    description: "Description has text limit 500 characters",
+    },
+   textFacebook: "Hyperlink Facebook can't be emty",
+   textTwitter: "Hyperlink Twitter can't be emty",
+   textLinkedin: "Hyperlink Linkedin can't be emty",
+   textYoutube: "Hyperlink Youtube can't be emty",
+   textCopyright: "Copyright can't be emty",
+   buttonLabel: "Button Label can't be emty",
+   buttonLabelJa: "Button Label Japanese can't be emty",
+   subTitle: "Role can't be emty",
+   japaneseSubTitle: "Role Japanese can't be emty",
+   hyperLink: "Hyperlink can't be emty",
+};
+
+export const TitlePage = {
+  Admin: "Admin - Titan Technology Corporation - Software Outsourcing Company in Vietnam"
+}
+
+export const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/

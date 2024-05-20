@@ -1,19 +1,22 @@
+import { createSlice } from '@reduxjs/toolkit';
 import { language } from "../enum/EnumApi";
 
+/**
+ * Initial state for the language reducer.
+ */
 const initialState = {
-  currentLanguage: language.english,
+  currentLanguage: language.english, // Default language is English
 };
 
-const languageReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case "CHANGE_LANGUAGE":
-      return {
-        ...state,
-        currentLanguage: action.payload,
-      };
-    default:
-      return state;
-  }
-};
+const languageSlice = createSlice({
+  name: 'language',
+  initialState,
+  reducers: {
+    changeLanguage: (state, action) => {
+      state.currentLanguage = action.payload;
+    },
+  },
+});
 
-export default languageReducer;
+export const { changeLanguage } = languageSlice.actions;
+export default languageSlice.reducer;

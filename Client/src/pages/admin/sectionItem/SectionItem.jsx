@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { useDemoData } from "@mui/x-data-grid-generator";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -11,55 +11,43 @@ import {
   GridRowEditStopReasons,
   GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
-import { getAllSection, deleteSectionById } from "../../../api/ItemApi";
+import { deleteItemById } from "../../../api/ItemApi";
 import {
+  btnValue,
   deleteForm,
+  sectionName,
   widthTable,
 } from "../../../enum/EnumApi";
 import Swal from "sweetalert2";
-import "../../../components/admin/table/Table.css";
 import SideBar from "../../../components/admin/sideBar/SideBar";
+import EditSectionItem from "../../../components/admin/edit/EditSectionItem";
+import "../../../components/admin/table/Table.css"
 import { useSelector } from "react-redux";
-import EditSection from "../../../components/admin/edit/EditSection";
-import "./Section.css";
-import { Link } from "react-router-dom";
 
-export default function Section() {
-  const [rows, setRows] = useState([]);
+export default function SectionItem(props) {
+  const { name, slug, items } = props;
+  const [rows, setRows] = useState(items);
   const [idEdit, setIdEdit] = useState();
   const [rowModesModel, setRowModesModel] = useState({});
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const currentLanguage = useSelector(
-    (state) => state.language.currentLanguage
-  );
-  const payload = {
-    locale: currentLanguage
-  }
 
-  //call api get data
-  useEffect(() => {
-    setIdEdit(1);
-    getItem();
-    async function getItem() {
-      const data = await getAllSection(payload);
-      if (data) {
-        setRows(data);
-        console.log(data);
-      } else setRows([rows.id]);
-    }
-  }, [rows.id, currentLanguage]);
-
-  const { data } = useDemoData({
-    dataSet: "Commodity",
-  });
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
       event.defaultMuiPrevented = true;
     }
   };
 
+  const currentLanguage = useSelector(
+    (state) => state.language.currentLanguage
+  );
+
   const togglePopup = () => {
     setIsPopupVisible(true);
+  };
+
+  const handleAddClick = () => {
+    setIdEdit(0);
+    togglePopup(true);
   };
 
   const handleEditClick = (id) => () => {
@@ -80,7 +68,7 @@ export default function Section() {
         confirmButtonText: deleteForm.confirmBtnDelete,
       }).then((result) => {
         if (result.isConfirmed) {
-          deleteSectionById(id);
+          deleteItemById(id);
           setRows(rows.filter((row) => row.id !== id));
           Swal.fire({
             title: deleteForm.resultTitle,
@@ -90,6 +78,10 @@ export default function Section() {
       });
     }
   };
+
+  useEffect(() => {
+    setRows(items);
+  },[rows]);
 
   const getActions = ({ id }) => {
     return [
@@ -105,7 +97,7 @@ export default function Section() {
         label="Delete"
         onClick={handleDeleteClick(id)}
         color="inherit"
-      />
+      />,
     ];
   };
 
@@ -121,34 +113,59 @@ export default function Section() {
 
   const columns = [
     {
-      field: "backgroundUrl",
-      headerName: "Background",
+      field: "imageUrl",
+      headerName: "Image",
       minWidth: widthTable.m,
       maxWidth: widthTable.l,
       flex: 1,
-      renderCell: (rows) => (
-        <img className="imageUrl-table" src={rows.value} alt="" />
-      ),
+      renderCell: (rows) => <img className="imageUrl-table" src={rows.value} />,
     },
     {
       field: "title",
       headerName: "Title",
       type: "text",
-      minWidth: widthTable.xs,
-      maxWidth: widthTable.l,
+      minWidth: widthTable.m,
+      maxWidth: widthTable.m,
       flex: 1,
       align: "left",
       headerAlign: "left",
     },
     {
-      field: "description",
-      headerName: "Description",
+      field: "subTitle",
+      headerName: "Role",
       type: "text",
-      minWidth: widthTable.xs,
-      maxWidth: widthTable.xl,
+      minWidth: widthTable.l,
+      maxWidth: widthTable.m,
       flex: 1,
       align: "left",
       headerAlign: "left",
+      hide: true,
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      type: "text",
+      minWidth: widthTable.s,
+      maxWidth: widthTable.xl,
+      renderCell: (params) => (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: params.value,
+          }}
+        />
+      ),
+      flex: 1,
+    },
+    {
+      field: "buttonLabel",
+      headerName: "Button Label",
+      type: "text",
+      align: "left",
+      headerAlign: "left",
+      hide: true,
+      minWidth: widthTable.s,
+      maxWidth: widthTable.s,
+      flex: 1,
     },
     {
       field: "actions",
@@ -160,33 +177,17 @@ export default function Section() {
       maxWidth: widthTable.s,
       flex: 1,
     },
-    {
-      field: "urlSlug",
-      type: "text",
-      headerName: `See Items`,
-      renderCell: (params) => (
-        <>
-          <Link className="seeItems" to={`/admin/${params.value}`}>
-            <VisibilityIcon />
-          </Link>
-        </>
-      ),
-      minWidth: widthTable.ss,
-      maxWidth: widthTable.s,
-      flex: 1,
-    },
   ];
 
   return (
-    <Box className="sections-admin" sx={{ display: "flex" }}>
-      <SideBar name="Section" />
+    <Box sx={{ display: "flex" }}>
+      <SideBar name={`${name} Items`} />
       <Box
         component="main"
         sx={{
           padding: 10,
-          maxHeight: "100vh",
           height: "fit-content",
-          width: "100%",
+          width: "92%",
           "& .actions": {
             color: "text.secondary",
           },
@@ -209,9 +210,13 @@ export default function Section() {
             slots={{
               toolbar: HandleToolbar,
             }}
+            columnVisibilityModel={{
+              buttonLabel: name === sectionName.LastestJobs ? true : false,
+              subTitle: name === sectionName.Customer ? true : false
+            }}
             initialState={{
-              ...data.initialState,
-              pagination: { paginationModel: { pageSize: 20 } },
+              ...rows.initialState,
+              pagination: { paginationModel: { pageSize: 5 } },
             }}
             pageSizeOptions={[5, 10, 25]}
             slotProps={{
@@ -221,18 +226,25 @@ export default function Section() {
         </div>
       </Box>
       <div className={`edit-show ${isPopupVisible ? "active" : ""}`}>
-        <EditSection
-          id={idEdit}
-          setRows={setRows}
-          setIsPopupVisible={setIsPopupVisible}
-          currentLanguage={currentLanguage}
-        />
-      </div>
+          <EditSectionItem
+            id={idEdit}
+            sectionSlug={slug}
+            setRows={setRows}
+            setIsPopupVisible={setIsPopupVisible}
+          />
+        </div>
     </Box>
   );
   function HandleToolbar() {
     return (
       <GridToolbarContainer sx={{ justifyContent: "space-between" }}>
+        <Button
+          color={btnValue.colorAdd}
+          startIcon={<AddIcon />}
+          onClick={handleAddClick}
+        >
+          Add record
+        </Button>
         <GridToolbarQuickFilter />
       </GridToolbarContainer>
     );

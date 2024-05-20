@@ -13,6 +13,7 @@ namespace TitanWeb.Domain.DTO.Items
         public string? SubTitle { get; set; }
         public string? ShortDescription { get; set; }
         public string? Description { get; set; }
+        public bool IsDisplayed { get; set; } = true;
         public string? Address { get; set; }
         public string? TelNumber { get; set; }
         public string? InfoGmail { get; set; }
@@ -22,6 +23,7 @@ namespace TitanWeb.Domain.DTO.Items
         public SectionForItemDTO Section { get; set; }
         public IList<SubItemDTO> SubItems { get; set; }
         public string ImageUrl { get; set; }
+        public string Hyperlink { get; set; }
         public ButtonDTO Button { get; set; }
     }
 }

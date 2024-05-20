@@ -9,19 +9,22 @@ import {
   uploadImageEditor,
 } from "../../../api/ItemApi";
 import Swal from "sweetalert2";
-import { btnValue, language, numberLength } from "../../../enum/EnumApi";
+import { btnValue, language, numberLength, saveSuccess, errorEdit, inputLength } from "../../../enum/EnumApi";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import JoditReact from "jodit-react";
+import { toast, Toaster } from "react-hot-toast";
 
 const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
   const initialState = {
     id: numberLength.zero,
     title: "",
+    japaneseTitle: "",
     subTitle: "",
-    urlSlug: "",
     shortDescription: "",
+    japaneseShortDescription: "",
     description: "",
+    japaneseDescription: "",
     imageUrl: "",
   },
     [blog, setBlog] = useState(initialState);
@@ -32,12 +35,14 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
   const { t: translate } = useTranslation();
 
   const editor = useRef("");
+  const editorja = useRef("");
 
   useEffect(() => {
     if (id === 0) {
       resetState();
     }
     if (id > 0) {
+      resetState();
       getItem();
       async function getItem() {
         const data = await getItemById(id);
@@ -46,9 +51,11 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
         } else setBlog(data);
       }
     }
-  }, [id]);
+  }, [id, setIsPopupVisible]);
 
   const resetState = () => {
+    editorja.current.value="";
+    editor.current.value="";
     setBlog(initialState);
     setPreviewUrl(null);
   };
@@ -57,23 +64,49 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
     setIsPopupVisible(false);
   };
 
+  const validateInputs = () => {
+    const validations = [
+      { field: blog.title, maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: blog.japaneseTitle, maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: blog.subTitle, maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.author },
+      { field: blog.shortDescription, maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.shortDescription },
+      { field: blog.japaneseShortDescription, maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.shortDescription },
+    ];
+
+    for (let i = 0; i < validations.length; i++) {
+      const { field, maxLength, errorMessage } = validations[i];
+      if (field.length > maxLength) {
+        toast.error(errorMessage);
+        return false;
+      }
+    }
+    return true;
+  };
+
   //Onclick submit button
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) {
+      return;
+    }
+
     let formData = new FormData(e.target);
     formData.set("Description", editor.current.value || blog.description);
+    formData.set("JapaneseDescription", editorja.current.value || blog.japaneseDescription);
     editBlog(formData).then((data) => {
       if (data) {
         Swal.fire({
-          title: "Save Success",
-          icon: "success",
+          title: saveSuccess.title,
+          icon: saveSuccess.icon,
         });
         setRows(blog);
         setIsPopupVisible(false);
+        resetState();
       } else {
         Swal.fire({
-          title: "Error Edit Blog",
-          icon: "error",
+          title: errorEdit.title,
+          icon: errorEdit.icon,
         });
       }
     });
@@ -85,6 +118,7 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
       const reader = new FileReader();
       reader.onloadend = async () => {
         if (reader.result) {
+          setPreviewUrl(reader.result);
           const filename = reader.result;
           const formData = new FormData();
           formData.append("file", filename);
@@ -94,7 +128,6 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
           );
           const url = await uploadToCloudinary(formData);
           setBlog({ ...blog, imageUrl: url });
-          setPreviewUrl(reader.result);
         }
       };
       reader.readAsDataURL(file);
@@ -106,7 +139,6 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
     readonly: false,
     toolbar: true,
     spellcheck: false,
-    autofocus: true,
     language: language.english,
     toolbarButtonSize: btnValue.sizeM,
     toolbarAdaptive: false,
@@ -161,7 +193,12 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
   return (
     <>
       <Box sx={{ padding: 5 }}>
-        <div className="btn-cancel">
+      <Toaster
+          containerStyle={{
+            top: 100,
+          }}
+        />
+      <div className="btn-cancel">
           <i onClick={handleClose} className="fa-solid fa-xmark"></i>
         </div>
         <form
@@ -196,31 +233,30 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
                 />
               </label>
             </div>
-            <div className="title">
-              <p className="text-title">Title</p>
-              <input
-                placeholder={translate("editAdmin.Title")}
-                className="input-title"
-                type="text"
-                name="Title"
-                title="Title"
-                value={blog.title || ""}
-                onChange={(e) => setBlog({ ...blog, title: e.target.value })}
-              />
-            </div>
-            <div className="title">
-              <p className="text-title">Slug</p>
-              <input
-                placeholder={translate("editAdmin.Slug")}
-                className="input-title"
-                type="text"
-                name="UrlSlug"
-                title="UrlSlug"
-                value={blog.urlSlug || ""}
-                onChange={(e) => setBlog({ ...blog, urlSlug: e.target.value })}
-              />
-            </div>
-            <div className="title">
+              <div className="title">
+                <p className="text-title">Title</p>
+                <input
+                  placeholder={translate("editAdmin.Title")}
+                  className="input-title"
+                  type="text"
+                  name="Title"
+                  title="Title"
+                  value={blog.title || ""}
+                  onChange={(e) => setBlog({ ...blog, title: e.target.value })}
+                />
+              </div>
+              <div className="title">
+                <input
+                  placeholder={translate("editAdminJa.Title")}
+                  className="input-title"
+                  type="text"
+                  name="JapaneseTitle"
+                  title="JapaneseTitle"
+                  value={blog.japaneseTitle || ""}
+                  onChange={(e) => setBlog({ ...blog, japaneseTitle: e.target.value })}
+                />
+              </div>
+            <div className="short-title">
               <p className="text-title">Author</p>
               <input
                 placeholder={translate("editAdmin.Author")}
@@ -232,30 +268,50 @@ const EditBlog = ({ id, setRows, setIsPopupVisible }) => {
                 onChange={(e) => setBlog({ ...blog, subTitle: e.target.value })}
               />
             </div>
-            <div className="desc-edit">
-              <p className="text-desc">Short Description</p>
-              <textarea
-                placeholder={translate("editAdmin.ShortDescription")}
-                className="input-shdes"
-                type="text"
-                name="ShortDescription"
-                title="ShortDescription"
-                value={blog.shortDescription || ""}
-                onChange={(e) =>
-                  setBlog({ ...blog, shortDescription: e.target.value })
-                }
-              />
-            </div>
-            <div className="desc-edit">
-              <p className="text-desc">Description</p>
-              <JoditReact
-                ref={editor}
-                name="Description"
-                type="text"
-                value={blog.description}
-                config={editorConfig}
-              />
-            </div>
+              <div className="desc-edit">
+                <p className="text-desc">Short Description</p>
+                <textarea
+                  placeholder={translate("editAdmin.ShortDescription")}
+                  className="input-shdes"
+                  type="text"
+                  name="ShortDescription"
+                  title="ShortDescription"
+                  value={blog.shortDescription || ""}
+                  onChange={(e) =>
+                    setBlog({ ...blog, shortDescription: e.target.value })
+                  }
+                />
+              </div>
+              <div className="desc-edit">
+                <textarea
+                  placeholder={translate("editAdminJa.ShortDescription")}
+                  className="input-shdes"
+                  type="text"
+                  name="JapaneseShortDescription"
+                  title="JapaneseShortDescription"
+                  value={blog.japaneseShortDescription || ""}
+                  onChange={(e) =>
+                    setBlog({ ...blog, japaneseShortDescription: e.target.value })
+                  }
+                />
+              </div>
+                <div className="desc-edit">
+                  <p className="text-desc">Description</p>
+                  <JoditReact
+                    ref={editor}
+                    name="Description"
+                    type="text"
+                    value={blog.description}
+                    config={editorConfig}
+                  />
+                </div>
+                  <JoditReact
+                    ref={editorja}
+                    name="JapaneseDescription"
+                    type="text"
+                    value={blog.japaneseDescription}
+                    config={editorConfig}
+                  />
           </div>
 
           <div className="btn-apply">

@@ -88,7 +88,7 @@ namespace TitanWeb.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Find Sub-Item By Item Id
+        /// Get Sub-Item By Item Id
         /// </summary>
         /// <param name="itemId"> Id Of Item want to find </param>
         /// <returns> Sub Item By Item Id </returns>

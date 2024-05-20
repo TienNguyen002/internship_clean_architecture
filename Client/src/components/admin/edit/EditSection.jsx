@@ -3,25 +3,27 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import "./Edit.css";
 import {
-    getSectionById,
+  getSectionById,
   editSection,
   uploadToCloudinary,
   uploadImageEditor,
 } from "../../../api/ItemApi";
 import Swal from "sweetalert2";
-import { btnValue, numberLength, allowedExtensions, saveSuccess, errorEdit, allowedSectionsName } from "../../../enum/EnumApi";
+import { btnValue, numberLength, allowedExtensions, saveSuccess, errorEdit, allowedSectionsName, inputLength } from "../../../enum/EnumApi";
 import { Box } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import JoditReact from "jodit-react";
 import dataText from "../../../locales/en/translation.json";
+import { toast, Toaster } from "react-hot-toast";
 
 const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
   const initialState = {
       id: numberLength.zero,
       name: "",
       title: "",
+      japaneseTitle: "",
       urlSlug: "",
       description: "",
+      japaneseDescription: "",
       imageUrl: "",
       Locale: "",
     },
@@ -33,10 +35,9 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
   const editImageFrame = data.editImageFrame;
   const { t: translate } = useTranslation();
 
-  const editor = useRef("");
-
   useEffect(() => {
     if (id > 0) {
+        resetState();
         getItem();
     }
     else {
@@ -48,22 +49,47 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
         resetState();
       } else setSection(data);
     }
-  }, [id]);
+  }, [id, setIsPopupVisible]);
 
   const resetState = () => {
+    setPreviewUrl(section.backgroundUrl || null);
     setSection(initialState);
-    setPreviewUrl(null);
   };
 
   const handleClose = () => {
     setIsPopupVisible(false);
+    id = 0;
+  };
+
+  const validateInputs = () => {
+    const validations = [
+      { field: section.name || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.name },
+      { field: section.urlSlug || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.slug },
+      { field: section.title || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: section.japaneseTitle || '', maxLength: inputLength.maxLength100.limit, errorMessage: inputLength.maxLength100.title },
+      { field: section.description || '', maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.description },
+      { field: section.japaneseDescription || '', maxLength: inputLength.maxLength500.limit, errorMessage: inputLength.maxLength500.description },
+    ];
+
+    for (let i = 0; i < validations.length; i++) {
+      const { field, maxLength, errorMessage } = validations[i];
+      if (field && field.length > maxLength) {
+        toast.error(errorMessage);
+        return false;
+      }
+    }
+    return true;
   };
 
   //Onclick submit button
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) {
+      return;
+    }
+
     let formData = new FormData(e.target);
-    formData.set("Description", editor.current.value || section.description);
     editSection(formData).then((data) => {
       if (data) {
         Swal.fire({
@@ -104,31 +130,6 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
     [initialState]
   );
 
-  const editorConfig = {
-    readonly: false,
-    toolbar: true,
-    spellcheck: false,
-    language: "en",
-    toolbarButtonSize: "medium",
-    toolbarAdaptive: false,
-    showCharsCounter: false,
-    showWordsCounter: false,
-    showXPathInStatusbar: false,
-    askBeforePasteHTML: true,
-    askBeforePasteFromWord: true,
-    width: 800,
-    height: 500,
-    defaultActionOnPaste: "insert_clear_html",
-    placeholder: "Write something awesome...",
-    beautyHTML: true,
-    controls: {
-      image: {
-        exec: async (editor) => {
-          await imageUpload(editor);
-        },
-      },
-    },
-  };
   const imageUpload = async (editor) => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -161,6 +162,11 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
   return (
     <>
       <Box sx={{ padding: 5 }}>
+      <Toaster
+          containerStyle={{
+            top: 100,
+          }}
+        />
         <div className="btn-cancel">
           <i onClick={handleClose} className="fa-solid fa-xmark"></i>
         </div>
@@ -210,7 +216,7 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
             <div className="bold-title">
               <p className="text-title">Name</p>
               <input
-                placeholder={translate("editAdmin.name")}
+                placeholder={translate("editAdmin.Name")}
                 className="input-title"
                 type="text"
                 name="Name"
@@ -232,6 +238,17 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
                   setSection({ ...section, title: e.target.value })
                 }
               />
+              <input
+                placeholder={translate("editAdminJa.Title")}
+                className="input-title"
+                type="text"
+                name="JapaneseTitle"
+                title="JapaneseTitle"
+                value={section.japaneseTitle || ""}
+                onChange={(e) =>
+                  setSection({ ...section, japaneseTitle: e.target.value })
+                }
+              />
             </div>
             <div className="title">
               <p className="text-title">Slug</p>
@@ -249,12 +266,27 @@ const EditSection = ({ id, setRows, setIsPopupVisible, currentLanguage }) => {
             </div>
             <div className="desc-edit">
               <p className="text-desc">Description</p>
-              <JoditReact
-                ref={editor}
-                name="Description"
+                <textarea
+                placeholder={translate("editAdmin.Description")}
+                className="input-shdes"
                 type="text"
-                value={section.description}
-                config={editorConfig}
+                name="Description"
+                title="Description"
+                value={section.description || ""}
+                onChange={(e) =>
+                  setSection({ ...section, description: e.target.value })
+                }
+              />
+                <textarea
+                placeholder={translate("editAdminJa.Description")}
+                className="input-shdes"
+                type="text"
+                name="JapaneseDescription"
+                title="JapaneseDescription"
+                value={section.japaneseDescription || ""}
+                onChange={(e) =>
+                  setSection({ ...section, japaneseDescription: e.target.value })
+                }
               />
             </div>
           </div>

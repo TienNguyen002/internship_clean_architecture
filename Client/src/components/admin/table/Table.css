@@ -2,17 +2,66 @@
     transition: width 0.1s ease;
     width: 0;
     overflow-x: hidden;
+    height: 90vh;
 }
 .edit-show.active{
+    height: 98vh;
     padding-top: 20px;
-    height: fit-content;
-    width: 50%;
+    width: 60%;
     z-index: 10;
     background-color: var(--light-color);
     position: relative;
     border-left: 1px solid var(--border);
 }
 
+.MuiBox-root.css-147x205 {
+    background-color: var(--light-primary-color);
+}
+
+.MuiBox-root.css-ky0xin {
+    height: 100vh;
+}
+.MuiBox-root.css-1k3guf7 {
+    height: 100vh;
+}
+.MuiBox-root.css-1jt1yyv {
+    height: 100vh;
+}
+
+.MuiBox-root {
+    background-color: var(--gray-light);
+}
+
+.MuiDataGrid-root {
+    background-color: var(--light-color);
+}
+
+.edit-show-dual {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 0;
+    overflow-x: hidden;
+    position: fixed;
+    top: 23%;
+    left: 32%;
+    transform: translate(-50%, -50%) scale(0.65);
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+}
+
+.edit-show-dual.active {
+    height: 150%;
+    width: 100%;
+    scale: 0.65;
+    z-index: 1500;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+    background-color: var(--light-color);
+    position: fixed;
+    border: 1px solid var(--primary-color);
+}
 
 .MuiDataGrid-viewport.MuiDataGrid-row.MuiDataGrid-renderingZone{
     max-height: fit-content;
@@ -29,13 +78,13 @@
         font-size: 1.75rem;
     }
     .imageUrl-table{
-        width: 22rem;
+        width: 10rem;
     }
     .MuiDataGrid-columnHeaderTitle{
         font-size: 1.5rem;
     }
     .MuiButtonBase-root.MuiButton-root.MuiButton-text{
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .MuiSvgIcon-root.MuiSvgIcon-fontSizeSmall{
         font-size: 2rem;
@@ -71,7 +120,7 @@
         font-size: 1.5rem;
     }
     .imageUrl-table{
-        width: 14rem;
+        width: 10rem;
     }
     .MuiDataGrid-columnHeaderTitle{
         font-size: 1.25rem;

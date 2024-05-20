@@ -136,8 +136,8 @@ namespace TitanWeb.Api.Controllers
         ///         "JapaneseTitle"= "Titan Tet Celebration 2025",
         ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         ///         "JapaneseShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
         ///         "ImageFile"="@myImage.png;type=image/png"
         ///     }
         /// </remarks>
@@ -171,8 +171,8 @@ namespace TitanWeb.Api.Controllers
         ///         "SubTitle (Author)"= "Admin",
         ///         "ShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         ///         "JapaneseShortDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        ///         "Japanese"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
         ///         "ImageFile"="@myImage.png;type=image/png"
         ///     }
         /// </remarks>
@@ -240,8 +240,8 @@ namespace TitanWeb.Api.Controllers
         ///         "JapaneseBoldTitle" = "INSPIRE"
         ///         "Title"= "YOUR WORK",
         ///         "JapaneseTitle"= "YOUR WORK",
-        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        ///         "Description"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        ///         "JapaneseDescription"= "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod."
         ///         "BackgroundImage"="@myImage.png;type=image/png"
         ///     }
         /// </remarks>
@@ -274,14 +274,15 @@ namespace TitanWeb.Api.Controllers
         ///         "UrlSlug"= "branch-office"
         ///         "Address"= "9/1/2 Tran Dai Nghia Street, Ward 8, Da Lat City, Vietnam.",
         ///         "TelNumber"="Tel: +84-26-3382-8379"
-        ///         "Description" = null
-        ///         "InfoGmail1" = null
-        ///         "InfoGmail2" = null
-        ///         "Skype" = null
-        ///         "Facebook" = null
-        ///         "Twitter" = null
-        ///         "Linkedin" = null
-        ///         "Youtube" = null
+        ///         "Description" = optional
+        ///         "Japanese" = optional
+        ///         "InfoGmail1" = optional
+        ///         "InfoGmail2" = optional
+        ///         "Skype" = optional
+        ///         "Facebook" = optional
+        ///         "Twitter" = optional
+        ///         "Linkedin" = optional
+        ///         "Youtube" = optional
         ///     }
         /// </remarks>
         /// <param name="model"> Model to add/update Footer Item </param>
@@ -309,12 +310,14 @@ namespace TitanWeb.Api.Controllers
         ///     POST api/Item/edit
         ///     {
         ///         "Id"= "71", (Id = 0 to Create, Id !=0 to Update)
-        ///         "JapaneseTitle"= "VALERY KHVATOV",
         ///         "Title"= "VALERY KHVATOV",
+        ///         "JapaneseTitle"= "VALERY KHVATOV",
         ///         "SubTitle"="VP of Technology",
         ///         "JapaneseSubTitle"="VP of Technology",
         ///         "Description" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
         ///         "JapaneseDescription" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.",
+        ///         "ButtonLabel" = optional
+        ///         "JapaneseButtonLabel" = optional
         ///     }
         /// </remarks>
         /// <param name="model"> Model to add/update Item </param>
@@ -323,7 +326,6 @@ namespace TitanWeb.Api.Controllers
         [HttpPost("edit")]
         public async Task<ActionResult> EditItem([FromForm] ItemEditModel model)
         {
-            // _logger.LogInformation(LogManagements.LogEditBanner);
             var updateSuccess = await _service.EditItemAsync(model);
             if (!updateSuccess)
             {
@@ -331,6 +333,23 @@ namespace TitanWeb.Api.Controllers
             }
             var result = _mapper.Map<ItemDTO>(model);
             return Ok(ApiResponse.Success(result, ResponseManagements.SuccessEditItem));
+        }
+
+        /// <summary>
+        /// Toggles the display of a banner items
+        /// </summary>
+        /// <param name="id"> Id of the Item </param>
+        /// <returns>True if the display is toggled successfully, false otherwise.</returns>
+        /// <exception cref="Exception"></exception>
+        [HttpPost("display/banner/{id}")]
+        public async Task<ActionResult> ToggleDisplayAsync(int id)
+        {
+            var updateSuccess = await _service.ToggleDisplayAsync(id);
+            if (!updateSuccess)
+            {
+                return BadRequest(ApiResponse.Fail(HttpStatusCode.BadRequest, ResponseManagements.FailToEditBanner));
+            }
+            return Ok(ApiResponse.Success(updateSuccess, ResponseManagements.SuccessEditBanner));
         }
     }
 }

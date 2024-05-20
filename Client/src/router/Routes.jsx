@@ -21,8 +21,12 @@ import Logo from "../pages/admin/logo/Logo";
 import Banner from "../pages/admin/banner/Banner";
 import Section from "../pages/admin/section/Section";
 import AdFooter from "../components/admin/footer/Footer";
+import EditRequest from "../components/admin/request/Request";
+import Privacy from "../pages/privacy/Privacy";
 
-
+/**
+ * Routes for regular users of the application.
+ */
 export const routes = [
   { path: "/", element: <HomePage /> },
   { path: "/home/", element: <HomePage /> },
@@ -44,15 +48,20 @@ export const routes = [
   { path: "/services/models", element: <Model /> },
   { path: "/domains", element: <Domain /> },
   { path: "/domains/:slug", element: <Domain /> },
+  { path: "/privacy", element: <Privacy /> },
   { path: "/400/", element: <BadRequest /> },
   { path: "*", element: <NotFound /> }
 ];
 
+/**
+ * Routes for admin users of the application.
+ */
 export const adminRoutes = [
   { path: "/admin", element: <DashBoard /> },
   { path: `/admin/news`, element: <AdNews /> },
   { path: "/admin/blogs", element: <AdBlogs /> },
   { path: "/admin/request", element: <AdRequest /> },
+  { path: "/admin/request/:id", element: <EditRequest /> },
   { path: "/admin/logo", element: <Logo /> },
   { path: "/admin/banner", element: <Banner /> },
   { path: "/admin/section", element: <Section /> },

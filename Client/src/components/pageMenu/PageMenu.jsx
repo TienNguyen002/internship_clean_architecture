@@ -45,7 +45,7 @@ function PageMenu() {
                 </a>
               </li>
               <li>
-                <a className={`${isActive('/blogs/') ? 'current' : ''}`} href="/blogs/" target="_blog_titan">
+                <a className={`${isActive('/blogs/') ? 'current' : ''}`} href="/blogs/" rel="_blog_titan">
                   {translate('menu.Blogs')}
                 </a>
               </li>

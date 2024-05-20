@@ -77,6 +77,10 @@
     color: var(--gray-color);
 }
 
+.description-news-detail table{
+    width: auto !important; /* !!important will override default styling rules for the element so we can make the table in the news detail page responsive. */
+}
+
 .box-container-news-detail .swiper-button-prev{
     color: var(--black);
     scale: 1.2;
@@ -96,7 +100,7 @@
         padding: 0px;
         margin: 0 150px;
     }
-    
+
     .box-container-news-detail {
         padding: 0px;
         margin: 0 150px;
@@ -107,27 +111,27 @@
     .container-news-detail {
         margin: 0 100px;
     }
-    
+
     .box-container-news-detail {
         margin: 0 100px;
     }
   }
-  
+
   @media only screen and (max-width: 768px) {
     .container-news-detail {
         margin: 0 50px;
     }
-    
+
     .box-container-news-detail {
         margin: 0 50px;
     }
   }
-  
+
   @media only screen and (max-width: 480px) {
     .container-news-detail {
         margin: 0px;
     }
-    
+
     .box-container-news-detail {
         margin: 0px;
     }

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  font-family: sans-serif;
 }
 
 .App-header {
@@ -13,8 +14,8 @@
   color: var(--light-color);;
 }
 
-.App {
-  font-family: sans-serif;
+* {
+  user-select: none;
 }
 
 body {
@@ -24,7 +25,6 @@ body {
 
 a {
   text-decoration: none;
-  color: var(--light-color);
 }
 
 @media screen and (max-width: 768px) {

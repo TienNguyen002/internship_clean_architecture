@@ -11,6 +11,7 @@
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string ImageUrl { get; set; }
+        public string Hyperlink { get; set; }
         public string ButtonLabel { get; set; }
         public bool ButtonStatus { get; set; }
     }
